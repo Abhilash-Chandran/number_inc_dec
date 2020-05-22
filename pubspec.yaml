@@ -1,7 +1,7 @@
 name: number_inc_dec
 description: A flutter widget which accepts numeric values with buttons to increment and decrement.
 version: 0.5.0
-homepage:
+homepage: https://github.com/Abhilash-Chandran/number_inc_dec
 
 environment:
   sdk: '>=2.7.0 <3.0.0'
