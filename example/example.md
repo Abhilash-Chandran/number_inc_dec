@@ -4,7 +4,7 @@ In following section you can see several different examples with different confi
 
 ---
 
-###### Default Appearance
+#### Default Appearance
 
 ```dart
 NumberInputWithIncrementDecrement(
@@ -12,11 +12,11 @@ NumberInputWithIncrementDecrement(
 );
 ```
 
-![](C:\Abhilash\Github\number_inc_dec\example\gifs\example1.gif)
+<img title="" src="gifs/example1.gif" alt="" width="472">
 
 ---
 
-###### Setting minimum and maximum values
+#### Setting minimum and maximum values
 
 ```dart
 NumberInputWithIncrementDecrement(
@@ -26,9 +26,11 @@ NumberInputWithIncrementDecrement(
 );
 ```
 
+<img title="" src="gifs/example2.gif" alt="" width="465">
+
 ---
 
-###### Using double values with fractional `incDecFactor=0.35`
+#### Using double values with fractional `incDecFactor=0.35`
 
 ```dart
 NumberInputWithIncrementDecrement(
@@ -38,15 +40,195 @@ NumberInputWithIncrementDecrement(
     );
 ```
 
-![](C:\Abhilash\Github\number_inc_dec\example\gifs\example3.gif)
+<img title="" src="gifs/example3.gif" alt="" width="465">
 
 ---
 
+#### Prefabbed Widget with Squared buttons
 
+```dart
+NumberInputPrefabbed.squaredButtons(
+  controller: TextEditingController(),
+),
+```
 
-###### 
+<img src="gifs/pre_squared.gif" title="" alt="" width="467">
 
+---
 
+#### Prefabbed widget with Leaf like Icons
+
+```dart
+NumberInputPrefabbed.leafyButtons(
+  controller: TextEditingController(),
+),
+```
+
+<img src="gifs/pre_leaf.gif" title="" alt="" width="464">
+
+---
+
+#### Prefabbed widget directional icons.
+
+```dart
+NumberInputPrefabbed.directionalButtons(
+  controller: TextEditingController(),
+),
+```
+
+<img src="gifs/pre_directional.gif" title="" alt="" width="465">
+---
+
+---
+
+#### Prefabbed widget with round endged icons
+
+```dart
+NumberInputPrefabbed.roundedEdgeButtons(
+  controller: TextEditingController(),
+),
+```
+
+<img src="gifs/pre_roundEdge.gif" title="" alt="" width="470">
+
+---
+
+#### Prefabbed widget with circular icons in Pink color
+
+```dart
+NumberInputPrefabbed.roundedButtons(
+   controller: TextEditingController(),
+   incDecBgColor: Colors.pink,
+),
+```
+
+<img src="gifs/pre_rounded.gif" title="" alt="" width="469">
+
+---
+
+#### With initial Value as 5
+
+```dart
+NumberInputWithIncrementDecrement(
+  controller: TextEditingController(),
+  initialValue: 5,
+);
+```
+
+<img title="" src="gifs/example4.gif" alt="" width="464">
+
+---
+
+#### Different border decoration
+
+```dart
+    NumberInputWithIncrementDecrement(
+      controller: TextEditingController(),
+      widgetContainerDecoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.pink,
+        ),
+      ),
+    );
+```
+
+<img title="" src="gifs/example5.gif" alt="" width="459">
+
+---
+
+#### Different icons & formfield decoration
+
+```dart
+    NumberInputWithIncrementDecrement(
+      controller: TextEditingController(),
+      numberFieldDecoration: InputDecoration(
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+          borderSide: BorderSide(color: Colors.orange, width: 2.0),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+      ),
+      incIcon: Icons.plus_one,
+      decIcon: Icons.exposure_neg_1,
+    );
+```
+
+<img title="" src="gifs/example6.gif" alt="" width="465">
+
+---
+
+#### Height scaled to 0.75
+
+```dart
+    NumberInputWithIncrementDecrement(
+      controller: TextEditingController(),
+      scaleHeight: 0.75,
+      incIcon: Icons.plus_one,
+      decIcon: Icons.exposure_neg_1,
+    );
+```
+
+<img title="" src="gifs/example7.gif" alt="" width="476">
+
+---
+
+#### Width scaled to 0.75
+
+```dart
+    NumberInputWithIncrementDecrement(
+      controller: TextEditingController(),
+      scaleWidth: 0.75,
+      incIcon: Icons.plus_one,
+      decIcon: Icons.exposure_neg_1,
+    );
+```
+
+<img title="" src="gifs/example8.gif" alt="" width="489">
+
+---
+
+#### Highly Customized widget, Icon shape and size.
+
+```dart
+    NumberInputWithIncrementDecrement(
+      controller: TextEditingController(),
+      numberFieldDecoration: InputDecoration(
+        border: InputBorder.none,
+      ),
+      widgetContainerDecoration: BoxDecoration(        
+        borderRadius: BorderRadius.all(
+          Radius.circular(10)
+        ),
+        border: Border.all(
+          color: Colors.amber,
+          width: 2,
+        )
+      ),
+      incIconDecoration: BoxDecoration(
+        color: Colors.amber,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+        ),        
+      ),
+      separateIcons: true,
+      decIconDecoration: BoxDecoration(
+        color: Colors.amber,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+        ),
+      ),
+      incIconSize: 28,
+      decIconSize: 28,
+      incIcon: Icons.plus_one,
+      decIcon: Icons.exposure_neg_1,
+    );
+```
+
+<img title="" src="gifs/example9.gif" alt="" width="488">
+
+---
 
 ## Demo
 
@@ -303,4 +485,4 @@ sWidget {
 }
 ```
 
-<img title="" src="C:\Abhilash\Github\number_inc_dec\demo.gif" alt="demo" width="270">
+<img title="" src="demo.gif" alt="demo" width="270">
