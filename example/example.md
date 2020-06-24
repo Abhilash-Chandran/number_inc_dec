@@ -12,7 +12,7 @@ NumberInputWithIncrementDecrement(
 );
 ```
 
-![example1](./gifs/example1.gif){width=472px}
+![example1](./gifs/example1.gif)
 
 ---
 
@@ -26,7 +26,7 @@ NumberInputWithIncrementDecrement(
 );
 ```
 
-<img title="" src="gifs/example2.gif" alt="" width="465">
+<img title="" src="./gifs/example2.gif" alt="" width="465">
 
 ---
 
@@ -40,7 +40,7 @@ NumberInputWithIncrementDecrement(
     );
 ```
 
-<img title="" src="gifs/example3.gif" alt="" width="465">
+<img title="" src="example/gifs/example3.gif" alt="" width="465">
 
 ---
 
