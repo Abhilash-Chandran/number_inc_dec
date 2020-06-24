@@ -26,7 +26,7 @@ NumberInputWithIncrementDecrement(
 );
 ```
 
-<img title="" src="./gifs/example2.gif" alt="" width="465">
+![example2](./gifs/example2.gif)
 
 ---
 
@@ -40,7 +40,7 @@ NumberInputWithIncrementDecrement(
     );
 ```
 
-<img title="" src="example/gifs/example3.gif" alt="" width="465">
+![example3](./gifs/example3.gif)
 
 ---
 
@@ -52,7 +52,7 @@ NumberInputPrefabbed.squaredButtons(
 ),
 ```
 
-<img src="gifs/pre_squared.gif" title="" alt="" width="467">
+![pre_squared](./gifs/pre_squared.gif)
 
 ---
 
@@ -64,7 +64,7 @@ NumberInputPrefabbed.leafyButtons(
 ),
 ```
 
-<img src="gifs/pre_leaf.gif" title="" alt="" width="464">
+![pre_leaf](./gifs/pre_leaf.gif)
 
 ---
 
@@ -76,7 +76,7 @@ NumberInputPrefabbed.directionalButtons(
 ),
 ```
 
-## <img src="gifs/pre_directional.gif" title="" alt="" width="465">
+![pre_directional](./gifs/pre_directional.gif)
 
 ---
 
@@ -88,7 +88,7 @@ NumberInputPrefabbed.roundedEdgeButtons(
 ),
 ```
 
-<img src="gifs/pre_roundEdge.gif" title="" alt="" width="470">
+![pre_roundEdge](./gifs/pre_roundEdge.gif)
 
 ---
 
@@ -101,7 +101,7 @@ NumberInputPrefabbed.roundedButtons(
 ),
 ```
 
-<img src="gifs/pre_rounded.gif" title="" alt="" width="469">
+![pre_rounded](./gifs/pre_rounded.gif)
 
 ---
 
@@ -114,7 +114,7 @@ NumberInputWithIncrementDecrement(
 );
 ```
 
-<img title="" src="gifs/example4.gif" alt="" width="464">
+![example4](./gifs/example4.gif)
 
 ---
 
@@ -131,7 +131,7 @@ NumberInputWithIncrementDecrement(
     );
 ```
 
-<img title="" src="gifs/example5.gif" alt="" width="459">
+![example5](./gifs/example5.gif)
 
 ---
 
@@ -154,7 +154,7 @@ NumberInputWithIncrementDecrement(
     );
 ```
 
-<img title="" src="gifs/example6.gif" alt="" width="465">
+![example6](./gifs/example6.gif)
 
 ---
 
@@ -169,7 +169,7 @@ NumberInputWithIncrementDecrement(
     );
 ```
 
-<img title="" src="gifs/example7.gif" alt="" width="476">
+![example7](./gifs/example7.gif)
 
 ---
 
@@ -184,7 +184,7 @@ NumberInputWithIncrementDecrement(
     );
 ```
 
-<img title="" src="gifs/example8.gif" alt="" width="489">
+![example8](./gifs/example8.gif)
 
 ---
 
@@ -225,7 +225,7 @@ NumberInputWithIncrementDecrement(
     );
 ```
 
-<img title="" src="gifs/example9.gif" alt="" width="488">
+![example9](./gifs/example9.gif)
 
 ---
 
@@ -484,4 +484,4 @@ sWidget {
 }
 ```
 
-<img title="" src="demo.gif" alt="demo" width="270">
+![demo](demo.gif)

@@ -1,4 +1,4 @@
-## [0.6.0] - 24June2020
+## [0.6.0+2] - 24June2020
 
 * Added 5 different preffabed widgets for ease of use and  as example.
 
