@@ -1,14 +1,14 @@
 ## [0.6.0] - 24June2020
 
-* Added 4 different preffabed widgets for ease of use and  as example.
+* Added 5 different preffabed widgets for ease of use and  as example.
 
 * Added scale factors for width and height.
 
 * Provided more options such as icon size, background color and decoration.
 
-* Add options for call back onIncrement and onDecrement
+* Added options for call back on Increment and Decrement
 
-* Added options for different layouts  of the increment decrement buttons.
+* Added options for different layouts of the increment decrement buttons.
 
 ## [0.5.0] - 22May2020.
 
