@@ -24,9 +24,9 @@ class MyApp extends StatelessWidget {
           body: Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(              
+              child: ListView(              
                 // padding: EdgeInsets.all(12),              
-                mainAxisAlignment: MainAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Default appearance'),
                   Example1(),
