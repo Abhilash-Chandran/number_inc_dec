@@ -1,12 +1,52 @@
 # Example
 
-In following table you can see several different examples with different configurations.
+In following section you can see several different examples with different configurations.
 
-| Description          | Code                                                                                             | Output                                                     |
-| -------------------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
-| A default appearance | `NumberInputWithIncrementDecrement(
-<br/>      controller: TextEditingController(),
-<br/>    );` | ![](C:\Abhilash\Github\number_inc_dec\images\example1.gif) |
+---
+
+###### Default Appearance
+
+```dart
+NumberInputWithIncrementDecrement(
+ controller: TextEditingController(),
+);
+```
+
+![](C:\Abhilash\Github\number_inc_dec\example\gifs\example1.gif)
+
+---
+
+###### Setting minimum and maximum values
+
+```dart
+NumberInputWithIncrementDecrement(
+  controller: TextEditingController(),
+  min: -2,
+  max: 3,
+);
+```
+
+---
+
+###### Using double values with fractional `incDecFactor=0.35`
+
+```dart
+NumberInputWithIncrementDecrement(
+      controller: TextEditingController(),
+      isInt: false,
+      incDecFactor: 0.35,
+    );
+```
+
+![](C:\Abhilash\Github\number_inc_dec\example\gifs\example3.gif)
+
+---
+
+
+
+###### 
+
+
 
 ## Demo
 

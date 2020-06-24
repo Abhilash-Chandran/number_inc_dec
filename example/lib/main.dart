@@ -28,13 +28,13 @@ class MyApp extends StatelessWidget {
                 // padding: EdgeInsets.all(12),              
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Default appearance'),
-                  Example1(),
+                  // Text('Default appearance'),
+                  // Example1(),
                   // Text('Setting minimum value -2 and maximum value 3'),
                   // Example2(),
                   // Divider(),
-                  // Text('Using double values with incDecFator=0.35'),
-                  // Example3(),
+                  Text('Using double values with incDecFator=0.35'),
+                  Example3(),
                   // Text('Prefabbed widget: Squared Buttons'),
                   // NumberInputPrefabbed.squaredButtons(
                   //   controller: TextEditingController(),
