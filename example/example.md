@@ -12,7 +12,7 @@ NumberInputWithIncrementDecrement(
 );
 ```
 
-<img title="" src="gifs/example1.gif" alt="" width="472">
+![example1](./gifs/example1.gif){width=472px}
 
 ---
 
@@ -76,8 +76,7 @@ NumberInputPrefabbed.directionalButtons(
 ),
 ```
 
-<img src="gifs/pre_directional.gif" title="" alt="" width="465">
----
+## <img src="gifs/pre_directional.gif" title="" alt="" width="465">
 
 ---
 
@@ -197,7 +196,7 @@ NumberInputWithIncrementDecrement(
       numberFieldDecoration: InputDecoration(
         border: InputBorder.none,
       ),
-      widgetContainerDecoration: BoxDecoration(        
+      widgetContainerDecoration: BoxDecoration(
         borderRadius: BorderRadius.all(
           Radius.circular(10)
         ),
@@ -210,7 +209,7 @@ NumberInputWithIncrementDecrement(
         color: Colors.amber,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(10),
-        ),        
+        ),
       ),
       separateIcons: true,
       decIconDecoration: BoxDecoration(
@@ -259,8 +258,8 @@ class MyApp extends StatelessWidget {
       home: SafeArea(
         child: Scaffold(
           body: Center(
-            child: ListView(              
-              padding: EdgeInsets.all(12),              
+            child: ListView(
+              padding: EdgeInsets.all(12),
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('Default appearance'),
@@ -324,7 +323,7 @@ class Example9 extends StatelessWidget {
       numberFieldDecoration: InputDecoration(
         border: InputBorder.none,
       ),
-      widgetContainerDecoration: BoxDecoration(        
+      widgetContainerDecoration: BoxDecoration(
         borderRadius: BorderRadius.all(
           Radius.circular(10)
         ),
@@ -337,7 +336,7 @@ class Example9 extends StatelessWidget {
         color: Colors.amber,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(10),
-        ),        
+        ),
       ),
       separateIcons: true,
       decIconDecoration: BoxDecoration(
