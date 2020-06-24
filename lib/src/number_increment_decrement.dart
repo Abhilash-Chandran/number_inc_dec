@@ -526,7 +526,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
     this.initialValue = 0,
     this.incDecFactor = 1,
     this.isInt = true,
-    this.autovalidate=false,
+    this.autovalidate = false,
     this.numberFieldDecoration,
     this.widgetContainerDecoration,
     this.validator,
