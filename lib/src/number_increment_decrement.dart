@@ -110,7 +110,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   final double scaleWidth;
 
   /// A scaling factor for the whole widget.
-  /// Defualts to 1.
+  /// Defaults to 1.
   final double scaleHeight;
 
   /// Show a separator between the increment & decrement buttons.
@@ -509,7 +509,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   final double scaleWidth;
 
   /// A scaling factor for the height of the widget.
-  /// Defualts to 1.
+  /// Defaults to 1.
   final double scaleHeight;
 
   /// Show a transparent separator between the increment & decrement buttons.
