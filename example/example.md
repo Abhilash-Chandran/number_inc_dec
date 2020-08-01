@@ -44,6 +44,25 @@ NumberInputWithIncrementDecrement(
 
 ---
 
+#### Providing callbacks for successfull incrment / decrement
+
+
+```dart
+NumberInputWithIncrementDecrement(
+  controller: TextEditingController(),
+  onIncrement: (num newlyIncrementedValue) {
+    print('Newly incrmented value is $newlyIncrementedValue');
+  },
+  onDecrement: (num newlyDecrementedValue) {
+    print('Newly decremented value is $newlyDecrementedValue');
+  },
+)
+```
+
+![call_back_inc_dec](./gifs/inc_dec_callback.gif)
+
+---
+
 #### Prefabbed Widget with Squared buttons
 
 ```dart
@@ -104,6 +123,63 @@ NumberInputPrefabbed.roundedButtons(
 ![pre_rounded](./gifs/pre_rounded.gif)
 
 ---
+#### Alternative button arrangement
+The `buttonArrangement` option can be used to decide the position of the 
+increment decrement buttons. This can be used with both `NumberInputPrefabbed`
+and `NumberInputWithIncrementDecrement`.
+
+---
+***Increment/Decrement buttons at the right***
+
+```dart
+NumberInputPrefabbed.roundedButtons(
+  controller: TextEditingController(),
+  incDecBgColor: Colors.amber,
+  buttonArrangement: ButtonArrangement.rightEnd,
+),
+```
+
+![buttonpos_rightend](./gifs/buttonpos_right.gif)
+
+
+***Increment/Decrement buttons at the left***
+
+```dart
+NumberInputPrefabbed.roundedButtons(
+  controller: TextEditingController(),
+  incDecBgColor: Colors.amber,
+  buttonArrangement: ButtonArrangement.leftEnd,
+),
+```
+
+![buttonpos_rightend](./gifs/buttonpos_left.gif)
+
+***Increment at left, decrement at right ***
+
+```dart
+NumberInputPrefabbed.roundedButtons(
+  controller: TextEditingController(),
+  incDecBgColor: Colors.amber,
+  buttonArrangement: ButtonArrangement.incLeftDecRight,
+),
+```
+
+![buttonpos_rightend](./gifs/buttonpos_left_right.gif)
+
+***Increment at right, decrement at left***
+
+```dart
+NumberInputPrefabbed.roundedButtons(
+  controller: TextEditingController(),
+  incDecBgColor: Colors.amber,
+  buttonArrangement: ButtonArrangement.incRightDecLeft,
+),
+```
+
+![buttonpos_rightend](./gifs/buttonpos_right_left.gif)
+
+---
+
 
 #### With initial Value as 5
 
@@ -289,6 +365,30 @@ class MyApp extends StatelessWidget {
                 NumberInputPrefabbed.roundedButtons(
                   controller: TextEditingController(),
                   incDecBgColor: Colors.pink,
+                ),
+                Text('Both buttons positioned at right side'),
+                NumberInputPrefabbed.roundedButtons(
+                  controller: TextEditingController(),
+                  incDecBgColor: Colors.amber,
+                  buttonArrangement: ButtonArrangement.rightEnd,
+                ),
+                Text('Both buttons positioned at left side'),
+                NumberInputPrefabbed.roundedButtons(
+                  controller: TextEditingController(),
+                  incDecBgColor: Colors.amber,
+                  buttonArrangement: ButtonArrangement.leftEnd,
+                ),
+                Text('Increment left Decrement right'),
+                NumberInputPrefabbed.roundedButtons(
+                  controller: TextEditingController(),
+                  incDecBgColor: Colors.blueAccent,
+                  buttonArrangement: ButtonArrangement.incLeftDecRight,
+                ),
+                Text('Increment right Decrement left'),
+                NumberInputPrefabbed.roundedButtons(
+                  controller: TextEditingController(),
+                  incDecBgColor: Colors.blueAccent,
+                  buttonArrangement: ButtonArrangement.incRightDecLeft,
                 ),
                 Text('With initial Value as 5'),
                 Example4(),

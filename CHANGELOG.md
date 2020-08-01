@@ -1,3 +1,13 @@
+## [0.6.0+3] - 02August2020
+
+* Added examples for `buttonArrangement` options.
+
+* Added example for `onIncrement` & `onDecrement` callbacks
+
+* Fixed some spell check errors in readme.
+
+* Merged a documentation [fix](https://github.com/Abhilash-Chandran/number_inc_dec/pull/2) from [not-holar](https://github.com/not-holar). Thank you 🥇 😄.
+
 ## [0.6.0+2] - 24June2020
 
 * Added 5 different preffabed widgets for ease of use and  as example.
@@ -15,6 +25,7 @@
 - A initial release of the NumberIncrementDecrement Widget
 
 
+## Todos
 
 - [ ] Expose all options of the TextFormField for more customized control.
 

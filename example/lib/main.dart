@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
           body: Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListView(              
-                // padding: EdgeInsets.all(12),              
+              child: ListView(
+                // padding: EdgeInsets.all(12),
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Default appearance'),
@@ -56,6 +56,30 @@ class MyApp extends StatelessWidget {
                     controller: TextEditingController(),
                     incDecBgColor: Colors.pink,
                   ),
+                  Text('Both buttons positioned at right side'),
+                  NumberInputPrefabbed.roundedButtons(
+                    controller: TextEditingController(),
+                    incDecBgColor: Colors.amber,
+                    buttonArrangement: ButtonArrangement.rightEnd,
+                  ),
+                  Text('Both buttons positioned at left side'),
+                  NumberInputPrefabbed.roundedButtons(
+                    controller: TextEditingController(),
+                    incDecBgColor: Colors.amber,
+                    buttonArrangement: ButtonArrangement.leftEnd,
+                  ),
+                  Text('Increment left Decrement right'),
+                  NumberInputPrefabbed.roundedButtons(
+                    controller: TextEditingController(),
+                    incDecBgColor: Colors.blueAccent,
+                    buttonArrangement: ButtonArrangement.incLeftDecRight,
+                  ),
+                  Text('Increment right Decrement left'),
+                  NumberInputPrefabbed.roundedButtons(
+                    controller: TextEditingController(),
+                    incDecBgColor: Colors.blueAccent,
+                    buttonArrangement: ButtonArrangement.incRightDecLeft,
+                  ),
                   Text('With initial Value as 5'),
                   Example4(),
                   Text('Different border decoration'),
@@ -68,6 +92,17 @@ class MyApp extends StatelessWidget {
                   Example8(),
                   Text('Customized Icon shape and size.'),
                   Example9(),
+                  Text('Passing callbacks onIncrment and onDecrement'),
+                  NumberInputWithIncrementDecrement(
+                    controller: TextEditingController(),
+                    onIncrement: (num newlyIncrementedValue) {
+                      print('Newly incrmented value is $newlyIncrementedValue');
+                    },
+                    onDecrement: (num newlyDecrementedValue) {
+                      print(
+                          'Newly decremented value is $newlyDecrementedValue');
+                    },
+                  )
                 ],
               ),
             ),
@@ -90,20 +125,17 @@ class Example9 extends StatelessWidget {
       numberFieldDecoration: InputDecoration(
         border: InputBorder.none,
       ),
-      widgetContainerDecoration: BoxDecoration(        
-        borderRadius: BorderRadius.all(
-          Radius.circular(10)
-        ),
-        border: Border.all(
-          color: Colors.amber,
-          width: 2,
-        )
-      ),
+      widgetContainerDecoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          border: Border.all(
+            color: Colors.amber,
+            width: 2,
+          )),
       incIconDecoration: BoxDecoration(
         color: Colors.amber,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(10),
-        ),        
+        ),
       ),
       separateIcons: true,
       decIconDecoration: BoxDecoration(
