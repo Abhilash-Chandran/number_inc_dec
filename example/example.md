@@ -44,14 +44,14 @@ NumberInputWithIncrementDecrement(
 
 ---
 
-#### Providing callbacks for successfull incrment / decrement
+#### Providing callbacks for successful increment / decrement
 
 
 ```dart
 NumberInputWithIncrementDecrement(
   controller: TextEditingController(),
   onIncrement: (num newlyIncrementedValue) {
-    print('Newly incrmented value is $newlyIncrementedValue');
+    print('Newly incremented value is $newlyIncrementedValue');
   },
   onDecrement: (num newlyDecrementedValue) {
     print('Newly decremented value is $newlyDecrementedValue');
@@ -99,7 +99,7 @@ NumberInputPrefabbed.directionalButtons(
 
 ---
 
-#### Prefabbed widget with round endged icons
+#### Prefabbed widget with round edged icons
 
 ```dart
 NumberInputPrefabbed.roundedEdgeButtons(
@@ -211,7 +211,7 @@ NumberInputWithIncrementDecrement(
 
 ---
 
-#### Different icons & formfield decoration
+#### Different icons & form field decoration
 
 ```dart
     NumberInputWithIncrementDecrement(
@@ -343,7 +343,7 @@ class MyApp extends StatelessWidget {
                 Text('Setting minimum value -2 and maximum value 3'),
                 Example2(),
                 Divider(),
-                Text('Using double values with incDecFator=0.35'),
+                Text('Using double values with incDecFactor=0.35'),
                 Example3(),
                 Text('Prefabbed widget: Squared Buttons'),
                 NumberInputPrefabbed.squaredButtons(
@@ -394,7 +394,7 @@ class MyApp extends StatelessWidget {
                 Example4(),
                 Text('Different border decoration'),
                 Example5(),
-                Text('Different icons & formfield decoration'),
+                Text('Different icons & form field decoration'),
                 Example6(),
                 Text('Height scaled to 0.75'),
                 Example7(),

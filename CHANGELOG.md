@@ -25,7 +25,7 @@
 - A initial release of the NumberIncrementDecrement Widget
 
 
-## Todos
+## Todo
 
 - [ ] Expose all options of the TextFormField for more customized control.
 
