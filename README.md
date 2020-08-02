@@ -1,4 +1,5 @@
-![build, test and publish](https://github.com/Abhilash-Chandran/number_inc_dec/workflows/build,%20test/badge.svg)
+![Build,Test](https://github.com/Abhilash-Chandran/number_inc_dec/workflows/Build,Test/badge.svg)
+![Publish](https://github.com/Abhilash-Chandran/number_inc_dec/workflows/Publish/badge.svg)
 [![pub package](https://img.shields.io/pub/v/number_inc_dec.svg?label=number_inc_dec)](https://pub.dev/packages/number_inc_dec)
 [![codecov](https://codecov.io/gh/Abhilash-Chandran/number_inc_dec/branch/master/graph/badge.svg)](https://codecov.io/gh/Abhilash-Chandran/number_inc_dec)
 # number_inc_dec
