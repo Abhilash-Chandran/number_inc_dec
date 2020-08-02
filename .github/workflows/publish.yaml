@@ -55,6 +55,7 @@ jobs:
         uses: k-paxian/dart-package-publisher@master
         with:
           flutter: true
+          skipTest: true
           relativePath: ${{ matrix.package }}
           accessToken: ${{ secrets.GAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.GAUTH_REFRESH_TOKEN }}
