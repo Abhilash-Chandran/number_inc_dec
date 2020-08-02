@@ -1,7 +1,7 @@
 on: push
 name: Build,Test
 jobs:
-  build_test_ubuntu_windows:
+  build_test_ubuntu_macos:
     name: Build number_inc_dec on stable
     runs-on: ${{ matrix.os }}
     strategy:
@@ -58,7 +58,7 @@ jobs:
   # This way its safe to push changes to master and let the other workflows run without the danger of accidental publishing.         
   publish:
     name: Publish number_inc_dec to pub.dev
-    needs: [build, build_test_windows]
+    needs: [build_test_ubuntu_macos, build_test_windows]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
