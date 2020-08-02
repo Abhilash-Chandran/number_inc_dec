@@ -45,87 +45,6 @@ void main() {
     await expectLater(find.byType(NumberInputWithIncrementDecrement),
         matchesGoldenFile('goldens/button_arangement_left.png'));
   });
-  testWidgets('Test Button Arrangement leftIncRightDec',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: Center(
-            child: RepaintBoundary(
-              child: Material(
-                child: NumberInputPrefabbed.roundedButtons(
-                  controller: TextEditingController(),
-                  buttonArrangement: ButtonArrangement.incLeftDecRight,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-    await expectLater(find.byType(NumberInputPrefabbed),
-        matchesGoldenFile('goldens/button_arangement_left_right.png'));
-  });
-  testWidgets('Test Button Arrangement leftDecRightInc',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: Center(
-            child: RepaintBoundary(
-              child: Material(
-                child: NumberInputPrefabbed.roundedButtons(
-                  controller: TextEditingController(),
-                  buttonArrangement: ButtonArrangement.incRightDecLeft,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-    await expectLater(find.byType(NumberInputPrefabbed),
-        matchesGoldenFile('goldens/button_arangement_right_left.png'));
-  });
-  testWidgets('Test RoundedEdgeButtons appearance',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: Center(
-            child: RepaintBoundary(
-              child: Material(
-                child: NumberInputPrefabbed.roundedEdgeButtons(
-                  controller: TextEditingController(),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-    await expectLater(find.byType(NumberInputPrefabbed),
-        matchesGoldenFile('goldens/prefabbed_rounded_edge_buttons.png'));
-  });
-  testWidgets('Test Squared Buttons appearance', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: Center(
-            child: RepaintBoundary(
-              child: Material(
-                child: NumberInputPrefabbed.squaredButtons(
-                  controller: TextEditingController(),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-    await expectLater(find.byType(NumberInputPrefabbed),
-        matchesGoldenFile('goldens/prefabbed_squared_buttons.png'));
-  });
   testWidgets('Test Prefabbed Leafy Appearance', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
@@ -144,28 +63,6 @@ void main() {
     );
     await expectLater(find.byType(NumberInputPrefabbed),
         matchesGoldenFile('goldens/prefabbed_leafy_appearance.png'));
-  });
-  testWidgets('Test Prefabbed Directional button Appearance',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: Center(
-            child: RepaintBoundary(
-              child: Material(
-                child: NumberInputPrefabbed.directionalButtons(
-                  controller: TextEditingController(),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-    await expectLater(
-        find.byType(NumberInputPrefabbed),
-        matchesGoldenFile(
-            'goldens/prefabbed_directional_button_appearance.png'));
   });
   testWidgets('Test increment Decrement Icon color settings',
       (WidgetTester tester) async {
