@@ -44,6 +44,25 @@ NumberInputWithIncrementDecrement(
 
 ---
 
+#### Providing callbacks for successful increment / decrement
+
+
+```dart
+NumberInputWithIncrementDecrement(
+  controller: TextEditingController(),
+  onIncrement: (num newlyIncrementedValue) {
+    print('Newly incremented value is $newlyIncrementedValue');
+  },
+  onDecrement: (num newlyDecrementedValue) {
+    print('Newly decremented value is $newlyDecrementedValue');
+  },
+)
+```
+
+![call_back_inc_dec](./gifs/inc_dec_callback.gif)
+
+---
+
 #### Prefabbed Widget with Squared buttons
 
 ```dart
@@ -80,7 +99,7 @@ NumberInputPrefabbed.directionalButtons(
 
 ---
 
-#### Prefabbed widget with round endged icons
+#### Prefabbed widget with round edged icons
 
 ```dart
 NumberInputPrefabbed.roundedEdgeButtons(
@@ -104,6 +123,63 @@ NumberInputPrefabbed.roundedButtons(
 ![pre_rounded](./gifs/pre_rounded.gif)
 
 ---
+#### Alternative button arrangement
+The `buttonArrangement` option can be used to decide the position of the 
+increment decrement buttons. This can be used with both `NumberInputPrefabbed`
+and `NumberInputWithIncrementDecrement`.
+
+---
+***Increment/Decrement buttons at the right***
+
+```dart
+NumberInputPrefabbed.roundedButtons(
+  controller: TextEditingController(),
+  incDecBgColor: Colors.amber,
+  buttonArrangement: ButtonArrangement.rightEnd,
+),
+```
+
+![buttonpos_rightend](./gifs/buttonpos_right.gif)
+
+
+***Increment/Decrement buttons at the left***
+
+```dart
+NumberInputPrefabbed.roundedButtons(
+  controller: TextEditingController(),
+  incDecBgColor: Colors.amber,
+  buttonArrangement: ButtonArrangement.leftEnd,
+),
+```
+
+![buttonpos_rightend](./gifs/buttonpos_left.gif)
+
+***Increment at left, decrement at right ***
+
+```dart
+NumberInputPrefabbed.roundedButtons(
+  controller: TextEditingController(),
+  incDecBgColor: Colors.amber,
+  buttonArrangement: ButtonArrangement.incLeftDecRight,
+),
+```
+
+![buttonpos_rightend](./gifs/buttonpos_left_right.gif)
+
+***Increment at right, decrement at left***
+
+```dart
+NumberInputPrefabbed.roundedButtons(
+  controller: TextEditingController(),
+  incDecBgColor: Colors.amber,
+  buttonArrangement: ButtonArrangement.incRightDecLeft,
+),
+```
+
+![buttonpos_rightend](./gifs/buttonpos_right_left.gif)
+
+---
+
 
 #### With initial Value as 5
 
@@ -135,7 +211,7 @@ NumberInputWithIncrementDecrement(
 
 ---
 
-#### Different icons & formfield decoration
+#### Different icons & form field decoration
 
 ```dart
     NumberInputWithIncrementDecrement(
@@ -267,7 +343,7 @@ class MyApp extends StatelessWidget {
                 Text('Setting minimum value -2 and maximum value 3'),
                 Example2(),
                 Divider(),
-                Text('Using double values with incDecFator=0.35'),
+                Text('Using double values with incDecFactor=0.35'),
                 Example3(),
                 Text('Prefabbed widget: Squared Buttons'),
                 NumberInputPrefabbed.squaredButtons(
@@ -290,11 +366,35 @@ class MyApp extends StatelessWidget {
                   controller: TextEditingController(),
                   incDecBgColor: Colors.pink,
                 ),
+                Text('Both buttons positioned at right side'),
+                NumberInputPrefabbed.roundedButtons(
+                  controller: TextEditingController(),
+                  incDecBgColor: Colors.amber,
+                  buttonArrangement: ButtonArrangement.rightEnd,
+                ),
+                Text('Both buttons positioned at left side'),
+                NumberInputPrefabbed.roundedButtons(
+                  controller: TextEditingController(),
+                  incDecBgColor: Colors.amber,
+                  buttonArrangement: ButtonArrangement.leftEnd,
+                ),
+                Text('Increment left Decrement right'),
+                NumberInputPrefabbed.roundedButtons(
+                  controller: TextEditingController(),
+                  incDecBgColor: Colors.blueAccent,
+                  buttonArrangement: ButtonArrangement.incLeftDecRight,
+                ),
+                Text('Increment right Decrement left'),
+                NumberInputPrefabbed.roundedButtons(
+                  controller: TextEditingController(),
+                  incDecBgColor: Colors.blueAccent,
+                  buttonArrangement: ButtonArrangement.incRightDecLeft,
+                ),
                 Text('With initial Value as 5'),
                 Example4(),
                 Text('Different border decoration'),
                 Example5(),
-                Text('Different icons & formfield decoration'),
+                Text('Different icons & form field decoration'),
                 Example6(),
                 Text('Height scaled to 0.75'),
                 Example7(),
