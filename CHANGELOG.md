@@ -31,7 +31,7 @@
 
 - [ ] Add more prefabbed widgets.
 
-- [ ] Write golden test cases.
+- [x] Write golden test cases.
 
 - [x] Expose call back options
 
