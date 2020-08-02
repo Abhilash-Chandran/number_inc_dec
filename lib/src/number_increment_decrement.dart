@@ -12,6 +12,9 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// Key to be used for this widget.
   final Key key;
 
+  /// Whether the user is able to interact or not
+  final bool enabled;
+
   /// Provide a custom controller.
   final TextEditingController controller;
 
@@ -123,6 +126,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   NumberInputPrefabbed.squaredButtons({
     @required this.controller,
     this.key,
+    this.enabled = true,
     this.buttonArrangement = ButtonArrangement.rightEnd,
     this.min = -2,
     this.max = double.infinity,
@@ -164,6 +168,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   NumberInputPrefabbed.leafyButtons({
     @required this.controller,
     this.key,
+    this.enabled = true,
     this.buttonArrangement = ButtonArrangement.rightEnd,
     this.min = 0,
     this.max = double.infinity,
@@ -223,6 +228,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   NumberInputPrefabbed.directionalButtons({
     @required this.controller,
     this.key,
+    this.enabled = true,
     this.buttonArrangement = ButtonArrangement.rightEnd,
     this.min = 0,
     this.max = double.infinity,
@@ -272,6 +278,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   NumberInputPrefabbed.roundedEdgeButtons({
     @required this.controller,
     this.key,
+    this.enabled = true,
     this.buttonArrangement = ButtonArrangement.rightEnd,
     this.min = 0,
     this.max = double.infinity,
@@ -362,6 +369,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   NumberInputPrefabbed.roundedButtons({
     @required this.controller,
     this.key,
+    this.enabled = true,
     this.buttonArrangement = ButtonArrangement.rightEnd,
     this.min = 0,
     this.max = double.infinity,
@@ -420,6 +428,9 @@ enum ButtonArrangement {
 class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// Key to be used for this widget.
   final Key key;
+
+  /// Whether the user is able to interact or not
+  final bool enabled;
 
   /// Provide a custom controller.
   final TextEditingController controller;
@@ -532,6 +543,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   NumberInputWithIncrementDecrement({
     @required this.controller,
     this.key,
+    this.enabled = true,
     this.buttonArrangement = ButtonArrangement.rightEnd,
     this.min = 0,
     this.max = double.infinity,
