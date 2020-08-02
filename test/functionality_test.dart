@@ -257,8 +257,6 @@ void main() {
   });
   testWidgets('Test autoValidate with default min-max validator',
       (WidgetTester tester) async {
-    Completer incCompleter = Completer<num>();
-    Completer decCompleter = Completer<num>();
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
