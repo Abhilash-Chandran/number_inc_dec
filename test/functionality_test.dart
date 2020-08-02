@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -188,11 +190,11 @@ void main() {
         ),
       ),
     );
-    // ensure default value is 0.00 is not set
+    // ensure default value 0 is not set
     final defaultNumber = find.widgetWithText(TextFormField, '0.00');
     expect(defaultNumber, findsNothing);
 
-    // ensure default value is 0.00 is not set
+    // ensure default value of 7 set
     final defaultSetNumber = find.widgetWithText(TextFormField, '7');
     expect(defaultSetNumber, findsOneWidget);
     // tap increment button once and ensure it works
@@ -207,7 +209,79 @@ void main() {
     await tester.tap(decrementButton);
     await tester.pump();
     expect(find.widgetWithText(TextFormField, '6'), findsOneWidget);
-    // ensure no wiget has 0 as values
+    // ensure no widget has 0 as values
     expect(find.widgetWithText(TextFormField, '0'), findsNothing);
+  });
+
+  testWidgets('Test increment decrement call backs',
+      (WidgetTester tester) async {
+    Completer incCompleter = Completer<num>();
+    Completer decCompleter = Completer<num>();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: NumberInputWithIncrementDecrement(
+            controller: TextEditingController(),
+            initialValue: 7,
+            onIncrement: incCompleter.complete,
+            onDecrement: decCompleter.complete,
+          ),
+        ),
+      ),
+    );
+    // ensure default value is not set to 0
+    final defaultNumber = find.widgetWithText(TextFormField, '0');
+    expect(defaultNumber, findsNothing);
+
+    // ensure default value 7 is set
+    final defaultSetNumber = find.widgetWithText(TextFormField, '7');
+    expect(defaultSetNumber, findsOneWidget);
+    // tap increment button once and ensure it works
+    await tester.tap(find.byIcon(Icons.arrow_drop_up));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(TextFormField, '8'), findsOneWidget);
+
+    // Esnure that the increment call back is returned with the correct value 8.
+    expect(incCompleter.isCompleted, isTrue);
+    expect(await incCompleter.future, equals(8));
+
+    // tap decrement button two times and ensure it works
+    final decrementButton = find.byIcon(Icons.arrow_drop_down);
+    await tester.tap(decrementButton);
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(TextFormField, '7'), findsOneWidget);
+
+    // Esnure that the decrement call back is returned with the correct value 8.
+    expect(decCompleter.isCompleted, isTrue);
+    expect(await decCompleter.future, equals(7));
+  });
+  testWidgets('Test autoValidate with default min-max validator',
+      (WidgetTester tester) async {
+    Completer incCompleter = Completer<num>();
+    Completer decCompleter = Completer<num>();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: NumberInputWithIncrementDecrement(
+            controller: TextEditingController(),
+            autovalidate: true,
+            initialValue: 1,
+            min: 1,
+            max: 10,
+          ),
+        ),
+      ),
+    );
+
+    // ensure default value 7 is set
+    final defaultSetNumber = find.widgetWithText(TextFormField, '1');
+    expect(defaultSetNumber, findsOneWidget);
+    // tap increment button once and ensure it works
+    await tester.enterText(find.byType(TextFormField), '0');
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(TextFormField, '0'), findsOneWidget);
+    expect(
+        find.widgetWithText(TextFormField, 'Value should be between 1 and 10'),
+        findsOneWidget);
   });
 }

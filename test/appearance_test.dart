@@ -145,6 +145,28 @@ void main() {
     await expectLater(find.byType(NumberInputPrefabbed),
         matchesGoldenFile('goldens/prefabbed_leafy_appearance.png'));
   });
+  testWidgets('Test Prefabbed Directional button Appearance',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: RepaintBoundary(
+              child: Material(
+                child: NumberInputPrefabbed.directionalButtons(
+                  controller: TextEditingController(),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await expectLater(
+        find.byType(NumberInputPrefabbed),
+        matchesGoldenFile(
+            'goldens/prefabbed_directional_button_appearance.png'));
+  });
   testWidgets('Test increment Decrement Icon color settings',
       (WidgetTester tester) async {
     await tester.pumpWidget(
