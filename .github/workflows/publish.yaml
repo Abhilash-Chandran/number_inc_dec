@@ -12,11 +12,18 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: "12.x"
+
       - uses: subosito/flutter-action@v1
         with:
           channel: "stable"
-      - run: flutter pub get
+      
+      - name: Install dependencies
+        run: flutter pub get        
+      
       - run: flutter test test/functionality_test.dart
+  # This separate build_test_windows is done because the golden files are created in windows
+  # Unfortunately these golden files differs in ubuntu & macos implementations and fails the golden tests.
+  # Also the code coverage is only updated here to include the golden tests.
   build_test_windows:
     name: Build number_inc_dec on stable
     runs-on: windows-latest    
@@ -28,9 +35,27 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: "stable"
-      - run: flutter pub get
-      - run: flutter test    
-            
+      # copied from @rrousselGit's river_pod workflow
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check format
+        run: flutter format --set-exit-if-changed .
+
+      - name: Analyze
+        run: flutter analyze
+        working-directory: ${{ matrix.package }}
+
+      - name: Run tests
+        run: flutter test --coverage
+        working-directory: ${{ matrix.package }}
+
+      - name: Upload coverage to codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} 
+  # note the following publish step will not publish unless the pubspec.yaml has changed its version
+  # This way its safe to push changes to master and let the other workflows run without the danger of accidental publishing.         
   publish:
     name: Publish number_inc_dec to pub.dev
     needs: [build, build_test_windows]
