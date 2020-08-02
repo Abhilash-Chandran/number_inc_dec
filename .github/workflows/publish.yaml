@@ -1,0 +1,68 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  # This separate build_test_windows is done because the golden files are created in windows
+  # Unfortunately these golden files differs in ubuntu & macos implementations and fails the golden tests.
+  # Also the code coverage is only updated here to include the golden tests.
+  build_test_windows:
+    name: Build number_inc_dec on stable
+    runs-on: windows-latest    
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+      # copied from @rrousselGit's river_pod workflow
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check format
+        run: flutter format --set-exit-if-changed .
+
+      - name: Analyze
+        run: flutter analyze
+        working-directory: ${{ matrix.package }}
+
+      - name: Run tests
+        run: flutter test --coverage
+        working-directory: ${{ matrix.package }}
+
+      - name: Upload coverage to codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} 
+  # note the following publish step will not publish unless the pubspec.yaml has changed its version
+  # This way its safe to push changes to master and let the other workflows run without the danger of accidental publishing.         
+  publish:
+    name: Publish number_inc_dec to pub.dev
+    needs: [build_test_ubuntu_macos, build_test_windows]
+    runs-on: ubuntu-latest
+    steps:
+      
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Publish if new
+        id: publish
+        uses: k-paxian/dart-package-publisher@master
+        with:
+          flutter: true
+          relativePath: ${{ matrix.package }}
+          accessToken: ${{ secrets.GAUTH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.GAUTH_REFRESH_TOKEN }}
+          suppressBuildRunner: true
+
+      - name: Tag commit
+        if: steps.publish.outputs.success
+        uses: hole19/git-tag-action@master
+        env:
+          TAG: ${{steps.publish.outputs.package}}-${{steps.publish.outputs.localVersion}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
