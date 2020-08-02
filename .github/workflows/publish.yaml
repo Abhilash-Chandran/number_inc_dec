@@ -1,7 +1,7 @@
 on: push
 name: build, test and publish
 jobs:
-  build and test:
+  build_and_test:
     name: Build number_inc_dec on stable
     runs-on: ${{ matrix.os }}
     strategy:
