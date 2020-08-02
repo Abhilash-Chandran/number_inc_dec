@@ -1,12 +1,16 @@
+![build, test and publish](https://github.com/Abhilash-Chandran/number_inc_dec/workflows/build,%20test/badge.svg)
+[![pub package](https://img.shields.io/pub/v/number_inc_dec.svg?label=number_inc_dec)](https://pub.dev/packages/number_inc_dec)
+[![codecov](https://codecov.io/gh/Abhilash-Chandran/number_inc_dec/branch/master/graph/badge.svg)](https://codecov.io/gh/Abhilash-Chandran/number_inc_dec)
 # number_inc_dec
 
 A flutter widget that accepts numbers along with buttons to increment and decrement. This is a simple TextFormField with buttons and logic to handle factored increments/decrements and with some additional properties like minimum and maximum allowed value. The factor of incrementing/decrementing is also configurable.
 
-Please check the example section which provides examples for each options.
+Please check the [example](/example) section which provides granular examples for each options.
 
+> If you like this package give it a thumbs-up 👍.
 ## Getting Started
 
-1. Install the latest version of the package by adding it to `pubspec.yaml` as noted in the install page.
+1. Install the latest version of the package by adding it to `pubspec.yaml` as noted in the [install](/install) page.
 
 2. Import the `number_inc_dec.dart` as follows `import 'package:number_inc_dec/number_inc_dec.dart';`.
 
@@ -24,7 +28,7 @@ Please check the example section which provides examples for each options.
      
 ## Demo with different options
 
-Check the examples sections for the corresponding code snippets.
+Check the [examples](/example) sections for the corresponding code snippets.
 
 ![demo](demo.gif)
 
