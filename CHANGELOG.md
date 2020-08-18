@@ -1,3 +1,9 @@
+## [0.6.5] - 19August2020
+
+* increased test coverage.
+* fixed lot of typo errors in documentation and code.
+* Added `enable` and `style` attribute to the widgets.
+
 ## [0.6.0+3] - 02August2020
 
 * Added examples for `buttonArrangement` options.

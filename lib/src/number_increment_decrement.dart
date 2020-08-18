@@ -662,6 +662,7 @@ class _NumberInputWithIncrementDecrementState
               child: TextFormField(
                 validator: widget.validator ?? _minMaxValidator,
                 style: widget.style,
+                enabled: widget.enabled,
                 textAlign: TextAlign.center,
                 autovalidate: widget.autovalidate,
                 decoration: widget.numberFieldDecoration ??
@@ -732,24 +733,26 @@ class _NumberInputWithIncrementDecrementState
           size: widget.decIconSize,
           color: widget.decIconColor,
         ),
-        onTap: () {
-          var currentValue = widget.isInt
-              ? int.parse(_controller.text)
-              : double.parse(_controller.text);
-          setState(() {
-            currentValue = currentValue - widget.incDecFactor;
-            currentValue =
-                currentValue > widget.min ? currentValue : widget.min;
-            _controller.text = widget.isInt
-                ? currentValue.toString()
-                : currentValue.toStringAsFixed(
-                    widget.fractionDigits); // decrementing value
-            // decrement callback
-            if (widget.onDecrement != null) {
-              widget.onDecrement(currentValue);
-            }
-          });
-        },
+        onTap: !widget.enabled
+            ? null
+            : () {
+                var currentValue = widget.isInt
+                    ? int.parse(_controller.text)
+                    : double.parse(_controller.text);
+                setState(() {
+                  currentValue = currentValue - widget.incDecFactor;
+                  currentValue =
+                      currentValue > widget.min ? currentValue : widget.min;
+                  _controller.text = widget.isInt
+                      ? currentValue.toString()
+                      : currentValue.toStringAsFixed(
+                          widget.fractionDigits); // decrementing value
+                  // decrement callback
+                  if (widget.onDecrement != null) {
+                    widget.onDecrement(currentValue);
+                  }
+                });
+              },
       ),
     );
   }
@@ -775,24 +778,26 @@ class _NumberInputWithIncrementDecrementState
           size: widget.incIconSize,
           color: widget.incIconColor,
         ),
-        onTap: () {
-          var currentValue = widget.isInt
-              ? int.parse(_controller.text)
-              : double.parse(_controller.text);
-          setState(() {
-            currentValue = currentValue + widget.incDecFactor;
-            currentValue =
-                currentValue < widget.max ? currentValue : widget.max;
-            _controller.text = widget.isInt
-                ? currentValue.toString()
-                : currentValue.toStringAsFixed(
-                    widget.fractionDigits); // incrementing value
-            // increment call back.
-            if (widget.onIncrement != null) {
-              widget.onIncrement(currentValue);
-            }
-          });
-        },
+        onTap: !widget.enabled
+            ? null
+            : () {
+                var currentValue = widget.isInt
+                    ? int.parse(_controller.text)
+                    : double.parse(_controller.text);
+                setState(() {
+                  currentValue = currentValue + widget.incDecFactor;
+                  currentValue =
+                      currentValue < widget.max ? currentValue : widget.max;
+                  _controller.text = widget.isInt
+                      ? currentValue.toString()
+                      : currentValue.toStringAsFixed(
+                          widget.fractionDigits); // incrementing value
+                  // increment call back.
+                  if (widget.onIncrement != null) {
+                    widget.onIncrement(currentValue);
+                  }
+                });
+              },
       ),
     );
   }

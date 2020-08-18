@@ -102,6 +102,10 @@ class MyApp extends StatelessWidget {
                       print(
                           'Newly decremented value is $newlyDecrementedValue');
                     },
+                  ),
+                  NumberInputWithIncrementDecrement(
+                    controller: TextEditingController(),
+                    enabled: false,
                   )
                 ],
               ),

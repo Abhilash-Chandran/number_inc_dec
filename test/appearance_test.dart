@@ -399,4 +399,48 @@ void main() {
     await expectLater(find.byType(NumberInputWithIncrementDecrement),
         matchesGoldenFile('goldens/regular_widget_with_style.png'));
   });
+  testWidgets('Test enabled on regular widget', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: RepaintBoundary(
+              child: Material(
+                child: NumberInputWithIncrementDecrement(
+                  controller: TextEditingController(),
+                  enabled: false,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await expectLater(
+      find.byType(NumberInputWithIncrementDecrement),
+      matchesGoldenFile('goldens/regular_widget_disabled.png'),
+    );
+  });
+  testWidgets('Test enabled on prefabbed widget', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: RepaintBoundary(
+              child: Material(
+                child: NumberInputPrefabbed.directionalButtons(
+                  controller: TextEditingController(),
+                  enabled: false,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await expectLater(
+      find.byType(NumberInputPrefabbed),
+      matchesGoldenFile('goldens/prefabbed_widget_disabled.png'),
+    );
+  });
 }
