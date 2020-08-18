@@ -36,7 +36,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// Initial value for the number input field. Defaults to zero.
   final num initialValue;
 
-  /// Decideds if the field only accepts integer values.
+  /// Decides if the field only accepts integer values.
   /// Defaults to true.
   final bool isInt;
 
@@ -74,18 +74,18 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// Defaults to null;
   final Decoration decIconDecoration;
 
-  /// Icon to be used for Incrment button.
+  /// Icon to be used for Increment button.
   final IconData incIcon;
 
-  /// Icon size to be used for Incrment button.
+  /// Icon size to be used for Increment button.
   /// Defaults to size defined in IconTheme
   final double incIconSize;
 
-  /// Icon color to be used for Incrment button.
+  /// Icon color to be used for Increment button.
   /// Defaults to color defined in IconTheme
   final Color incIconColor;
 
-  /// A call back function to be called on succesful increment.
+  /// A call back function to be called on successful increment.
   /// This will not called if the internal validators fail.
   /// It of type  [DiffIncDecCallBack].
   final DiffIncDecCallBack onIncrement;
@@ -93,7 +93,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// Icon to be used for Decrement button.
   final IconData decIcon;
 
-  /// Icon size to be used for Decrment button.
+  /// Icon size to be used for Decrement button.
   /// Defaults to size defined in IconTheme
   final double decIconSize;
 
@@ -101,7 +101,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// Defaults to color defined in IconTheme
   final Color decIconColor;
 
-  /// A call back function to be called on succesful decrement.
+  /// A call back function to be called on successful decrement.
   /// This will not called if the internal validators fail.
   /// It of type  [DiffIncDecCallBack].
   final DiffIncDecCallBack onDecrement;
@@ -453,7 +453,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// Initial value for the number input field. Defaults to zero.
   final num initialValue;
 
-  /// Decideds if the field only accepts integer values.
+  /// Decides if the field only accepts integer values.
   /// Defaults to true.
   final bool isInt;
 
@@ -491,25 +491,25 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// Defaults to null;
   final Decoration decIconDecoration;
 
-  /// Icon to be used for Incrment button.
+  /// Icon to be used for Increment button.
   final IconData incIcon;
 
-  /// Icon size to be used for Incrment button.
+  /// Icon size to be used for Increment button.
   /// Defaults to size defined in IconTheme
   final double incIconSize;
 
-  /// Icon color to be used for Incrment button.
+  /// Icon color to be used for Increment button.
   /// Defaults to color defined in IconTheme
   final Color incIconColor;
 
-  /// A call back function to be called on successfull increment.
+  /// A call back function to be called on successful increment.
   /// This will not be called if the internal validators fail.
   final DiffIncDecCallBack onIncrement;
 
   /// Icon to be used for Decrement button.
   final IconData decIcon;
 
-  /// Icon size to be used for Decrment button.
+  /// Icon size to be used for Decrement button.
   /// Defaults to size defined in IconTheme
   final double decIconSize;
 
@@ -517,7 +517,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// Defaults to color defined in IconTheme
   final Color decIconColor;
 
-  /// A call back function to be called on successfulll decrement.
+  /// A call back function to be called on successful decrement.
   /// This will not be called if the internal validators fail.
   final DiffIncDecCallBack onDecrement;
 
