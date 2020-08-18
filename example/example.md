@@ -570,7 +570,8 @@ class Example2 extends StatelessWidget {
     );
   }
 }
-sWidget {
+
+class Example1 extends StatelessWidget {
   const Example1({
     Key key,
   }) : super(key: key);
