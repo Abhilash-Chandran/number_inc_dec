@@ -3,6 +3,7 @@
 * increased test coverage.
 * fixed lot of typo errors in documentation and code.
 * Added `enable` and `style` attribute to the widgets.
+* Replace deprecated WhiteListingTextFormatter with FilteringTextInputFormatter.
 
 ## [0.6.0+3] - 02August2020
 
@@ -16,7 +17,7 @@
 
 ## [0.6.0+2] - 24June2020
 
-* Added 5 different preffabed widgets for ease of use and  as example.
+* Added 5 different prefabbed widgets for ease of use and  as example.
 
 * Added scale factors for width and height.
 
