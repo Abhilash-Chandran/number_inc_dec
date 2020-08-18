@@ -14,10 +14,17 @@ Future<void> main(FutureOr<void> testMain()) async {
 Future<void> loadAppFonts() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   final fontLoader = FontLoader('Roboto');
+  var fontData;
+  if (p.style == p.Style.windows) {
+    fontData = File(p.absolute('fonts', 'Roboto-Regular.ttf'))
+        .readAsBytes()
+        .then((bytes) => ByteData.view(Uint8List.fromList(bytes).buffer));
+  } else {
+    fontData = File(p.absolute('test', 'fonts', 'Roboto-Regular.ttf'))
+        .readAsBytes()
+        .then((bytes) => ByteData.view(Uint8List.fromList(bytes).buffer));
+  }
 
-  final fontData = File(p.absolute('fonts', 'Roboto-Regular.ttf'))
-      .readAsBytes()
-      .then((bytes) => ByteData.view(Uint8List.fromList(bytes).buffer));
   fontLoader.addFont(fontData);
   await fontLoader.load();
 }
