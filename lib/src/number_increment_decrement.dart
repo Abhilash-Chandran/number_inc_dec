@@ -66,6 +66,21 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// ```
   final FormFieldValidator<String> validator;
 
+  /// The [TextStyle] that will passed down to [TextFormField.style].
+  /// This is the style of the text being edited.
+  ///
+  /// For e.g following will make the numbers appear green.
+  /// ````dart
+  /// NumberInputPrefabbed.squaredButtons(
+  ///   controller: TextEditingController(),
+  ///   style: TextStyle(
+  ///         color: Colors.green,
+  ///         fontSize: 28,
+  ///   ),
+  /// );
+  /// ```
+  final TextStyle style;
+
   /// Decoration for the Increment Icon
   /// Defaults to a black border in the bottom.
   final Decoration incIconDecoration;
@@ -137,6 +152,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.numberFieldDecoration,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
+    this.style,
     this.incIcon = Icons.arrow_drop_up,
     this.decIcon = Icons.arrow_drop_down,
     this.fractionDigits = 2,
@@ -179,6 +195,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.numberFieldDecoration,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
+    this.style,
     this.incIcon = Icons.arrow_drop_up,
     this.decIcon = Icons.arrow_drop_down,
     this.fractionDigits = 2,
@@ -239,6 +256,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.numberFieldDecoration,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
+    this.style,
     this.incIcon = Icons.arrow_drop_up,
     this.decIcon = Icons.arrow_drop_down,
     this.fractionDigits = 2,
@@ -288,6 +306,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.autovalidate = false,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
+    this.style,
     this.incIcon = Icons.arrow_drop_up,
     this.decIcon = Icons.arrow_drop_down,
     this.fractionDigits = 2,
@@ -379,6 +398,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.autovalidate = false,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
+    this.style,
     this.incIcon = Icons.add,
     this.decIcon = Icons.remove,
     this.fractionDigits = 2,
@@ -483,6 +503,21 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// ```
   final FormFieldValidator<String> validator;
 
+  /// The [TextStyle] that will passed down to [TextFormField.style].
+  /// This is the style of the text being edited.
+  ///
+  /// For e.g following will make the numbers appear green.
+  /// ````dart
+  /// NumberInputPrefabbed.squaredButtons(
+  ///   controller: TextEditingController(),
+  ///   style: TextStyle(
+  ///         color: Colors.green,
+  ///         fontSize: 28,
+  ///   ),
+  /// );
+  /// ```
+  final TextStyle style;
+
   /// Decoration for the Increment Icon
   /// Defaults to a black border in the bottom.
   final Decoration incIconDecoration;
@@ -554,6 +589,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
     this.numberFieldDecoration,
     this.widgetContainerDecoration,
     this.validator,
+    this.style,
     this.incIcon = Icons.arrow_drop_up,
     this.decIcon = Icons.arrow_drop_down,
     this.fractionDigits = 2,
@@ -625,6 +661,7 @@ class _NumberInputWithIncrementDecrementState
               flex: 1,
               child: TextFormField(
                 validator: widget.validator ?? _minMaxValidator,
+                style: widget.style,
                 textAlign: TextAlign.center,
                 autovalidate: widget.autovalidate,
                 decoration: widget.numberFieldDecoration ??
