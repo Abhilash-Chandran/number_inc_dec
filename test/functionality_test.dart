@@ -319,4 +319,43 @@ void main() {
     expect(find.widgetWithText(TextFormField, '-1'), findsNothing);
     expect(find.widgetWithText(TextFormField, '1'), findsNothing);
   });
+
+  testWidgets('Test enable as false on prefabbed widget',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: NumberInputPrefabbed.roundedEdgeButtons(
+            controller: TextEditingController(),
+            enabled: false,
+          ),
+        ),
+      ),
+    );
+    // ensure default value is 0.00 is not set
+    final defaultNumber = find.widgetWithText(TextFormField, '0.00');
+    expect(defaultNumber, findsNothing);
+
+    // ensure default value is 0.00 is not set
+    final defaultSetNumber = find.widgetWithText(TextFormField, '0');
+    expect(defaultSetNumber, findsOneWidget);
+    // tap increment button once and ensure it works
+    await tester.tap(find.byIcon(Icons.arrow_drop_up));
+    await tester.pump();
+    await tester.tap(find.byIcon(Icons.arrow_drop_up));
+    await tester.pump();
+    expect(find.widgetWithText(TextFormField, '0'), findsOneWidget);
+    expect(find.widgetWithText(TextFormField, '1'), findsNothing);
+
+    // tap decrement button two times and ensure it works
+    final decrementButton = find.byIcon(Icons.arrow_drop_down);
+    await tester.tap(decrementButton);
+    await tester.pump();
+    await tester.tap(decrementButton);
+    await tester.pump();
+    expect(find.widgetWithText(TextFormField, '0'), findsOneWidget);
+    // ensure no widget has 0 as values
+    expect(find.widgetWithText(TextFormField, '-1'), findsNothing);
+    expect(find.widgetWithText(TextFormField, '1'), findsNothing);
+  });
 }
