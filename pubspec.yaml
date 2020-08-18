@@ -12,13 +12,14 @@ dependencies:
 
 dev_dependencies:
   flutter_test:
-    sdk: flutter
+    sdk: flutter  
+  path: ^1.7.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
-flutter:
+flutter:  
   # To add assets to your package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -48,3 +49,5 @@ flutter:
   #
   # For details regarding fonts in packages, see
   # https://flutter.dev/custom-fonts/#from-packages
+  ## Only for the sake of testing and will be used only there.     
+  uses-material-design: true

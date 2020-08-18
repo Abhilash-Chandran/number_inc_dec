@@ -352,4 +352,51 @@ void main() {
         matchesGoldenFile(
             'goldens/prefabbed_leafy_orange_numbderdecoration_appearance.png'));
   });
+
+  testWidgets('Test style on Prefabbed widget', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: RepaintBoundary(
+              child: Material(
+                child: NumberInputPrefabbed.squaredButtons(
+                  controller: TextEditingController(),
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 32,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await expectLater(find.byType(NumberInputPrefabbed),
+        matchesGoldenFile('goldens/prefabbed_with_style.png'));
+  });
+  testWidgets('Test style on regular widget', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: RepaintBoundary(
+              child: Material(
+                child: NumberInputWithIncrementDecrement(
+                  controller: TextEditingController(),
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 42,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await expectLater(find.byType(NumberInputWithIncrementDecrement),
+        matchesGoldenFile('goldens/regular_widget_with_style.png'));
+  });
 }
