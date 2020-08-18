@@ -9,6 +9,12 @@ import 'package:flutter/services.dart';
 typedef void DiffIncDecCallBack(num newValue);
 
 class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
+  /// Key to be used for this widget.
+  final Key key;
+
+  /// Whether the user is able to interact or not
+  final bool enabled;
+
   /// Provide a custom controller.
   final TextEditingController controller;
 
@@ -30,7 +36,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// Initial value for the number input field. Defaults to zero.
   final num initialValue;
 
-  /// Decideds if the field only accepts integer values.
+  /// Decides if the field only accepts integer values.
   /// Defaults to true.
   final bool isInt;
 
@@ -60,6 +66,21 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// ```
   final FormFieldValidator<String> validator;
 
+  /// The [TextStyle] that will passed down to [TextFormField.style].
+  /// This is the style of the text being edited.
+  ///
+  /// For e.g following will make the numbers appear green.
+  /// ````dart
+  /// NumberInputPrefabbed.squaredButtons(
+  ///   controller: TextEditingController(),
+  ///   style: TextStyle(
+  ///         color: Colors.green,
+  ///         fontSize: 28,
+  ///   ),
+  /// );
+  /// ```
+  final TextStyle style;
+
   /// Decoration for the Increment Icon
   /// Defaults to a black border in the bottom.
   final Decoration incIconDecoration;
@@ -68,18 +89,18 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// Defaults to null;
   final Decoration decIconDecoration;
 
-  /// Icon to be used for Incrment button.
+  /// Icon to be used for Increment button.
   final IconData incIcon;
 
-  /// Icon size to be used for Incrment button.
+  /// Icon size to be used for Increment button.
   /// Defaults to size defined in IconTheme
   final double incIconSize;
 
-  /// Icon color to be used for Incrment button.
+  /// Icon color to be used for Increment button.
   /// Defaults to color defined in IconTheme
   final Color incIconColor;
 
-  /// A call back function to be called on succesful increment.
+  /// A call back function to be called on successful increment.
   /// This will not called if the internal validators fail.
   /// It of type  [DiffIncDecCallBack].
   final DiffIncDecCallBack onIncrement;
@@ -87,7 +108,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// Icon to be used for Decrement button.
   final IconData decIcon;
 
-  /// Icon size to be used for Decrment button.
+  /// Icon size to be used for Decrement button.
   /// Defaults to size defined in IconTheme
   final double decIconSize;
 
@@ -95,7 +116,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// Defaults to color defined in IconTheme
   final Color decIconColor;
 
-  /// A call back function to be called on succesful decrement.
+  /// A call back function to be called on successful decrement.
   /// This will not called if the internal validators fail.
   /// It of type  [DiffIncDecCallBack].
   final DiffIncDecCallBack onDecrement;
@@ -119,6 +140,8 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
 
   NumberInputPrefabbed.squaredButtons({
     @required this.controller,
+    this.key,
+    this.enabled = true,
     this.buttonArrangement = ButtonArrangement.rightEnd,
     this.min = -2,
     this.max = double.infinity,
@@ -129,6 +152,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.numberFieldDecoration,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
+    this.style,
     this.incIcon = Icons.arrow_drop_up,
     this.decIcon = Icons.arrow_drop_down,
     this.fractionDigits = 2,
@@ -159,6 +183,8 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
 
   NumberInputPrefabbed.leafyButtons({
     @required this.controller,
+    this.key,
+    this.enabled = true,
     this.buttonArrangement = ButtonArrangement.rightEnd,
     this.min = 0,
     this.max = double.infinity,
@@ -169,6 +195,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.numberFieldDecoration,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
+    this.style,
     this.incIcon = Icons.arrow_drop_up,
     this.decIcon = Icons.arrow_drop_down,
     this.fractionDigits = 2,
@@ -217,6 +244,8 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
 
   NumberInputPrefabbed.directionalButtons({
     @required this.controller,
+    this.key,
+    this.enabled = true,
     this.buttonArrangement = ButtonArrangement.rightEnd,
     this.min = 0,
     this.max = double.infinity,
@@ -227,6 +256,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.numberFieldDecoration,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
+    this.style,
     this.incIcon = Icons.arrow_drop_up,
     this.decIcon = Icons.arrow_drop_down,
     this.fractionDigits = 2,
@@ -265,6 +295,8 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
 
   NumberInputPrefabbed.roundedEdgeButtons({
     @required this.controller,
+    this.key,
+    this.enabled = true,
     this.buttonArrangement = ButtonArrangement.rightEnd,
     this.min = 0,
     this.max = double.infinity,
@@ -274,6 +306,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.autovalidate = false,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
+    this.style,
     this.incIcon = Icons.arrow_drop_up,
     this.decIcon = Icons.arrow_drop_down,
     this.fractionDigits = 2,
@@ -354,6 +387,8 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
         );
   NumberInputPrefabbed.roundedButtons({
     @required this.controller,
+    this.key,
+    this.enabled = true,
     this.buttonArrangement = ButtonArrangement.rightEnd,
     this.min = 0,
     this.max = double.infinity,
@@ -363,6 +398,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.autovalidate = false,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
+    this.style,
     this.incIcon = Icons.add,
     this.decIcon = Icons.remove,
     this.fractionDigits = 2,
@@ -410,6 +446,12 @@ enum ButtonArrangement {
 }
 
 class NumberInputWithIncrementDecrement extends StatefulWidget {
+  /// Key to be used for this widget.
+  final Key key;
+
+  /// Whether the user is able to interact or not
+  final bool enabled;
+
   /// Provide a custom controller.
   final TextEditingController controller;
 
@@ -431,7 +473,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// Initial value for the number input field. Defaults to zero.
   final num initialValue;
 
-  /// Decideds if the field only accepts integer values.
+  /// Decides if the field only accepts integer values.
   /// Defaults to true.
   final bool isInt;
 
@@ -461,6 +503,21 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// ```
   final FormFieldValidator<String> validator;
 
+  /// The [TextStyle] that will passed down to [TextFormField.style].
+  /// This is the style of the text being edited.
+  ///
+  /// For e.g following will make the numbers appear green.
+  /// ````dart
+  /// NumberInputPrefabbed.squaredButtons(
+  ///   controller: TextEditingController(),
+  ///   style: TextStyle(
+  ///         color: Colors.green,
+  ///         fontSize: 28,
+  ///   ),
+  /// );
+  /// ```
+  final TextStyle style;
+
   /// Decoration for the Increment Icon
   /// Defaults to a black border in the bottom.
   final Decoration incIconDecoration;
@@ -469,25 +526,25 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// Defaults to null;
   final Decoration decIconDecoration;
 
-  /// Icon to be used for Incrment button.
+  /// Icon to be used for Increment button.
   final IconData incIcon;
 
-  /// Icon size to be used for Incrment button.
+  /// Icon size to be used for Increment button.
   /// Defaults to size defined in IconTheme
   final double incIconSize;
 
-  /// Icon color to be used for Incrment button.
+  /// Icon color to be used for Increment button.
   /// Defaults to color defined in IconTheme
   final Color incIconColor;
 
-  /// A call back function to be called on successfull increment.
+  /// A call back function to be called on successful increment.
   /// This will not be called if the internal validators fail.
   final DiffIncDecCallBack onIncrement;
 
   /// Icon to be used for Decrement button.
   final IconData decIcon;
 
-  /// Icon size to be used for Decrment button.
+  /// Icon size to be used for Decrement button.
   /// Defaults to size defined in IconTheme
   final double decIconSize;
 
@@ -495,7 +552,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// Defaults to color defined in IconTheme
   final Color decIconColor;
 
-  /// A call back function to be called on successfulll decrement.
+  /// A call back function to be called on successful decrement.
   /// This will not be called if the internal validators fail.
   final DiffIncDecCallBack onDecrement;
 
@@ -520,6 +577,8 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   final Color incDecBgColor;
   NumberInputWithIncrementDecrement({
     @required this.controller,
+    this.key,
+    this.enabled = true,
     this.buttonArrangement = ButtonArrangement.rightEnd,
     this.min = 0,
     this.max = double.infinity,
@@ -530,6 +589,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
     this.numberFieldDecoration,
     this.widgetContainerDecoration,
     this.validator,
+    this.style,
     this.incIcon = Icons.arrow_drop_up,
     this.decIcon = Icons.arrow_drop_down,
     this.fractionDigits = 2,
@@ -601,6 +661,7 @@ class _NumberInputWithIncrementDecrementState
               flex: 1,
               child: TextFormField(
                 validator: widget.validator ?? _minMaxValidator,
+                style: widget.style,
                 textAlign: TextAlign.center,
                 autovalidate: widget.autovalidate,
                 decoration: widget.numberFieldDecoration ??
@@ -616,8 +677,8 @@ class _NumberInputWithIncrementDecrementState
                 ),
                 inputFormatters: <TextInputFormatter>[
                   widget.isInt
-                      ? WhitelistingTextInputFormatter.digitsOnly
-                      : WhitelistingTextInputFormatter(
+                      ? FilteringTextInputFormatter.digitsOnly
+                      : FilteringTextInputFormatter.allow(
                           RegExp("[0-9.]"),
                         )
                 ],
