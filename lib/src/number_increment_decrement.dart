@@ -628,8 +628,8 @@ class _NumberInputWithIncrementDecrementState
                 ),
                 inputFormatters: <TextInputFormatter>[
                   widget.isInt
-                      ? WhitelistingTextInputFormatter.digitsOnly
-                      : WhitelistingTextInputFormatter(
+                      ? FilteringTextInputFormatter.digitsOnly
+                      : FilteringTextInputFormatter.allow(
                           RegExp("[0-9.]"),
                         )
                 ],
