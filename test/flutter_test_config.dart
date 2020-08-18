@@ -15,7 +15,7 @@ Future<void> loadAppFonts() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   final fontLoader = FontLoader('Roboto');
 
-  final fontData = File(p.join('fonts', 'Roboto-regular.ttf'))
+  final fontData = File(p.join('fonts', 'Roboto-Regular.ttf'))
       .readAsBytes()
       .then((bytes) => ByteData.view(Uint8List.fromList(bytes).buffer));
   fontLoader.addFont(fontData);
