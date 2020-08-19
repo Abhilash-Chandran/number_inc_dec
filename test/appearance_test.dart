@@ -107,6 +107,75 @@ void main() {
     await expectLater(find.byType(NumberInputPrefabbed),
         matchesGoldenFile('goldens/prefabbed_rounded_edge_buttons.png'));
   });
+  testWidgets('Test RoundedEdgeButtons leftEnd appearance',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: RepaintBoundary(
+              child: Material(
+                child: NumberInputPrefabbed.roundedEdgeButtons(
+                  controller: TextEditingController(),
+                  buttonArrangement: ButtonArrangement.leftEnd,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await expectLater(
+        find.byType(NumberInputPrefabbed),
+        matchesGoldenFile(
+            'goldens/prefabbed_rounded_edge_left_end_buttons.png'));
+  });
+  testWidgets('Test RoundedEdgeButtons incLeftDecRight appearance',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: RepaintBoundary(
+              child: Material(
+                child: NumberInputPrefabbed.roundedEdgeButtons(
+                  controller: TextEditingController(),
+                  buttonArrangement: ButtonArrangement.incLeftDecRight,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await expectLater(
+        find.byType(NumberInputPrefabbed),
+        matchesGoldenFile(
+            'goldens/prefabbed_rounded_edge_incLeftDecRight_buttons.png'));
+  });
+  testWidgets('Test RoundedEdgeButtons incRightDecLeft appearance',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: RepaintBoundary(
+              child: Material(
+                child: NumberInputPrefabbed.roundedEdgeButtons(
+                  controller: TextEditingController(),
+                  buttonArrangement: ButtonArrangement.incRightDecLeft,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await expectLater(
+        find.byType(NumberInputPrefabbed),
+        matchesGoldenFile(
+            'goldens/prefabbed_rounded_edge_incRightDecLeft_buttons.png'));
+  });
   testWidgets('Test Squared Buttons appearance', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
@@ -145,6 +214,28 @@ void main() {
     await expectLater(find.byType(NumberInputPrefabbed),
         matchesGoldenFile('goldens/prefabbed_leafy_appearance.png'));
   });
+  testWidgets('Test Prefabbed Leafy Appearance leftEnd',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: RepaintBoundary(
+              child: Material(
+                child: NumberInputPrefabbed.leafyButtons(
+                  controller: TextEditingController(),
+                  buttonArrangement: ButtonArrangement.leftEnd,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await expectLater(find.byType(NumberInputPrefabbed),
+        matchesGoldenFile('goldens/prefabbed_leafy_leftEnd_appearance.png'));
+  });
+
   testWidgets('Test Prefabbed Directional button Appearance',
       (WidgetTester tester) async {
     await tester.pumpWidget(
