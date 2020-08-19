@@ -314,6 +314,50 @@ void main() {
     await expectLater(find.byType(NumberInputWithIncrementDecrement),
         matchesGoldenFile('goldens/incr_decr_icon_decoration_appearance.png'));
   });
+
+  testWidgets('Test Regular Widget incLeftDecRight',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: RepaintBoundary(
+              child: Material(
+                child: NumberInputWithIncrementDecrement(
+                  controller: TextEditingController(),
+                  buttonArrangement: ButtonArrangement.incLeftDecRight,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await expectLater(find.byType(NumberInputWithIncrementDecrement),
+        matchesGoldenFile('goldens/regular_incLeftDecRight.png'));
+  });
+
+  testWidgets('Test Regular Widget incRightDecLeft',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: RepaintBoundary(
+              child: Material(
+                child: NumberInputWithIncrementDecrement(
+                  controller: TextEditingController(),
+                  buttonArrangement: ButtonArrangement.incRightDecLeft,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await expectLater(find.byType(NumberInputWithIncrementDecrement),
+        matchesGoldenFile('goldens/regular_incRightDecLeft.png'));
+  });
   testWidgets('Test Increment Icon Decrement Icons size setting',
       (WidgetTester tester) async {
     await tester.pumpWidget(
