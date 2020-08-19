@@ -103,9 +103,18 @@ class MyApp extends StatelessWidget {
                           'Newly decremented value is $newlyDecrementedValue');
                     },
                   ),
+                  Text('Disable the field.'),
                   NumberInputWithIncrementDecrement(
                     controller: TextEditingController(),
                     enabled: false,
+                  ),
+                  Text('Change style of editable text.'),
+                  NumberInputWithIncrementDecrement(
+                    controller: TextEditingController(),
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 32,
+                    ),
                   )
                 ],
               ),

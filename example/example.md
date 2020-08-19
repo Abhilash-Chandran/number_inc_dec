@@ -402,6 +402,30 @@ class MyApp extends StatelessWidget {
                 Example8(),
                 Text('Customized Icon shape and size.'),
                 Example9(),
+                Text('Passing callbacks onIncrment and onDecrement'),
+                NumberInputWithIncrementDecrement(
+                  controller: TextEditingController(),
+                  onIncrement: (num newlyIncrementedValue) {
+                    print('Newly incrmented value is $newlyIncrementedValue');
+                  },
+                  onDecrement: (num newlyDecrementedValue) {
+                    print(
+                        'Newly decremented value is $newlyDecrementedValue');
+                  },
+                ),
+                Text('Disable the field.'),
+                NumberInputWithIncrementDecrement(
+                  controller: TextEditingController(),
+                  enabled: false,
+                ),
+                Text('Change style of editable text.'),
+                NumberInputWithIncrementDecrement(
+                  controller: TextEditingController(),
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 32,
+                  ),
+                )
               ],
             ),
           ),
