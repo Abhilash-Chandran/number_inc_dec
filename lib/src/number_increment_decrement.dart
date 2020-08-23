@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 /// The callback will be passed the new value.
 /// The same can be read as a string from [NumberInputWithIncrementDecrement.controller].
 typedef void DiffIncDecCallBack(num newValue);
+typedef void ValueCallBack(num newValue);
 
 class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// Key to be used for this widget.
@@ -105,6 +106,10 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// It of type  [DiffIncDecCallBack].
   final DiffIncDecCallBack onIncrement;
 
+  /// A call back function to be called on successful submit.
+  /// This will not called if the internal validators fail.
+  final ValueCallBack onSubmitted;
+
   /// Icon to be used for Decrement button.
   final IconData decIcon;
 
@@ -164,6 +169,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.incIconColor,
     this.onDecrement,
     this.onIncrement,
+    this.onSubmitted,
     this.separateIcons = false,
     Color incDecBgColor = Colors.lightGreen,
   })  : incIconDecoration = BoxDecoration(
@@ -207,6 +213,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.incIconColor,
     this.onDecrement,
     this.onIncrement,
+    this.onSubmitted,
     this.separateIcons = true,
     Color incDecBgColor = Colors.lightGreen,
   })  : incIconDecoration = BoxDecoration(
@@ -268,6 +275,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.incIconColor,
     this.onDecrement,
     this.onIncrement,
+    this.onSubmitted,
     this.separateIcons = true,
     Color incDecBgColor = Colors.lightGreen,
   })  : incIconDecoration = BoxDecoration(
@@ -318,6 +326,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.incIconColor,
     this.onDecrement,
     this.onIncrement,
+    this.onSubmitted,
     this.separateIcons = true,
     Color incDecBgColor = Colors.lightGreen,
   })  : numberFieldDecoration = buttonArrangement ==
@@ -410,6 +419,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.incIconColor,
     this.onDecrement,
     this.onIncrement,
+    this.onSubmitted,
     this.separateIcons = true,
     this.numberFieldDecoration,
     Color incDecBgColor = Colors.lightGreen,
@@ -541,6 +551,10 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// This will not be called if the internal validators fail.
   final DiffIncDecCallBack onIncrement;
 
+  /// A call back function to be called on successful submit.
+  /// This will not be called if the internal validators fail.
+  final ValueCallBack onSubmitted;
+
   /// Icon to be used for Decrement button.
   final IconData decIcon;
 
@@ -601,6 +615,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
     this.incIconColor,
     this.onDecrement,
     this.onIncrement,
+    this.onSubmitted,
     this.separateIcons = false,
     this.decIconDecoration,
     this.incIconDecoration,
@@ -683,6 +698,24 @@ class _NumberInputWithIncrementDecrementState
                           RegExp("[0-9.]"),
                         )
                 ],
+                onFieldSubmitted: (value) {
+                  if (this.widget.onSubmitted != null) {
+                    num newVal;
+                    try {
+                      newVal = this.widget.isInt
+                          ? int.parse(value)
+                          : double.parse(value);
+                    } catch (e) {
+                      print("cannot convert $value into a number, e=$e");
+                      return;
+                    }
+                    // Auto keep new value inside min max
+                    newVal = newVal > widget.min ? newVal : widget.min;
+                    newVal = newVal < widget.max ? newVal : widget.max;
+
+                    this.widget.onSubmitted(newVal);
+                  }
+                }
               ),
             ),
             if (widget.buttonArrangement == ButtonArrangement.incLeftDecRight)

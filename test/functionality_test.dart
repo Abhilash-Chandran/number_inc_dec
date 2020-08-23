@@ -358,4 +358,58 @@ void main() {
     expect(find.widgetWithText(TextFormField, '-1'), findsNothing);
     expect(find.widgetWithText(TextFormField, '1'), findsNothing);
   });
+
+  testWidgets('Test onSubmitted callback', (WidgetTester tester) async {
+    double valueSubmitted = 20;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: NumberInputWithIncrementDecrement(
+            key: Key("testInput"),
+            controller: TextEditingController(),
+            isInt: false,
+            incDecFactor: 0.4,
+            min: 4.5,
+            max: 44.5,
+            initialValue: 10.0,
+            onSubmitted: (newValue) {
+              valueSubmitted = newValue;
+            },
+          ),
+        ),
+      ),
+    );
+    // ensure can find the widget
+    expect(find.byKey(Key("testInput")), findsOneWidget);
+    
+    // ensure default value is 10.00 (fractionDigits defaults to 2)
+    final defaultNumber = find.widgetWithText(TextFormField, '10.00');
+    expect(defaultNumber, findsOneWidget);
+
+    // tap increment button once and ensure onSubmitted is NOT called
+    await tester.tap(find.byIcon(Icons.arrow_drop_up));
+    await tester.pump();
+    expect(valueSubmitted, 20);
+
+    // entering a value and hitting done should trigger callback
+    await tester.enterText(find.byKey(Key("testInput")), "20.00");
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    expect(valueSubmitted, 20);
+
+    // entering a value out of range should not be allowed and corrects to 
+    // largest allowed
+    await tester.enterText(find.byKey(Key("testInput")), "500.0");
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    expect(valueSubmitted, 44.5);
+
+    // entering a value out of range should not be allowed and corrects to 
+    // smallest allowed
+    await tester.enterText(find.byKey(Key("testInput")), "1.0");
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    expect(valueSubmitted, 4.5);
+
+  });
 }
