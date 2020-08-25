@@ -1,3 +1,9 @@
+
+## [0.6.6] - 25August2020
+* Improve code coverage
+* Add missing documentation
+* Merged pull request which enables `onSubmitted` for the widget.
+     * Thank you [Andy Bulka](https://github.com/abulka) 🥇 😄.
 ## [0.6.5] - 19August2020
 
 * increased test coverage.
