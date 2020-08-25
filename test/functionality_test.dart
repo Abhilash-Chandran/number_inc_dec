@@ -359,8 +359,9 @@ void main() {
     expect(find.widgetWithText(TextFormField, '1'), findsNothing);
   });
 
-  testWidgets('Test onSubmitted callback', (WidgetTester tester) async {
-    double valueSubmitted = 20;
+  testWidgets('Test onSubmitted callback for double',
+      (WidgetTester tester) async {
+    double valueSubmitted = 15;
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
@@ -389,7 +390,7 @@ void main() {
     // tap increment button once and ensure onSubmitted is NOT called
     await tester.tap(find.byIcon(Icons.arrow_drop_up));
     await tester.pump();
-    expect(valueSubmitted, 20);
+    expect(valueSubmitted, 15);
 
     // entering a value and hitting done should trigger callback
     await tester.enterText(find.byKey(Key("testInput")), "20.00");
@@ -410,5 +411,65 @@ void main() {
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pump();
     expect(valueSubmitted, 4.5);
+  });
+  testWidgets('Test onSubmitted callback for int', (WidgetTester tester) async {
+    int valueSubmitted = 6;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: NumberInputWithIncrementDecrement(
+            key: Key("testInput"),
+            controller: TextEditingController(),
+            isInt: true,
+            incDecFactor: 2,
+            min: 4,
+            max: 8,
+            initialValue: 5,
+            onSubmitted: (newValue) {
+              valueSubmitted = newValue;
+            },
+          ),
+        ),
+      ),
+    );
+    // ensure can find the widget
+    expect(find.byKey(Key("testInput")), findsOneWidget);
+
+    // ensure default value is 5
+    final defaultNumber = find.widgetWithText(TextFormField, '5');
+    expect(defaultNumber, findsOneWidget);
+
+    // tap increment button once and ensure onSubmitted is NOT called
+    await tester.tap(find.byIcon(Icons.arrow_drop_up));
+    await tester.pump();
+    expect(valueSubmitted, 6);
+
+    // entering a value and hitting done should trigger callback
+    await tester.enterText(find.byKey(Key("testInput")), "7");
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    expect(valueSubmitted, 7);
+
+    // entering a value out of range should not be allowed and corrects to
+    // largest allowed
+    await tester.enterText(find.byKey(Key("testInput")), "500");
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    expect(valueSubmitted, 8);
+
+    // entering a value out of range should not be allowed and corrects to
+    // smallest allowed
+    await tester.enterText(find.byKey(Key("testInput")), "1");
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    expect(valueSubmitted, 4);
+
+    // following needs to be un commented once the relevant issue is solved.
+    // tap increment button once and ensure onSubmitted is NOT called
+    // await tester.tap(find.byIcon(Icons.arrow_drop_up));
+    // await tester.pump();
+    // expect(valueSubmitted, 4);
+    // final updatedNumber = find.widgetWithText(TextFormField, '3');
+    // expect(updatedNumber, findsOneWidget);
   });
 }

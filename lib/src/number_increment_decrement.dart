@@ -709,7 +709,6 @@ class _NumberInputWithIncrementDecrementState
                             ? int.parse(value)
                             : double.parse(value);
                       } catch (e) {
-                        print("cannot convert $value into a number, e=$e");
                         return;
                       }
                       // Auto keep new value inside min max

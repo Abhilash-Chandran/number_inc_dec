@@ -115,7 +115,20 @@ class MyApp extends StatelessWidget {
                       color: Colors.green,
                       fontSize: 32,
                     ),
-                  )
+                  ),
+                  Text('OnFieldSubmitted callback'),
+                  NumberInputWithIncrementDecrement(
+                    key: Key("testInput"),
+                    controller: TextEditingController(),
+                    isInt: true,
+                    incDecFactor: 2,
+                    min: 4,
+                    max: 8,
+                    initialValue: 5,
+                    onSubmitted: (newValue) {
+                      print('OnSubmitted value: $newValue');
+                    },
+                  ),
                 ],
               ),
             ),
