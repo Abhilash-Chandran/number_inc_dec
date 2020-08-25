@@ -633,6 +633,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
 class _NumberInputWithIncrementDecrementState
     extends State<NumberInputWithIncrementDecrement> {
   TextEditingController _controller;
+  final _formFieldKey = GlobalKey<FormFieldState>();
 
   @override
   void initState() {
@@ -645,9 +646,8 @@ class _NumberInputWithIncrementDecrementState
   }
 
   String _minMaxValidator(String value) {
-    return value != null &&
-            value.isNotEmpty &&
-            (num.parse(value) < widget.min || num.parse(value) > widget.max)
+    num parsed = num.tryParse(value);
+    return parsed != null && (parsed < widget.min || parsed > widget.max)
         ? 'Value should be between ${widget.min} and ${widget.max}'
         : null;
   }
@@ -678,6 +678,7 @@ class _NumberInputWithIncrementDecrementState
             Expanded(
               flex: 1,
               child: TextFormField(
+                  key: _formFieldKey,
                   validator: widget.validator ?? _minMaxValidator,
                   style: widget.style,
                   enabled: widget.enabled,
@@ -703,18 +704,9 @@ class _NumberInputWithIncrementDecrementState
                   ],
                   onFieldSubmitted: (value) {
                     if (this.widget.onSubmitted != null) {
-                      num newVal;
-                      try {
-                        newVal = this.widget.isInt
-                            ? int.parse(value)
-                            : double.parse(value);
-                      } catch (e) {
-                        return;
-                      }
+                      num newVal = _tryParse(value);
                       // Auto keep new value inside min max
-                      newVal = newVal > widget.min ? newVal : widget.min;
-                      newVal = newVal < widget.max ? newVal : widget.max;
-
+                      newVal = _clampAndUpdate(newVal);
                       this.widget.onSubmitted(newVal);
                     }
                   }),
@@ -770,22 +762,13 @@ class _NumberInputWithIncrementDecrementState
         onTap: !widget.enabled
             ? null
             : () {
-                var currentValue = widget.isInt
-                    ? int.parse(_controller.text)
-                    : double.parse(_controller.text);
-                setState(() {
-                  currentValue = currentValue - widget.incDecFactor;
-                  currentValue =
-                      currentValue > widget.min ? currentValue : widget.min;
-                  _controller.text = widget.isInt
-                      ? currentValue.toString()
-                      : currentValue.toStringAsFixed(
-                          widget.fractionDigits); // decrementing value
-                  // decrement callback
-                  if (widget.onDecrement != null) {
-                    widget.onDecrement(currentValue);
-                  }
-                });
+                var currentValue = _tryParse(_controller.text);
+                currentValue = currentValue - widget.incDecFactor;
+                currentValue = _clampAndUpdate(currentValue);
+                // decrement callback
+                if (widget.onDecrement != null) {
+                  widget.onDecrement(currentValue);
+                }
               },
       ),
     );
@@ -815,24 +798,38 @@ class _NumberInputWithIncrementDecrementState
         onTap: !widget.enabled
             ? null
             : () {
-                var currentValue = widget.isInt
-                    ? int.parse(_controller.text)
-                    : double.parse(_controller.text);
-                setState(() {
-                  currentValue = currentValue + widget.incDecFactor;
-                  currentValue =
-                      currentValue < widget.max ? currentValue : widget.max;
-                  _controller.text = widget.isInt
-                      ? currentValue.toString()
-                      : currentValue.toStringAsFixed(
-                          widget.fractionDigits); // incrementing value
-                  // increment call back.
-                  if (widget.onIncrement != null) {
-                    widget.onIncrement(currentValue);
-                  }
-                });
+                var currentValue = _tryParse(_controller.text);
+                currentValue = currentValue + widget.incDecFactor;
+                currentValue = _clampAndUpdate(currentValue);
+                // decrement callback
+                if (widget.onIncrement != null) {
+                  widget.onIncrement(currentValue);
+                }
               },
       ),
     );
+  }
+
+  /// try to parse the given string to int or double depending on [widget.isInt].
+  num _tryParse(String value) {
+    var newValue = widget.isInt
+        ? int.tryParse(_controller.text)
+        : double.tryParse(_controller.text);
+
+    // if parsing failed invoke the validators registered for this field.
+    if (newValue == null) {
+      _formFieldKey.currentState.validate();
+    }
+    return newValue;
+  }
+
+  num _clampAndUpdate(var currentValue) {
+    setState(() {
+      currentValue = currentValue.clamp(widget.min, widget.max);
+      _controller.text = widget.isInt
+          ? currentValue.toString()
+          : currentValue.toStringAsFixed(widget.fractionDigits);
+    });
+    return currentValue;
   }
 }

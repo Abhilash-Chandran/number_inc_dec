@@ -466,10 +466,10 @@ void main() {
 
     // following needs to be un commented once the relevant issue is solved.
     // tap increment button once and ensure onSubmitted is NOT called
-    // await tester.tap(find.byIcon(Icons.arrow_drop_up));
-    // await tester.pump();
-    // expect(valueSubmitted, 4);
-    // final updatedNumber = find.widgetWithText(TextFormField, '3');
-    // expect(updatedNumber, findsOneWidget);
+    await tester.tap(find.byIcon(Icons.arrow_drop_up));
+    await tester.pump();
+    expect(valueSubmitted, 4);
+    final updatedNumber = find.widgetWithText(TextFormField, '6');
+    expect(updatedNumber, findsOneWidget);
   });
 }
