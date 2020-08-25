@@ -678,48 +678,47 @@ class _NumberInputWithIncrementDecrementState
             Expanded(
               flex: 1,
               child: TextFormField(
-                validator: widget.validator ?? _minMaxValidator,
-                style: widget.style,
-                enabled: widget.enabled,
-                textAlign: TextAlign.center,
-                autovalidate: widget.autovalidate,
-                decoration: widget.numberFieldDecoration ??
-                    InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                  validator: widget.validator ?? _minMaxValidator,
+                  style: widget.style,
+                  enabled: widget.enabled,
+                  textAlign: TextAlign.center,
+                  autovalidate: widget.autovalidate,
+                  decoration: widget.numberFieldDecoration ??
+                      InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
                       ),
-                    ),
-                controller: _controller,
-                keyboardType: TextInputType.numberWithOptions(
-                  decimal: !widget.isInt,
-                  signed: true,
-                ),
-                inputFormatters: <TextInputFormatter>[
-                  widget.isInt
-                      ? FilteringTextInputFormatter.digitsOnly
-                      : FilteringTextInputFormatter.allow(
-                          RegExp("[0-9.]"),
-                        )
-                ],
-                onFieldSubmitted: (value) {
-                  if (this.widget.onSubmitted != null) {
-                    num newVal;
-                    try {
-                      newVal = this.widget.isInt
-                          ? int.parse(value)
-                          : double.parse(value);
-                    } catch (e) {
-                      print("cannot convert $value into a number, e=$e");
-                      return;
-                    }
-                    // Auto keep new value inside min max
-                    newVal = newVal > widget.min ? newVal : widget.min;
-                    newVal = newVal < widget.max ? newVal : widget.max;
+                  controller: _controller,
+                  keyboardType: TextInputType.numberWithOptions(
+                    decimal: !widget.isInt,
+                    signed: true,
+                  ),
+                  inputFormatters: <TextInputFormatter>[
+                    widget.isInt
+                        ? FilteringTextInputFormatter.digitsOnly
+                        : FilteringTextInputFormatter.allow(
+                            RegExp("[0-9.]"),
+                          )
+                  ],
+                  onFieldSubmitted: (value) {
+                    if (this.widget.onSubmitted != null) {
+                      num newVal;
+                      try {
+                        newVal = this.widget.isInt
+                            ? int.parse(value)
+                            : double.parse(value);
+                      } catch (e) {
+                        print("cannot convert $value into a number, e=$e");
+                        return;
+                      }
+                      // Auto keep new value inside min max
+                      newVal = newVal > widget.min ? newVal : widget.min;
+                      newVal = newVal < widget.max ? newVal : widget.max;
 
-                    this.widget.onSubmitted(newVal);
-                  }
-                }
-              ),
+                      this.widget.onSubmitted(newVal);
+                    }
+                  }),
             ),
             if (widget.buttonArrangement == ButtonArrangement.incLeftDecRight)
               _buildDecrementButton(),
