@@ -381,7 +381,7 @@ void main() {
     );
     // ensure can find the widget
     expect(find.byKey(Key("testInput")), findsOneWidget);
-    
+
     // ensure default value is 10.00 (fractionDigits defaults to 2)
     final defaultNumber = find.widgetWithText(TextFormField, '10.00');
     expect(defaultNumber, findsOneWidget);
@@ -397,19 +397,18 @@ void main() {
     await tester.pump();
     expect(valueSubmitted, 20);
 
-    // entering a value out of range should not be allowed and corrects to 
+    // entering a value out of range should not be allowed and corrects to
     // largest allowed
     await tester.enterText(find.byKey(Key("testInput")), "500.0");
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pump();
     expect(valueSubmitted, 44.5);
 
-    // entering a value out of range should not be allowed and corrects to 
+    // entering a value out of range should not be allowed and corrects to
     // smallest allowed
     await tester.enterText(find.byKey(Key("testInput")), "1.0");
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pump();
     expect(valueSubmitted, 4.5);
-
   });
 }

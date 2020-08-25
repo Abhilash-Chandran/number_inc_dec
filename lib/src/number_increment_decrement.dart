@@ -7,6 +7,9 @@ import 'package:flutter/services.dart';
 /// The callback will be passed the new value.
 /// The same can be read as a string from [NumberInputWithIncrementDecrement.controller].
 typedef void DiffIncDecCallBack(num newValue);
+
+/// This is the expected function definition for the callbacks via onSubmitted.
+/// The callback will be passed the new value.
 typedef void ValueCallBack(num newValue);
 
 class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
