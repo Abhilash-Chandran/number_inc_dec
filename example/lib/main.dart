@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
                   Text('Setting minimum value -2 and maximum value 3'),
                   Example2(),
                   Divider(),
-                  Text('Using double values with incDecFator=0.35'),
+                  Text('Using double values with incDecFactor=0.35'),
                   Example3(),
                   Text('Prefabbed widget: Squared Buttons'),
                   NumberInputPrefabbed.squaredButtons(
@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
                   Example4(),
                   Text('Different border decoration'),
                   Example5(),
-                  Text('Different icons & formfield decoration'),
+                  Text('Different icons & FormField decoration'),
                   Example6(),
                   Text('Height scaled to 0.75'),
                   Example7(),
@@ -92,11 +92,12 @@ class MyApp extends StatelessWidget {
                   Example8(),
                   Text('Customized Icon shape and size.'),
                   Example9(),
-                  Text('Passing callbacks onIncrment and onDecrement'),
+                  Text('Passing callbacks onIncrement and onDecrement'),
                   NumberInputWithIncrementDecrement(
                     controller: TextEditingController(),
                     onIncrement: (num newlyIncrementedValue) {
-                      print('Newly incrmented value is $newlyIncrementedValue');
+                      print(
+                          'Newly incremented value is $newlyIncrementedValue');
                     },
                     onDecrement: (num newlyDecrementedValue) {
                       print(
@@ -277,6 +278,7 @@ class Example3 extends StatelessWidget {
       controller: TextEditingController(),
       isInt: false,
       incDecFactor: 0.35,
+      min: -1.4,
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:number_inc_dec/number_inc_dec.dart';
@@ -57,7 +59,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   final Decoration widgetContainerDecoration;
 
   /// validators for this field.
-  /// Defaults to [_NumberInputWithIncrementDecrementState._minMaxValidator] validator
+  /// Defaults to [_NumberInputWithIncrementDecrementState._defaultValidator] validator
   /// based on the values of [min] and [max] field.
   /// Note: These values default to [0] and [double.infinity] respectively.
   ///
@@ -503,7 +505,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   final Decoration widgetContainerDecoration;
 
   /// validators for this field.
-  /// Defaults to [_NumberInputWithIncrementDecrementState._minMaxValidator] validator
+  /// Defaults to [_NumberInputWithIncrementDecrementState._defaultValidator] validator
   /// based on the values of [min] and [max] field.
   /// Note: These values default to [0] and [double.infinity] respectively.
   ///
@@ -557,6 +559,10 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// A call back function to be called on successful submit.
   /// This will not be called if the internal validators fail.
   final ValueCallBack onSubmitted;
+
+  /// A call back function to be called every time the number is changed
+  /// manually. This will not be called if the internal validators fail.
+  final ValueCallBack onChanged;
 
   /// Icon to be used for Decrement button.
   final IconData decIcon;
@@ -619,6 +625,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
     this.onDecrement,
     this.onIncrement,
     this.onSubmitted,
+    this.onChanged,
     this.separateIcons = false,
     this.decIconDecoration,
     this.incIconDecoration,
@@ -634,6 +641,7 @@ class _NumberInputWithIncrementDecrementState
     extends State<NumberInputWithIncrementDecrement> {
   TextEditingController _controller;
   final _formFieldKey = GlobalKey<FormFieldState>();
+  Timer _debounceTimer;
 
   @override
   void initState() {
@@ -645,11 +653,54 @@ class _NumberInputWithIncrementDecrementState
         : widget.initialValue.toStringAsFixed(widget.fractionDigits);
   }
 
-  String _minMaxValidator(String value) {
+  @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    super.dispose();
+  }
+
+  void _onChanged(String newValue) {
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(Duration(milliseconds: 100), () {
+      var clamped = _clampAndUpdate(_tryParse(newValue));
+      if (widget.onChanged != null) {
+        widget.onChanged(clamped);
+      }
+    });
+  }
+
+  /// Handling decimal is tricky.
+  /// Instead set up a default validator which tries to parse and if it fails
+  /// raise an error.
+  List<TextInputFormatter> _digitFormatters() {
+    return <TextInputFormatter>[
+      widget.isInt
+          ? widget.min.isNegative
+              ? FilteringTextInputFormatter.allow(
+                  RegExp(r'^[-]?\d*$'),
+                  replacementString: widget.controller.text,
+                )
+              : FilteringTextInputFormatter.digitsOnly
+          : widget.min.isNegative
+              ? FilteringTextInputFormatter.allow(
+                  RegExp(r'^[-]?\d*[.]?\d*$'),
+                  replacementString: widget.controller.text,
+                )
+              : FilteringTextInputFormatter.allow(
+                  RegExp(r'^\d*[.]?\d*$'),
+                  replacementString: widget.controller.text,
+                ),
+    ];
+  }
+
+  String _defaultValidator(String value) {
     num parsed = num.tryParse(value);
-    return parsed != null && (parsed < widget.min || parsed > widget.max)
-        ? 'Value should be between ${widget.min} and ${widget.max}'
-        : null;
+    if (parsed == null) {
+      return '$value is invalid ${widget.isInt ? 'integer' : 'decimal'} value.';
+    } else if (parsed < widget.min || parsed > widget.max) {
+      return 'Value should be between ${widget.min} and ${widget.max}';
+    }
+    return null;
   }
 
   @override
@@ -679,7 +730,7 @@ class _NumberInputWithIncrementDecrementState
               flex: 1,
               child: TextFormField(
                   key: _formFieldKey,
-                  validator: widget.validator ?? _minMaxValidator,
+                  validator: widget.validator ?? _defaultValidator,
                   style: widget.style,
                   enabled: widget.enabled,
                   textAlign: TextAlign.center,
@@ -695,13 +746,8 @@ class _NumberInputWithIncrementDecrementState
                     decimal: !widget.isInt,
                     signed: true,
                   ),
-                  inputFormatters: <TextInputFormatter>[
-                    widget.isInt
-                        ? FilteringTextInputFormatter.digitsOnly
-                        : FilteringTextInputFormatter.allow(
-                            RegExp("[0-9.]"),
-                          )
-                  ],
+                  // inputFormatters: _digitFormatters(),
+                  onChanged: _onChanged,
                   onFieldSubmitted: (value) {
                     if (this.widget.onSubmitted != null) {
                       num newVal = _tryParse(value);
@@ -810,25 +856,21 @@ class _NumberInputWithIncrementDecrementState
     );
   }
 
-  /// try to parse the given string to int or double depending on [widget.isInt].
+  /// try to parse the given string into a number.
   num _tryParse(String value) {
-    var newValue = widget.isInt
-        ? int.tryParse(_controller.text)
-        : double.tryParse(_controller.text);
-
-    // if parsing failed invoke the validators registered for this field.
-    if (newValue == null) {
-      _formFieldKey.currentState.validate();
-    }
+    // Always validate.
+    _formFieldKey.currentState.validate();
+    var newValue = num.tryParse(value);
     return newValue;
   }
 
   num _clampAndUpdate(var currentValue) {
     setState(() {
-      currentValue = currentValue.clamp(widget.min, widget.max);
+      currentValue = currentValue?.clamp(widget.min, widget.max);
       _controller.text = widget.isInt
           ? currentValue.toString()
-          : currentValue.toStringAsFixed(widget.fractionDigits);
+          : currentValue.toStringAsFixed(widget.fractionDigits) ??
+              _controller.text;
     });
     return currentValue;
   }

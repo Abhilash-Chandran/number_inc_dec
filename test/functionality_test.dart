@@ -270,10 +270,10 @@ void main() {
       ),
     );
 
-    // ensure default value 7 is set
+    // ensure default value 1 is set
     final defaultSetNumber = find.widgetWithText(TextFormField, '1');
     expect(defaultSetNumber, findsOneWidget);
-    // tap increment button once and ensure it works
+    // enter number '0'
     await tester.enterText(find.byType(TextFormField), '0');
     await tester.pumpAndSettle();
     expect(find.widgetWithText(TextFormField, '0'), findsOneWidget);
