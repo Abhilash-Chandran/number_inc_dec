@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:number_inc_dec/number_inc_dec.dart';
@@ -283,13 +284,13 @@ void main() {
         find.widgetWithText(TextFormField, 'Value should be between 1 and 10'),
         findsNothing);
   });
-  testWidgets('Test empty field as invalid value', (WidgetTester tester) async {
+  testWidgets('Test integer empty field as invalid value',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
           body: NumberInputWithIncrementDecrement(
             controller: TextEditingController(),
-            autovalidate: false,
             initialValue: 1,
             min: 1,
             max: 10,
@@ -303,11 +304,47 @@ void main() {
     expect(defaultSetNumber, findsOneWidget);
     // enter number '0'
     await tester.enterText(find.byType(TextFormField), '');
-    await tester.pump(Duration(milliseconds: 750));
+    await tester.pumpAndSettle(Duration(milliseconds: 750));
     expect(find.widgetWithText(TextFormField, '0'), findsNothing);
     // expect no validation error is shown.
-    expect(find.widgetWithText(TextFormField, ' is an invalid integer'),
-        findsNothing);
+    expect(find.widgetWithText(TextFormField, ' is an invalid integer value.'),
+        findsOneWidget);
+  });
+
+  testWidgets('Test decimal empty field as invalid value',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: NumberInputWithIncrementDecrement(
+            key: ValueKey('testInput'),
+            controller: TextEditingController(),
+            isInt: false,
+            initialValue: 1.0,
+            min: 1.0,
+            max: 10.0,
+          ),
+        ),
+      ),
+    );
+
+    // ensure default value 1 is set
+    final defaultSetNumber = find.widgetWithText(TextFormField, '1.00');
+    expect(defaultSetNumber, findsOneWidget);
+
+    // enter invalid number '0.00.0'
+    await tester.enterText(find.byType(TextFormField), '0.00.0');
+    await tester.pumpAndSettle(Duration(milliseconds: 750));
+    await expectLater(
+      find.byType(NumberInputWithIncrementDecrement),
+      matchesGoldenFile('goldens/invalid_decimal.png'),
+    );
+    expect(find.widgetWithText(TextFormField, '1.00'), findsNothing);
+    // expect no validation error is shown.
+    expect(
+        find.widgetWithText(
+            TextFormField, '0.00.0 is an invalid decimal value.'),
+        findsOneWidget);
   });
 
   testWidgets('Test enable as false', (WidgetTester tester) async {
