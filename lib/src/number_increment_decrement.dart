@@ -50,6 +50,10 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// defaults to [false]
   final bool autovalidate;
 
+  /// Setting this to [true] clamps the entered value to the [min] and [max]
+  /// if all the validations are successful.
+  final bool enableMinMaxClamping;
+
   /// Decoration for the TextFormField.
   /// Defaults to a simple outline border.
   final InputDecoration numberFieldDecoration;
@@ -115,6 +119,10 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// This will not called if the internal validators fail.
   final ValueCallBack onSubmitted;
 
+  /// A call back function to be called every time the number is changed
+  /// manually. This will not be called if the internal validators fail.
+  final ValueCallBack onChanged;
+
   /// Icon to be used for Decrement button.
   final IconData decIcon;
 
@@ -159,6 +167,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.incDecFactor = 1,
     this.isInt = true,
     this.autovalidate = false,
+    this.enableMinMaxClamping = false,
     this.numberFieldDecoration,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
@@ -175,6 +184,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.onDecrement,
     this.onIncrement,
     this.onSubmitted,
+    this.onChanged,
     this.separateIcons = false,
     Color incDecBgColor = Colors.lightGreen,
   })  : incIconDecoration = BoxDecoration(
@@ -203,6 +213,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.incDecFactor = 1,
     this.isInt = true,
     this.autovalidate = false,
+    this.enableMinMaxClamping = false,
     this.numberFieldDecoration,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
@@ -219,6 +230,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.onDecrement,
     this.onIncrement,
     this.onSubmitted,
+    this.onChanged,
     this.separateIcons = true,
     Color incDecBgColor = Colors.lightGreen,
   })  : incIconDecoration = BoxDecoration(
@@ -265,6 +277,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.incDecFactor = 1,
     this.isInt = true,
     this.autovalidate = false,
+    this.enableMinMaxClamping = false,
     this.numberFieldDecoration,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
@@ -281,6 +294,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.onDecrement,
     this.onIncrement,
     this.onSubmitted,
+    this.onChanged,
     this.separateIcons = true,
     Color incDecBgColor = Colors.lightGreen,
   })  : incIconDecoration = BoxDecoration(
@@ -317,6 +331,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.incDecFactor = 1,
     this.isInt = true,
     this.autovalidate = false,
+    this.enableMinMaxClamping = false,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
     this.style,
@@ -332,6 +347,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.onDecrement,
     this.onIncrement,
     this.onSubmitted,
+    this.onChanged,
     this.separateIcons = true,
     Color incDecBgColor = Colors.lightGreen,
   })  : numberFieldDecoration = buttonArrangement ==
@@ -410,6 +426,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.incDecFactor = 1,
     this.isInt = true,
     this.autovalidate = false,
+    this.enableMinMaxClamping = false,
     this.widgetContainerDecoration = const BoxDecoration(),
     this.validator,
     this.style,
@@ -425,6 +442,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     this.onDecrement,
     this.onIncrement,
     this.onSubmitted,
+    this.onChanged,
     this.separateIcons = true,
     this.numberFieldDecoration,
     Color incDecBgColor = Colors.lightGreen,
@@ -446,6 +464,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
         );
 }
 
+/// A set of button arrangements for the widget.
 enum ButtonArrangement {
   /// Places both the buttons to the left of the text field.
   leftEnd,
@@ -495,6 +514,10 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// Passed to [TextFormField.autovalidate]
   /// defaults to [false]
   final bool autovalidate;
+
+  /// Setting this to [true] clamps the entered value to the [min] and [max]
+  /// if all the validations are successful.
+  final bool enableMinMaxClamping;
 
   /// Decoration for the TextFormField.
   /// Defaults to a simple outline border.
@@ -608,7 +631,8 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
     this.initialValue = 0,
     this.incDecFactor = 1,
     this.isInt = true,
-    this.autovalidate = false,
+    this.autovalidate = true,
+    this.enableMinMaxClamping = false,
     this.numberFieldDecoration,
     this.widgetContainerDecoration,
     this.validator,
@@ -661,43 +685,46 @@ class _NumberInputWithIncrementDecrementState
 
   void _onChanged(String newValue) {
     _debounceTimer?.cancel();
-    _debounceTimer = Timer(Duration(milliseconds: 100), () {
-      var clamped = _clampAndUpdate(_tryParse(newValue));
+    _debounceTimer = Timer(Duration(milliseconds: 750), () {
+      var parsedAndClamped =
+          _clampAndUpdate(_tryParse(newValue), widget.enableMinMaxClamping);
       if (widget.onChanged != null) {
-        widget.onChanged(clamped);
+        widget.onChanged(parsedAndClamped);
       }
     });
   }
 
-  /// Handling decimal is tricky.
-  /// Instead set up a default validator which tries to parse and if it fails
-  /// raise an error.
+  void _onSubmitted(String newValue) {
+    var parsedAndClamped =
+        _clampAndUpdate(_tryParse(newValue), widget.enableMinMaxClamping);
+    if (this.widget.onSubmitted != null) {
+      this.widget.onSubmitted(parsedAndClamped);
+    }
+  }
+
+  /// Handling decimal values via reg exp is tricky and parsing directly and
+  /// handling null is easier.
+  ///
+  /// So setup a regexp formatter only for integer fields.
+  /// For decimal cases default validator which tries to parse will raise an
+  /// error if it fails.
   List<TextInputFormatter> _digitFormatters() {
     return <TextInputFormatter>[
-      widget.isInt
-          ? widget.min.isNegative
-              ? FilteringTextInputFormatter.allow(
-                  RegExp(r'^[-]?\d*$'),
-                  replacementString: widget.controller.text,
-                )
-              : FilteringTextInputFormatter.digitsOnly
-          : widget.min.isNegative
-              ? FilteringTextInputFormatter.allow(
-                  RegExp(r'^[-]?\d*[.]?\d*$'),
-                  replacementString: widget.controller.text,
-                )
-              : FilteringTextInputFormatter.allow(
-                  RegExp(r'^\d*[.]?\d*$'),
-                  replacementString: widget.controller.text,
-                ),
+      widget.min.isNegative
+          ? FilteringTextInputFormatter.allow(
+              RegExp(r'^[-]?[0-9]$'),
+              replacementString: _controller.text,
+            )
+          : FilteringTextInputFormatter.digitsOnly
     ];
   }
 
   String _defaultValidator(String value) {
     num parsed = num.tryParse(value);
     if (parsed == null) {
-      return '$value is invalid ${widget.isInt ? 'integer' : 'decimal'} value.';
-    } else if (parsed < widget.min || parsed > widget.max) {
+      return '$value is an invalid ${widget.isInt ? 'integer' : 'decimal'} value.';
+    } else if (!widget.enableMinMaxClamping && parsed < widget.min ||
+        parsed > widget.max) {
       return 'Value should be between ${widget.min} and ${widget.max}';
     }
     return null;
@@ -729,33 +756,27 @@ class _NumberInputWithIncrementDecrementState
             Expanded(
               flex: 1,
               child: TextFormField(
-                  key: _formFieldKey,
-                  validator: widget.validator ?? _defaultValidator,
-                  style: widget.style,
-                  enabled: widget.enabled,
-                  textAlign: TextAlign.center,
-                  autovalidate: widget.autovalidate,
-                  decoration: widget.numberFieldDecoration ??
-                      InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
+                key: _formFieldKey,
+                validator: widget.validator ?? _defaultValidator,
+                style: widget.style,
+                enabled: widget.enabled,
+                textAlign: TextAlign.center,
+                autovalidate: widget.autovalidate,
+                decoration: widget.numberFieldDecoration ??
+                    InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
                       ),
-                  controller: _controller,
-                  keyboardType: TextInputType.numberWithOptions(
-                    decimal: !widget.isInt,
-                    signed: true,
-                  ),
-                  // inputFormatters: _digitFormatters(),
-                  onChanged: _onChanged,
-                  onFieldSubmitted: (value) {
-                    if (this.widget.onSubmitted != null) {
-                      num newVal = _tryParse(value);
-                      // Auto keep new value inside min max
-                      newVal = _clampAndUpdate(newVal);
-                      this.widget.onSubmitted(newVal);
-                    }
-                  }),
+                    ),
+                controller: _controller,
+                keyboardType: TextInputType.numberWithOptions(
+                  decimal: !widget.isInt,
+                  signed: true,
+                ),
+                inputFormatters: widget.isInt ? _digitFormatters() : null,
+                onChanged: _onChanged,
+                onFieldSubmitted: _onSubmitted,
+              ),
             ),
             if (widget.buttonArrangement == ButtonArrangement.incLeftDecRight)
               _buildDecrementButton(),
@@ -810,7 +831,8 @@ class _NumberInputWithIncrementDecrementState
             : () {
                 var currentValue = _tryParse(_controller.text);
                 currentValue = currentValue - widget.incDecFactor;
-                currentValue = _clampAndUpdate(currentValue);
+                // always clamp for inc/dec button action.
+                currentValue = _clampAndUpdate(currentValue, true);
                 // decrement callback
                 if (widget.onDecrement != null) {
                   widget.onDecrement(currentValue);
@@ -846,7 +868,8 @@ class _NumberInputWithIncrementDecrementState
             : () {
                 var currentValue = _tryParse(_controller.text);
                 currentValue = currentValue + widget.incDecFactor;
-                currentValue = _clampAndUpdate(currentValue);
+                // always clamp for inc/dec button action.
+                currentValue = _clampAndUpdate(currentValue, true);
                 // decrement callback
                 if (widget.onIncrement != null) {
                   widget.onIncrement(currentValue);
@@ -858,20 +881,26 @@ class _NumberInputWithIncrementDecrementState
 
   /// try to parse the given string into a number.
   num _tryParse(String value) {
-    // Always validate.
-    _formFieldKey.currentState.validate();
     var newValue = num.tryParse(value);
     return newValue;
   }
 
-  num _clampAndUpdate(var currentValue) {
-    setState(() {
-      currentValue = currentValue?.clamp(widget.min, widget.max);
-      _controller.text = widget.isInt
-          ? currentValue.toString()
-          : currentValue.toStringAsFixed(widget.fractionDigits) ??
-              _controller.text;
-    });
+  num _clampAndUpdate(var currentValue, bool clamp) {
+    // Perform clamping only if explicitly enabled.
+    currentValue =
+        clamp ? currentValue?.clamp(widget.min, widget.max) : currentValue;
+    // Covert the number to string and apply fraction restriction if necessary.
+    // Also handles null cases when the parsing fails.
+    var currentValAsStr = (widget.isInt
+            ? currentValue?.toString()
+            : currentValue?.toStringAsFixed(widget.fractionDigits)) ??
+        _controller.text ??
+        '';
+    // Sets the text to the controller and corrects the cursor position.
+    _controller.value = TextEditingValue(
+      text: currentValAsStr,
+      selection: TextSelection.collapsed(offset: currentValAsStr?.length ?? 0),
+    );
     return currentValue;
   }
 }
