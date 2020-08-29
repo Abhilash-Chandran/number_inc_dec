@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView(
-                // padding: EdgeInsets.all(12),
+                padding: EdgeInsets.all(12),
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Default appearance'),
@@ -126,6 +126,31 @@ class MyApp extends StatelessWidget {
                     min: 4,
                     max: 8,
                     initialValue: 5,
+                    onSubmitted: (newValue) {
+                      print('OnSubmitted value: $newValue');
+                    },
+                  ),
+                  Text('Decimal field with minMax clamping enabled'),
+                  NumberInputWithIncrementDecrement(
+                    key: Key("testInput"),
+                    controller: TextEditingController(),
+                    isInt: false,
+                    incDecFactor: 2.5,
+                    min: -2.5,
+                    enableMinMaxClamping: true,
+                    initialValue: 0,
+                    onSubmitted: (newValue) {
+                      print('OnSubmitted value: $newValue');
+                    },
+                  ),
+                  Text('Decimal field with minMax clamping disabled'),
+                  NumberInputWithIncrementDecrement(
+                    controller: TextEditingController(),
+                    isInt: false,
+                    incDecFactor: 2.5,
+                    min: -2.5,
+                    enableMinMaxClamping: false,
+                    initialValue: 0,
                     onSubmitted: (newValue) {
                       print('OnSubmitted value: $newValue');
                     },
@@ -278,7 +303,6 @@ class Example3 extends StatelessWidget {
       controller: TextEditingController(),
       isInt: false,
       incDecFactor: 0.35,
-      min: -1.4,
     );
   }
 }

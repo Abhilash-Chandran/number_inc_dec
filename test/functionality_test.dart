@@ -254,14 +254,13 @@ void main() {
     expect(decCompleter.isCompleted, isTrue);
     expect(await decCompleter.future, equals(7));
   });
-  testWidgets('Test autoValidate with default min-max validator',
-      (WidgetTester tester) async {
+  testWidgets('Test autoValidate = false', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
           body: NumberInputWithIncrementDecrement(
             controller: TextEditingController(),
-            autovalidate: true,
+            autovalidate: false,
             initialValue: 1,
             min: 1,
             max: 10,
@@ -275,11 +274,14 @@ void main() {
     expect(defaultSetNumber, findsOneWidget);
     // enter number '0'
     await tester.enterText(find.byType(TextFormField), '0');
-    await tester.pumpAndSettle();
+    await tester.pump(Duration(milliseconds: 750));
     expect(find.widgetWithText(TextFormField, '0'), findsOneWidget);
+    // expect no validation error is shown.
+    expect(find.widgetWithText(TextFormField, '0 is not a valid integer'),
+        findsNothing);
     expect(
         find.widgetWithText(TextFormField, 'Value should be between 1 and 10'),
-        findsOneWidget);
+        findsNothing);
   });
 
   testWidgets('Test enable as false', (WidgetTester tester) async {
@@ -372,6 +374,7 @@ void main() {
             incDecFactor: 0.4,
             min: 4.5,
             max: 44.5,
+            enableMinMaxClamping: true,
             initialValue: 10.0,
             onSubmitted: (newValue) {
               valueSubmitted = newValue;
@@ -424,6 +427,7 @@ void main() {
             incDecFactor: 2,
             min: 4,
             max: 8,
+            enableMinMaxClamping: true,
             initialValue: 5,
             onSubmitted: (newValue) {
               valueSubmitted = newValue;
@@ -471,5 +475,145 @@ void main() {
     expect(valueSubmitted, 4);
     final updatedNumber = find.widgetWithText(TextFormField, '6');
     expect(updatedNumber, findsOneWidget);
+  });
+
+  testWidgets('Test onChanged callback for double',
+      (WidgetTester tester) async {
+    double valueChanged = 15;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: NumberInputWithIncrementDecrement(
+            key: Key("testInput"),
+            controller: TextEditingController(),
+            isInt: false,
+            incDecFactor: 0.4,
+            min: 4.5,
+            max: 44.5,
+            initialValue: 10.0,
+            onChanged: (newValue) {
+              valueChanged = newValue;
+            },
+          ),
+        ),
+      ),
+    );
+    // ensure can find the widget
+    expect(find.byKey(Key("testInput")), findsOneWidget);
+
+    // ensure default value is 10.00 (fractionDigits defaults to 2)
+    final defaultNumber = find.widgetWithText(TextFormField, '10.00');
+    expect(defaultNumber, findsOneWidget);
+
+    // tap increment button once and ensure onChanged is NOT called
+    await tester.tap(find.byIcon(Icons.arrow_drop_up));
+    await tester.pump();
+    expect(valueChanged, 15);
+
+    // entering a value should trigger the callback
+    await tester.enterText(find.byKey(Key("testInput")), "20.00");
+    // Wait for internal debounce duration.
+    await tester.pump(Duration(milliseconds: 750));
+    expect(valueChanged, 20.0);
+
+    // entering a value out of range should not be allowed and corrects to
+    // largest allowed
+    await tester.enterText(find.byKey(Key("testInput")), "44.5");
+    // Wait for internal debounce duration.
+    await tester.pump(Duration(milliseconds: 750));
+    expect(valueChanged, 44.5);
+
+    // entering a value out of range should not be allowed and corrects to
+    // smallest allowed
+    await tester.enterText(find.byKey(Key("testInput")), "1.0");
+    // Wait for internal debounce duration.
+    await tester.pump(Duration(milliseconds: 750));
+    expect(valueChanged, 1);
+  });
+  testWidgets('Test onChanged callback for double',
+      (WidgetTester tester) async {
+    int valueChanged = 15;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: NumberInputWithIncrementDecrement(
+            key: Key("testInput"),
+            controller: TextEditingController(),
+            isInt: true,
+            incDecFactor: 1,
+            min: 4,
+            max: 44,
+            initialValue: 10,
+            onChanged: (newValue) {
+              valueChanged = newValue;
+            },
+          ),
+        ),
+      ),
+    );
+    // ensure can find the widget
+    expect(find.byKey(Key("testInput")), findsOneWidget);
+
+    // ensure default value is 10.00 (fractionDigits defaults to 2)
+    final defaultNumber = find.widgetWithText(TextFormField, '10');
+    expect(defaultNumber, findsOneWidget);
+
+    // tap increment button once and ensure onChanged is NOT called
+    await tester.tap(find.byIcon(Icons.arrow_drop_up));
+    await tester.pump();
+    expect(valueChanged, 15);
+
+    // entering a value should trigger the callback
+    await tester.enterText(find.byKey(Key("testInput")), "20");
+    // Wait for internal debounce duration.
+    await tester.pump(Duration(milliseconds: 750));
+    expect(valueChanged, 20);
+
+    // entering a value out of range should not be allowed and corrects to
+    // largest allowed
+    await tester.enterText(find.byKey(Key("testInput")), "40");
+    // Wait for internal debounce duration.
+    await tester.pump(Duration(milliseconds: 750));
+    expect(valueChanged, 40);
+
+    // entering a value out of range should not be allowed and corrects to
+    // smallest allowed
+    await tester.enterText(find.byKey(Key("testInput")), "1");
+    // Wait for internal debounce duration.
+    await tester.pump(Duration(milliseconds: 750));
+    expect(valueChanged, 1);
+  });
+
+  testWidgets('Test enableMinMaxClamping with default min-max',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: NumberInputWithIncrementDecrement(
+            controller: TextEditingController(),
+            enableMinMaxClamping: true,
+            initialValue: 1,
+            min: 6,
+            max: 10,
+          ),
+        ),
+      ),
+    );
+
+    // ensure default value 1 is set
+    final defaultSetNumber = find.widgetWithText(TextFormField, '1');
+    expect(defaultSetNumber, findsOneWidget);
+    // enter number '25'
+    await tester.enterText(find.byType(TextFormField), '25');
+    await tester.pump(Duration(milliseconds: 750));
+    // Ensure that the value 25 is clamped to the maximum of 10
+    expect(find.widgetWithText(TextFormField, '10'), findsOneWidget);
+    expect(find.widgetWithText(TextFormField, '25'), findsNothing);
+    // enter number '2'
+    await tester.enterText(find.byType(TextFormField), '2');
+    await tester.pump(Duration(milliseconds: 750));
+    // Ensure that the value 2 is clamped to the minimum of 6
+    expect(find.widgetWithText(TextFormField, '6'), findsOneWidget);
+    expect(find.widgetWithText(TextFormField, '2'), findsNothing);
   });
 }
