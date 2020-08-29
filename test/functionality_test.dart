@@ -283,6 +283,32 @@ void main() {
         find.widgetWithText(TextFormField, 'Value should be between 1 and 10'),
         findsNothing);
   });
+  testWidgets('Test empty field as invalid value', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: NumberInputWithIncrementDecrement(
+            controller: TextEditingController(),
+            autovalidate: false,
+            initialValue: 1,
+            min: 1,
+            max: 10,
+          ),
+        ),
+      ),
+    );
+
+    // ensure default value 1 is set
+    final defaultSetNumber = find.widgetWithText(TextFormField, '1');
+    expect(defaultSetNumber, findsOneWidget);
+    // enter number '0'
+    await tester.enterText(find.byType(TextFormField), '');
+    await tester.pump(Duration(milliseconds: 750));
+    expect(find.widgetWithText(TextFormField, '0'), findsNothing);
+    // expect no validation error is shown.
+    expect(find.widgetWithText(TextFormField, ' is an invalid integer'),
+        findsNothing);
+  });
 
   testWidgets('Test enable as false', (WidgetTester tester) async {
     await tester.pumpWidget(
