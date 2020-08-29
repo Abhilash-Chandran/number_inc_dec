@@ -16,7 +16,7 @@ Future<void> loadAppFonts() async {
   final fontLoader = FontLoader('Roboto');
   var fontData;
   if (p.style == p.Style.windows) {
-    fontData = File(p.absolute('test', 'fonts', 'Roboto-Regular.ttf'))
+    fontData = File(p.absolute('fonts', 'Roboto-Regular.ttf'))
         .readAsBytes()
         .then((bytes) => ByteData.view(Uint8List.fromList(bytes).buffer));
   } else {
