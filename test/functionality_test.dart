@@ -335,10 +335,6 @@ void main() {
     // enter invalid number '0.00.0'
     await tester.enterText(find.byType(TextFormField), '0.00.0');
     await tester.pumpAndSettle(Duration(milliseconds: 750));
-    await expectLater(
-      find.byType(NumberInputWithIncrementDecrement),
-      matchesGoldenFile('goldens/invalid_decimal.png'),
-    );
     expect(find.widgetWithText(TextFormField, '1.00'), findsNothing);
     // expect no validation error is shown.
     expect(
