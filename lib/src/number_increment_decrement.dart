@@ -14,452 +14,443 @@ typedef void DiffIncDecCallBack(num newValue);
 /// The callback will be passed the new value.
 typedef void ValueCallBack(num newValue);
 
+/// A set of pre-fabricated widgets based on [NumberInputWithIncrementDecrement].
 class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
-  /// Key to be used for this widget.
-  final Key key;
-
-  /// Whether the user is able to interact or not
-  final bool enabled;
-
-  /// Provide a custom controller.
-  final TextEditingController controller;
-
-  /// Decides the button placement using [ButtonArrangement].
-  /// Defaults to [ButtonArrangement.rightEnd]
-  final ButtonArrangement buttonArrangement;
-
-  /// Minimum value allowed for this field. Defaults to zero.
-  final num min;
-
-  /// Maximum value allowed for this field. Defaults to `double.infinity`.
-  final num max;
-
-  /// A factor by which the numeric value should be incremented or decremented.
-  /// e.g. Setting `incDecFactor=0.5` increments or decrement the number field by 0.5.
-  /// Defaults to 1.
-  final num incDecFactor;
-
-  /// Initial value for the number input field. Defaults to zero.
-  final num initialValue;
-
-  /// Decides if the field only accepts integer values.
-  /// Defaults to true.
-  final bool isInt;
-
-  /// Passed to [TextFormField.autovalidate]
-  /// defaults to [false]
-  final bool autovalidate;
-
-  /// Setting this to [true] clamps the entered value to the [min] and [max]
-  /// if all the validations are successful.
-  final bool enableMinMaxClamping;
-
-  /// Decoration for the TextFormField.
-  /// Defaults to a simple outline border.
-  final InputDecoration numberFieldDecoration;
-
-  /// Decoration for the whole widget.
-  /// defaults to a simple container with rounded border.
-  final Decoration widgetContainerDecoration;
-
-  /// validators for this field.
-  /// Defaults to [_NumberInputWithIncrementDecrementState._defaultValidator] validator
-  /// based on the values of [min] and [max] field.
-  /// Note: These values default to [0] and [double.infinity] respectively.
-  ///
-  /// ```dart
-  /// String _minMaxValidator(String value) {
-  ///    return num.parse(value) < widget.min || num.parse(value) > widget.max
-  ///        ? 'Value should be between ${widget.min} and ${widget.max}'
-  ///        : null;
-  ///  }
-  /// ```
-  final FormFieldValidator<String> validator;
-
-  /// The [TextStyle] that will passed down to [TextFormField.style].
-  /// This is the style of the text being edited.
-  ///
-  /// For e.g following will make the numbers appear green.
-  /// ````dart
-  /// NumberInputPrefabbed.squaredButtons(
-  ///   controller: TextEditingController(),
-  ///   style: TextStyle(
-  ///         color: Colors.green,
-  ///         fontSize: 28,
-  ///   ),
-  /// );
-  /// ```
-  final TextStyle style;
-
-  /// Decoration for the Increment Icon
-  /// Defaults to a black border in the bottom.
-  final Decoration incIconDecoration;
-
-  /// Decoration for the Decrement Icon
-  /// Defaults to null;
-  final Decoration decIconDecoration;
-
-  /// Icon to be used for Increment button.
-  final IconData incIcon;
-
-  /// Icon size to be used for Increment button.
-  /// Defaults to size defined in IconTheme
-  final double incIconSize;
-
-  /// Icon color to be used for Increment button.
-  /// Defaults to color defined in IconTheme
-  final Color incIconColor;
-
-  /// A call back function to be called on successful increment.
-  /// This will not called if the internal validators fail.
-  /// It of type  [DiffIncDecCallBack].
-  final DiffIncDecCallBack onIncrement;
-
-  /// A call back function to be called on successful submit.
-  /// This will not called if the internal validators fail.
-  final ValueCallBack onSubmitted;
-
-  /// A call back function to be called every time the number is changed
-  /// manually. This will not be called if the internal validators fail.
-  final ValueCallBack onChanged;
-
-  /// Icon to be used for Decrement button.
-  final IconData decIcon;
-
-  /// Icon size to be used for Decrement button.
-  /// Defaults to size defined in IconTheme
-  final double decIconSize;
-
-  /// Icon color to be used for Decrement button.
-  /// Defaults to color defined in IconTheme
-  final Color decIconColor;
-
-  /// A call back function to be called on successful decrement.
-  /// This will not called if the internal validators fail.
-  /// It of type  [DiffIncDecCallBack].
-  final DiffIncDecCallBack onDecrement;
-
-  /// No of digits after decimal point.
-  /// Defaults to value of 2 for non int fields.
-  /// Should be between 0 and 20 inclusively.
-  final int fractionDigits;
-
-  /// A scaling factor for the whole widget.
-  /// Defaults to 1.
-  final double scaleWidth;
-
-  /// A scaling factor for the whole widget.
-  /// Defaults to 1.
-  final double scaleHeight;
-
-  /// Show a separator between the increment & decrement buttons.
-  /// Defaults to false.
-  final bool separateIcons;
-
   NumberInputPrefabbed.squaredButtons({
-    @required this.controller,
-    this.key,
-    this.enabled = true,
-    this.buttonArrangement = ButtonArrangement.rightEnd,
-    this.min = -2,
-    this.max = double.infinity,
-    this.initialValue = 0,
-    this.incDecFactor = 1,
-    this.isInt = true,
-    this.autovalidate = false,
-    this.enableMinMaxClamping = false,
-    this.numberFieldDecoration,
-    this.widgetContainerDecoration = const BoxDecoration(),
-    this.validator,
-    this.style,
-    this.incIcon = Icons.arrow_drop_up,
-    this.decIcon = Icons.arrow_drop_down,
-    this.fractionDigits = 2,
-    this.scaleWidth = 1.0,
-    this.scaleHeight = 1.0,
-    this.incIconSize = 28,
-    this.decIconSize = 28,
-    this.decIconColor,
-    this.incIconColor,
-    this.onDecrement,
-    this.onIncrement,
-    this.onSubmitted,
-    this.onChanged,
-    this.separateIcons = false,
+    @required TextEditingController controller,
+    Key key,
+    bool enabled = true,
+    ButtonArrangement buttonArrangement = ButtonArrangement.rightEnd,
+    num min = 0,
+    num max = double.infinity,
+    num initialValue = 0,
+    num incDecFactor = 1,
+    bool isInt = true,
+    bool autovalidate = true,
+    bool enableMinMaxClamping = false,
+    InputDecoration numberFieldDecoration,
+    Decoration widgetContainerDecoration = const BoxDecoration(),
+    FormFieldValidator<String> validator,
+    TextStyle style,
+    IconData incIcon = Icons.arrow_drop_up,
+    IconData decIcon = Icons.arrow_drop_down,
+    int fractionDigits = 2,
+    double scaleWidth = 1.0,
+    double scaleHeight = 1.0,
+    double incIconSize = 28,
+    double decIconSize = 28,
+    Color decIconColor,
+    Color incIconColor,
+    DiffIncDecCallBack onDecrement,
+    DiffIncDecCallBack onIncrement,
+    ValueCallBack onSubmitted,
+    ValueCallBack onChanged,
+    bool separateIcons = false,
     Color incDecBgColor = Colors.lightGreen,
-  })  : incIconDecoration = BoxDecoration(
-          color: incDecBgColor,
-          border: Border.all(
-            color: Colors.black,
-            width: 0.5,
+  }) : super(
+          controller: controller,
+          key: key,
+          enabled: enabled,
+          enableMinMaxClamping: enableMinMaxClamping,
+          buttonArrangement: buttonArrangement,
+          numberFieldDecoration: numberFieldDecoration,
+          widgetContainerDecoration: widgetContainerDecoration,
+          validator: validator,
+          style: style,
+          incIcon: incIcon,
+          decIcon: decIcon,
+          fractionDigits: fractionDigits,
+          scaleHeight: scaleHeight,
+          scaleWidth: scaleWidth,
+          incIconSize: incIconSize,
+          decIconSize: decIconSize,
+          decIconColor: decIconColor,
+          incIconColor: incIconColor,
+          onDecrement: onDecrement,
+          onIncrement: onIncrement,
+          onSubmitted: onSubmitted,
+          onChanged: onChanged,
+          separateIcons: separateIcons,
+          incDecBgColor: incDecBgColor,
+          incIconDecoration: BoxDecoration(
+            color: incDecBgColor,
+            border: Border.all(
+              color: Colors.black,
+              width: 0.5,
+            ),
           ),
-        ),
-        decIconDecoration = BoxDecoration(
-          color: incDecBgColor,
-          border: Border.all(
-            color: Colors.black,
-            width: 0.5,
+          decIconDecoration: BoxDecoration(
+            color: incDecBgColor,
+            border: Border.all(
+              color: Colors.black,
+              width: 0.5,
+            ),
           ),
         );
 
   NumberInputPrefabbed.leafyButtons({
-    @required this.controller,
-    this.key,
-    this.enabled = true,
-    this.buttonArrangement = ButtonArrangement.rightEnd,
-    this.min = 0,
-    this.max = double.infinity,
-    this.initialValue = 0,
-    this.incDecFactor = 1,
-    this.isInt = true,
-    this.autovalidate = false,
-    this.enableMinMaxClamping = false,
-    this.numberFieldDecoration,
-    this.widgetContainerDecoration = const BoxDecoration(),
-    this.validator,
-    this.style,
-    this.incIcon = Icons.arrow_drop_up,
-    this.decIcon = Icons.arrow_drop_down,
-    this.fractionDigits = 2,
-    this.scaleWidth = 1.0,
-    this.scaleHeight = 1.0,
-    this.incIconSize = 28,
-    this.decIconSize = 28,
-    this.decIconColor,
-    this.incIconColor,
-    this.onDecrement,
-    this.onIncrement,
-    this.onSubmitted,
-    this.onChanged,
-    this.separateIcons = true,
+    @required TextEditingController controller,
+    Key key,
+    bool enabled = true,
+    ButtonArrangement buttonArrangement = ButtonArrangement.rightEnd,
+    num min = 0,
+    num max = double.infinity,
+    num initialValue = 0,
+    num incDecFactor = 1,
+    bool isInt = true,
+    bool autovalidate = true,
+    bool enableMinMaxClamping = false,
+    InputDecoration numberFieldDecoration,
+    Decoration widgetContainerDecoration = const BoxDecoration(),
+    FormFieldValidator<String> validator,
+    TextStyle style,
+    IconData incIcon = Icons.arrow_drop_up,
+    IconData decIcon = Icons.arrow_drop_down,
+    int fractionDigits = 2,
+    double scaleWidth = 1.0,
+    double scaleHeight = 1.0,
+    double incIconSize = 28,
+    double decIconSize = 28,
+    Color decIconColor,
+    Color incIconColor,
+    DiffIncDecCallBack onDecrement,
+    DiffIncDecCallBack onIncrement,
+    ValueCallBack onSubmitted,
+    ValueCallBack onChanged,
+    bool separateIcons = true,
     Color incDecBgColor = Colors.lightGreen,
-  })  : incIconDecoration = BoxDecoration(
-          color: incDecBgColor,
-          borderRadius: buttonArrangement == ButtonArrangement.rightEnd
-              ? BorderRadius.only(
-                  bottomRight: Radius.circular(10),
-                  topLeft: Radius.circular(10),
-                )
-              : BorderRadius.only(
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                ),
-          border: Border.all(
-            color: Colors.black,
-            width: 0.25,
+  }) : super(
+          controller: controller,
+          key: key,
+          enabled: enabled,
+          enableMinMaxClamping: enableMinMaxClamping,
+          buttonArrangement: buttonArrangement,
+          numberFieldDecoration: numberFieldDecoration,
+          widgetContainerDecoration: widgetContainerDecoration,
+          validator: validator,
+          style: style,
+          incIcon: incIcon,
+          decIcon: decIcon,
+          fractionDigits: fractionDigits,
+          scaleHeight: scaleHeight,
+          scaleWidth: scaleWidth,
+          incIconSize: incIconSize,
+          decIconSize: decIconSize,
+          decIconColor: decIconColor,
+          incIconColor: incIconColor,
+          onDecrement: onDecrement,
+          onIncrement: onIncrement,
+          onSubmitted: onSubmitted,
+          onChanged: onChanged,
+          separateIcons: separateIcons,
+          incDecBgColor: incDecBgColor,
+          incIconDecoration: BoxDecoration(
+            color: incDecBgColor,
+            borderRadius: buttonArrangement == ButtonArrangement.rightEnd
+                ? BorderRadius.only(
+                    bottomRight: Radius.circular(10),
+                    topLeft: Radius.circular(10),
+                  )
+                : BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
+            border: Border.all(
+              color: Colors.black,
+              width: 0.25,
+            ),
           ),
-        ),
-        decIconDecoration = BoxDecoration(
-          color: incDecBgColor,
-          borderRadius: buttonArrangement == ButtonArrangement.rightEnd
-              ? BorderRadius.only(
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                )
-              : BorderRadius.only(
-                  bottomRight: Radius.circular(10),
-                  topLeft: Radius.circular(10),
-                ),
-          border: Border.all(
-            color: Colors.black,
-            width: 0.25,
+          decIconDecoration: BoxDecoration(
+            color: incDecBgColor,
+            borderRadius: buttonArrangement == ButtonArrangement.rightEnd
+                ? BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  )
+                : BorderRadius.only(
+                    bottomRight: Radius.circular(10),
+                    topLeft: Radius.circular(10),
+                  ),
+            border: Border.all(
+              color: Colors.black,
+              width: 0.25,
+            ),
           ),
         );
 
   NumberInputPrefabbed.directionalButtons({
-    @required this.controller,
-    this.key,
-    this.enabled = true,
-    this.buttonArrangement = ButtonArrangement.rightEnd,
-    this.min = 0,
-    this.max = double.infinity,
-    this.initialValue = 0,
-    this.incDecFactor = 1,
-    this.isInt = true,
-    this.autovalidate = false,
-    this.enableMinMaxClamping = false,
-    this.numberFieldDecoration,
-    this.widgetContainerDecoration = const BoxDecoration(),
-    this.validator,
-    this.style,
-    this.incIcon = Icons.arrow_drop_up,
-    this.decIcon = Icons.arrow_drop_down,
-    this.fractionDigits = 2,
-    this.scaleWidth = 1.0,
-    this.scaleHeight = 1.0,
-    this.incIconSize = 28,
-    this.decIconSize = 28,
-    this.decIconColor,
-    this.incIconColor,
-    this.onDecrement,
-    this.onIncrement,
-    this.onSubmitted,
-    this.onChanged,
-    this.separateIcons = true,
+    @required TextEditingController controller,
+    Key key,
+    bool enabled = true,
+    ButtonArrangement buttonArrangement = ButtonArrangement.rightEnd,
+    num min = 0,
+    num max = double.infinity,
+    num initialValue = 0,
+    num incDecFactor = 1,
+    bool isInt = true,
+    bool autovalidate = true,
+    bool enableMinMaxClamping = false,
+    InputDecoration numberFieldDecoration,
+    Decoration widgetContainerDecoration = const BoxDecoration(),
+    FormFieldValidator<String> validator,
+    TextStyle style,
+    IconData incIcon = Icons.arrow_drop_up,
+    IconData decIcon = Icons.arrow_drop_down,
+    int fractionDigits = 2,
+    double scaleWidth = 1.0,
+    double scaleHeight = 1.0,
+    double incIconSize = 28,
+    double decIconSize = 28,
+    Color decIconColor,
+    Color incIconColor,
+    DiffIncDecCallBack onDecrement,
+    DiffIncDecCallBack onIncrement,
+    ValueCallBack onSubmitted,
+    ValueCallBack onChanged,
+    bool separateIcons = true,
     Color incDecBgColor = Colors.lightGreen,
-  })  : incIconDecoration = BoxDecoration(
-          color: incDecBgColor,
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(15),
-            topLeft: Radius.circular(15),
+  }) : super(
+          controller: controller,
+          key: key,
+          enabled: enabled,
+          enableMinMaxClamping: enableMinMaxClamping,
+          buttonArrangement: buttonArrangement,
+          numberFieldDecoration: numberFieldDecoration,
+          widgetContainerDecoration: widgetContainerDecoration,
+          validator: validator,
+          style: style,
+          incIcon: incIcon,
+          decIcon: decIcon,
+          fractionDigits: fractionDigits,
+          scaleHeight: scaleHeight,
+          scaleWidth: scaleWidth,
+          incIconSize: incIconSize,
+          decIconSize: decIconSize,
+          decIconColor: decIconColor,
+          incIconColor: incIconColor,
+          onDecrement: onDecrement,
+          onIncrement: onIncrement,
+          onSubmitted: onSubmitted,
+          onChanged: onChanged,
+          separateIcons: separateIcons,
+          incDecBgColor: incDecBgColor,
+          incIconDecoration: BoxDecoration(
+            color: incDecBgColor,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(15),
+              topLeft: Radius.circular(15),
+            ),
+            border: Border.all(
+              color: Colors.black,
+              width: 0.25,
+            ),
           ),
-          border: Border.all(
-            color: Colors.black,
-            width: 0.25,
-          ),
-        ),
-        decIconDecoration = BoxDecoration(
-          color: incDecBgColor,
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(15),
-            bottomLeft: Radius.circular(15),
-          ),
-          border: Border.all(
-            color: Colors.black,
-            width: 0.25,
+          decIconDecoration: BoxDecoration(
+            color: incDecBgColor,
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(15),
+              bottomLeft: Radius.circular(15),
+            ),
+            border: Border.all(
+              color: Colors.black,
+              width: 0.25,
+            ),
           ),
         );
 
   NumberInputPrefabbed.roundedEdgeButtons({
-    @required this.controller,
-    this.key,
-    this.enabled = true,
-    this.buttonArrangement = ButtonArrangement.rightEnd,
-    this.min = 0,
-    this.max = double.infinity,
-    this.initialValue = 0,
-    this.incDecFactor = 1,
-    this.isInt = true,
-    this.autovalidate = false,
-    this.enableMinMaxClamping = false,
-    this.widgetContainerDecoration = const BoxDecoration(),
-    this.validator,
-    this.style,
-    this.incIcon = Icons.arrow_drop_up,
-    this.decIcon = Icons.arrow_drop_down,
-    this.fractionDigits = 2,
-    this.scaleWidth = 1.0,
-    this.scaleHeight = 1.0,
-    this.incIconSize = 27,
-    this.decIconSize = 27,
-    this.decIconColor,
-    this.incIconColor,
-    this.onDecrement,
-    this.onIncrement,
-    this.onSubmitted,
-    this.onChanged,
-    this.separateIcons = true,
+    @required TextEditingController controller,
+    Key key,
+    bool enabled = true,
+    ButtonArrangement buttonArrangement = ButtonArrangement.rightEnd,
+    num min = 0,
+    num max = double.infinity,
+    num initialValue = 0,
+    num incDecFactor = 1,
+    bool isInt = true,
+    bool autovalidate = true,
+    bool enableMinMaxClamping = false,
+    InputDecoration numberFieldDecoration,
+    Decoration widgetContainerDecoration = const BoxDecoration(),
+    FormFieldValidator<String> validator,
+    TextStyle style,
+    IconData incIcon = Icons.arrow_drop_up,
+    IconData decIcon = Icons.arrow_drop_down,
+    int fractionDigits = 2,
+    double scaleWidth = 1.0,
+    double scaleHeight = 1.0,
+    double incIconSize = 27,
+    double decIconSize = 27,
+    Color decIconColor,
+    Color incIconColor,
+    DiffIncDecCallBack onDecrement,
+    DiffIncDecCallBack onIncrement,
+    ValueCallBack onSubmitted,
+    ValueCallBack onChanged,
+    bool separateIcons = true,
     Color incDecBgColor = Colors.lightGreen,
-  })  : numberFieldDecoration = buttonArrangement ==
-                    ButtonArrangement.rightEnd ||
-                buttonArrangement == ButtonArrangement.leftEnd
-            ? InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: buttonArrangement == ButtonArrangement.rightEnd
-                      ? BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                          bottomLeft: Radius.circular(5),
-                        )
-                      : BorderRadius.only(
-                          topRight: Radius.circular(5),
-                          bottomRight: Radius.circular(5),
-                        ),
-                ),
-              )
-            : null,
-        incIconDecoration = BoxDecoration(
-          color: incDecBgColor,
-          borderRadius: buttonArrangement == ButtonArrangement.rightEnd
-              ? BorderRadius.only(
-                  topRight: Radius.circular(5),
-                )
-              : buttonArrangement == ButtonArrangement.incLeftDecRight
-                  ? BorderRadius.only(
-                      topLeft: Radius.circular(5),
-                      bottomLeft: Radius.circular(5),
+  }) : super(
+          controller: controller,
+          key: key,
+          enabled: enabled,
+          enableMinMaxClamping: enableMinMaxClamping,
+          buttonArrangement: buttonArrangement,
+          widgetContainerDecoration: widgetContainerDecoration,
+          validator: validator,
+          style: style,
+          incIcon: incIcon,
+          decIcon: decIcon,
+          fractionDigits: fractionDigits,
+          scaleHeight: scaleHeight,
+          scaleWidth: scaleWidth,
+          incIconSize: incIconSize,
+          decIconSize: decIconSize,
+          decIconColor: decIconColor,
+          incIconColor: incIconColor,
+          onDecrement: onDecrement,
+          onIncrement: onIncrement,
+          onSubmitted: onSubmitted,
+          onChanged: onChanged,
+          separateIcons: separateIcons,
+          incDecBgColor: incDecBgColor,
+          numberFieldDecoration:
+              buttonArrangement == ButtonArrangement.rightEnd ||
+                      buttonArrangement == ButtonArrangement.leftEnd
+                  ? InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius:
+                            buttonArrangement == ButtonArrangement.rightEnd
+                                ? BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                  )
+                                : BorderRadius.only(
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5),
+                                  ),
+                      ),
                     )
-                  : buttonArrangement == ButtonArrangement.incRightDecLeft
-                      ? BorderRadius.only(
-                          topRight: Radius.circular(5),
-                          bottomRight: Radius.circular(5),
-                        )
-                      : BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                        ),
-          border: Border.all(
-            color: Colors.black,
-            width: 0.25,
+                  : null,
+          incIconDecoration: BoxDecoration(
+            color: incDecBgColor,
+            borderRadius: buttonArrangement == ButtonArrangement.rightEnd
+                ? BorderRadius.only(
+                    topRight: Radius.circular(5),
+                  )
+                : buttonArrangement == ButtonArrangement.incLeftDecRight
+                    ? BorderRadius.only(
+                        topLeft: Radius.circular(5),
+                        bottomLeft: Radius.circular(5),
+                      )
+                    : buttonArrangement == ButtonArrangement.incRightDecLeft
+                        ? BorderRadius.only(
+                            topRight: Radius.circular(5),
+                            bottomRight: Radius.circular(5),
+                          )
+                        : BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                          ),
+            border: Border.all(
+              color: Colors.black,
+              width: 0.25,
+            ),
           ),
-        ),
-        decIconDecoration = BoxDecoration(
-          color: incDecBgColor,
-          borderRadius: buttonArrangement == ButtonArrangement.rightEnd
-              ? BorderRadius.only(
-                  bottomRight: Radius.circular(5),
-                )
-              : buttonArrangement == ButtonArrangement.incLeftDecRight
-                  ? BorderRadius.only(
-                      topRight: Radius.circular(5),
-                      bottomRight: Radius.circular(5),
-                    )
-                  : buttonArrangement == ButtonArrangement.incRightDecLeft
-                      ? BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                          bottomLeft: Radius.circular(5),
-                        )
-                      : BorderRadius.only(
-                          bottomLeft: Radius.circular(5),
-                        ),
-          border: Border.all(
-            color: Colors.black,
-            width: 0.25,
+          decIconDecoration: BoxDecoration(
+            color: incDecBgColor,
+            borderRadius: buttonArrangement == ButtonArrangement.rightEnd
+                ? BorderRadius.only(
+                    bottomRight: Radius.circular(5),
+                  )
+                : buttonArrangement == ButtonArrangement.incLeftDecRight
+                    ? BorderRadius.only(
+                        topRight: Radius.circular(5),
+                        bottomRight: Radius.circular(5),
+                      )
+                    : buttonArrangement == ButtonArrangement.incRightDecLeft
+                        ? BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            bottomLeft: Radius.circular(5),
+                          )
+                        : BorderRadius.only(
+                            bottomLeft: Radius.circular(5),
+                          ),
+            border: Border.all(
+              color: Colors.black,
+              width: 0.25,
+            ),
           ),
         );
   NumberInputPrefabbed.roundedButtons({
-    @required this.controller,
-    this.key,
-    this.enabled = true,
-    this.buttonArrangement = ButtonArrangement.rightEnd,
-    this.min = 0,
-    this.max = double.infinity,
-    this.initialValue = 0,
-    this.incDecFactor = 1,
-    this.isInt = true,
-    this.autovalidate = false,
-    this.enableMinMaxClamping = false,
-    this.widgetContainerDecoration = const BoxDecoration(),
-    this.validator,
-    this.style,
-    this.incIcon = Icons.add,
-    this.decIcon = Icons.remove,
-    this.fractionDigits = 2,
-    this.scaleWidth = 1.0,
-    this.scaleHeight = 1.0,
-    this.incIconSize = 27,
-    this.decIconSize = 27,
-    this.decIconColor,
-    this.incIconColor,
-    this.onDecrement,
-    this.onIncrement,
-    this.onSubmitted,
-    this.onChanged,
-    this.separateIcons = true,
-    this.numberFieldDecoration,
+    @required TextEditingController controller,
+    Key key,
+    bool enabled = true,
+    ButtonArrangement buttonArrangement = ButtonArrangement.rightEnd,
+    num min = 0,
+    num max = double.infinity,
+    num initialValue = 0,
+    num incDecFactor = 1,
+    bool isInt = true,
+    bool autovalidate = true,
+    bool enableMinMaxClamping = false,
+    InputDecoration numberFieldDecoration,
+    Decoration widgetContainerDecoration = const BoxDecoration(),
+    FormFieldValidator<String> validator,
+    TextStyle style,
+    IconData incIcon = Icons.arrow_drop_up,
+    IconData decIcon = Icons.arrow_drop_down,
+    int fractionDigits = 2,
+    double scaleWidth = 1.0,
+    double scaleHeight = 1.0,
+    double incIconSize = 27,
+    double decIconSize = 27,
+    Color decIconColor,
+    Color incIconColor,
+    DiffIncDecCallBack onDecrement,
+    DiffIncDecCallBack onIncrement,
+    ValueCallBack onSubmitted,
+    ValueCallBack onChanged,
+    bool separateIcons = true,
     Color incDecBgColor = Colors.lightGreen,
-  })  : incIconDecoration = BoxDecoration(
-          color: incDecBgColor,
-          borderRadius: BorderRadius.all(Radius.circular(50)),
-          border: Border.all(
-            color: Colors.black,
-            width: 0.25,
+  }) : super(
+          controller: controller,
+          key: key,
+          enabled: enabled,
+          enableMinMaxClamping: enableMinMaxClamping,
+          buttonArrangement: buttonArrangement,
+          numberFieldDecoration: numberFieldDecoration,
+          widgetContainerDecoration: widgetContainerDecoration,
+          validator: validator,
+          style: style,
+          incIcon: incIcon,
+          decIcon: decIcon,
+          fractionDigits: fractionDigits,
+          scaleHeight: scaleHeight,
+          scaleWidth: scaleWidth,
+          incIconSize: incIconSize,
+          decIconSize: decIconSize,
+          decIconColor: decIconColor,
+          incIconColor: incIconColor,
+          onDecrement: onDecrement,
+          onIncrement: onIncrement,
+          onSubmitted: onSubmitted,
+          onChanged: onChanged,
+          separateIcons: separateIcons,
+          incDecBgColor: incDecBgColor,
+          incIconDecoration: BoxDecoration(
+            color: incDecBgColor,
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+            border: Border.all(
+              color: Colors.black,
+              width: 0.25,
+            ),
           ),
-        ),
-        decIconDecoration = BoxDecoration(
-          color: incDecBgColor,
-          borderRadius: BorderRadius.all(Radius.circular(50)),
-          border: Border.all(
-            color: Colors.black,
-            width: 0.25,
+          decIconDecoration: BoxDecoration(
+            color: incDecBgColor,
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+            border: Border.all(
+              color: Colors.black,
+              width: 0.25,
+            ),
           ),
         );
 }
@@ -478,6 +469,11 @@ enum ButtonArrangement {
   /// Places increment button to the right and decrement button to the left.
   incRightDecLeft,
 }
+
+/// A simple widget that wraps a TextFormField, exposes it as a number field and
+/// adds buttons to increment and decrement the numeric value. Performs some
+/// basic validation, formatting to [fractionDigits] and clamping the values
+/// between [min] and [max] when enabled through [enableMinMaxClamping].
 
 class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// Key to be used for this widget.
