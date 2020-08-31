@@ -708,7 +708,7 @@ class _NumberInputWithIncrementDecrementState
     return <TextInputFormatter>[
       widget.min.isNegative
           ? FilteringTextInputFormatter.allow(
-              RegExp(r'^[-]?[0-9]$'),
+              RegExp(r'[\-]?\d*'),
               replacementString: _controller.text,
             )
           : FilteringTextInputFormatter.digitsOnly
@@ -742,6 +742,7 @@ class _NumberInputWithIncrementDecrementState
             ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             if (widget.buttonArrangement == ButtonArrangement.incLeftDecRight)
               _buildIncrementButton(),
