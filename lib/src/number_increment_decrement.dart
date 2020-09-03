@@ -293,6 +293,12 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
           controller: controller,
           key: key,
           enabled: enabled,
+          min: min,
+          max: max,
+          initialValue: initialValue,
+          incDecFactor: incDecFactor,
+          isInt: isInt,
+          autovalidate: autovalidate,
           enableMinMaxClamping: enableMinMaxClamping,
           buttonArrangement: buttonArrangement,
           widgetContainerDecoration: widgetContainerDecoration,
@@ -676,7 +682,6 @@ class _NumberInputWithIncrementDecrementState
   @override
   void dispose() {
     _debounceTimer?.cancel();
-    _controller.dispose();
     super.dispose();
   }
 
@@ -812,8 +817,8 @@ class _NumberInputWithIncrementDecrementState
     );
   }
 
-  Ink _buildDecrementButton() {
-    return Ink(
+  Widget _buildDecrementButton() {
+    return Container(
       decoration: widget.decIconDecoration ??
           BoxDecoration(
             border: widget.buttonArrangement == ButtonArrangement.leftEnd ||
@@ -824,34 +829,37 @@ class _NumberInputWithIncrementDecrementState
                     bottom: BorderSide(color: Colors.black),
                   ),
           ),
-      child: InkWell(
-        splashColor: widget.incDecBgColor,
-        child: Icon(
-          widget.decIcon,
-          size: widget.decIconSize,
-          color: widget.decIconColor,
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          splashColor: widget.incDecBgColor,
+          child: Icon(
+            widget.decIcon,
+            size: widget.decIconSize,
+            color: widget.decIconColor,
+          ),
+          onTap: !widget.enabled
+              ? null
+              : () {
+                  var currentValue = _tryParse(_controller.text);
+                  // It better to do this check after parsing otherwise decrement
+                  // would raise error.
+                  if (currentValue == null) return;
+                  currentValue = currentValue - widget.incDecFactor;
+                  // always clamp for inc/dec button action.
+                  currentValue = _clampAndUpdate(currentValue, true);
+                  // decrement callback
+                  if (widget.onDecrement != null) {
+                    widget.onDecrement(currentValue);
+                  }
+                },
         ),
-        onTap: !widget.enabled
-            ? null
-            : () {
-                var currentValue = _tryParse(_controller.text);
-                // It better to do this check after parsing otherwise decrement
-                // would raise error.
-                if (currentValue == null) return;
-                currentValue = currentValue - widget.incDecFactor;
-                // always clamp for inc/dec button action.
-                currentValue = _clampAndUpdate(currentValue, true);
-                // decrement callback
-                if (widget.onDecrement != null) {
-                  widget.onDecrement(currentValue);
-                }
-              },
       ),
     );
   }
 
-  Ink _buildIncrementButton() {
-    return Ink(
+  Widget _buildIncrementButton() {
+    return Container(
       decoration: widget.incIconDecoration ??
           BoxDecoration(
             border: widget.buttonArrangement == ButtonArrangement.leftEnd ||
@@ -864,28 +872,31 @@ class _NumberInputWithIncrementDecrementState
                     bottom: BorderSide(color: Colors.black),
                   ),
           ),
-      child: InkWell(
-        splashColor: widget.incDecBgColor,
-        child: Icon(
-          widget.incIcon,
-          size: widget.incIconSize,
-          color: widget.incIconColor,
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          splashColor: widget.incDecBgColor,
+          child: Icon(
+            widget.incIcon,
+            size: widget.incIconSize,
+            color: widget.incIconColor,
+          ),
+          onTap: !widget.enabled
+              ? null
+              : () {
+                  var currentValue = _tryParse(_controller.text);
+                  // It better to do this check after parsing otherwise increment
+                  // would raise error.
+                  if (currentValue == null) return;
+                  currentValue = currentValue + widget.incDecFactor;
+                  // always clamp for inc/dec button action.
+                  currentValue = _clampAndUpdate(currentValue, true);
+                  // decrement callback
+                  if (widget.onIncrement != null) {
+                    widget.onIncrement(currentValue);
+                  }
+                },
         ),
-        onTap: !widget.enabled
-            ? null
-            : () {
-                var currentValue = _tryParse(_controller.text);
-                // It better to do this check after parsing otherwise increment
-                // would raise error.
-                if (currentValue == null) return;
-                currentValue = currentValue + widget.incDecFactor;
-                // always clamp for inc/dec button action.
-                currentValue = _clampAndUpdate(currentValue, true);
-                // decrement callback
-                if (widget.onIncrement != null) {
-                  widget.onIncrement(currentValue);
-                }
-              },
       ),
     );
   }
