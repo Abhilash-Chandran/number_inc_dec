@@ -130,6 +130,19 @@ class MyApp extends StatelessWidget {
                       print('OnSubmitted value: $newValue');
                     },
                   ),
+                  Text('onChanged callback'),
+                  NumberInputWithIncrementDecrement(
+                    key: Key("testInput"),
+                    controller: TextEditingController(),
+                    isInt: true,
+                    incDecFactor: 2,
+                    min: 4,
+                    max: 8,
+                    initialValue: 5,
+                    onChanged: (newValue) {
+                      print('OnChanged value: $newValue');
+                    },
+                  ),
                   Text('Decimal field with minMax clamping enabled'),
                   NumberInputWithIncrementDecrement(
                     key: Key("testInput"),
@@ -150,6 +163,18 @@ class MyApp extends StatelessWidget {
                     incDecFactor: 2.5,
                     min: -2.5,
                     enableMinMaxClamping: false,
+                    initialValue: 0,
+                    onSubmitted: (newValue) {
+                      print('OnSubmitted value: $newValue');
+                    },
+                  ),
+                  Text('Decimal field with auto validate disabled'),
+                  NumberInputWithIncrementDecrement(
+                    controller: TextEditingController(),
+                    isInt: false,
+                    incDecFactor: 2.5,
+                    min: -2.5,
+                    autovalidate: false,
                     initialValue: 0,
                     onSubmitted: (newValue) {
                       print('OnSubmitted value: $newValue');

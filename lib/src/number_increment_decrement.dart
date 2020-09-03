@@ -676,6 +676,7 @@ class _NumberInputWithIncrementDecrementState
   @override
   void dispose() {
     _debounceTimer?.cancel();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -684,7 +685,9 @@ class _NumberInputWithIncrementDecrementState
     _debounceTimer = Timer(Duration(milliseconds: 750), () {
       var parsedAndClamped =
           _clampAndUpdate(_tryParse(newValue), widget.enableMinMaxClamping);
-      if (widget.onChanged != null) {
+      if (widget.onChanged != null &&
+          parsedAndClamped != null &&
+          _formFieldKey.currentState.isValid) {
         widget.onChanged(parsedAndClamped);
       }
     });
@@ -693,7 +696,9 @@ class _NumberInputWithIncrementDecrementState
   void _onSubmitted(String newValue) {
     var parsedAndClamped =
         _clampAndUpdate(_tryParse(newValue), widget.enableMinMaxClamping);
-    if (this.widget.onSubmitted != null) {
+    if (this.widget.onSubmitted != null &&
+        parsedAndClamped != null &&
+        _formFieldKey.currentState.isValid) {
       this.widget.onSubmitted(parsedAndClamped);
     }
   }
@@ -717,10 +722,13 @@ class _NumberInputWithIncrementDecrementState
 
   String _defaultValidator(String value) {
     num parsed = num.tryParse(value);
-    if (parsed == null) {
+    if (parsed == null && value != null && (value.isNotEmpty && value != '-')) {
+      print('validator value is : $value with ${value.length}');
+
       return '$value is an invalid ${widget.isInt ? 'integer' : 'decimal'} value.';
-    } else if (!widget.enableMinMaxClamping && parsed < widget.min ||
-        parsed > widget.max) {
+    } else if (parsed != null &&
+        !widget.enableMinMaxClamping &&
+        (parsed < widget.min || parsed > widget.max)) {
       return 'Value should be between ${widget.min} and ${widget.max}';
     }
     return null;
@@ -742,7 +750,7 @@ class _NumberInputWithIncrementDecrementState
             ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             if (widget.buttonArrangement == ButtonArrangement.incLeftDecRight)
               _buildIncrementButton(),
@@ -827,6 +835,9 @@ class _NumberInputWithIncrementDecrementState
             ? null
             : () {
                 var currentValue = _tryParse(_controller.text);
+                // It better to do this check after parsing otherwise decrement
+                // would raise error.
+                if (currentValue == null) return;
                 currentValue = currentValue - widget.incDecFactor;
                 // always clamp for inc/dec button action.
                 currentValue = _clampAndUpdate(currentValue, true);
@@ -864,6 +875,9 @@ class _NumberInputWithIncrementDecrementState
             ? null
             : () {
                 var currentValue = _tryParse(_controller.text);
+                // It better to do this check after parsing otherwise increment
+                // would raise error.
+                if (currentValue == null) return;
                 currentValue = currentValue + widget.incDecFactor;
                 // always clamp for inc/dec button action.
                 currentValue = _clampAndUpdate(currentValue, true);
