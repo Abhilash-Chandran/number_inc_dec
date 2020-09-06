@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -190,7 +191,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
     this.enabled = true,
     this.buttonArrangement = ButtonArrangement.rightEnd,
     this.min = 0,
-    this.max = double.infinity,
+    this.max = double.maxFinite,
     this.initialValue = 0,
     this.incDecFactor = 1,
     this.isInt = true,
@@ -296,8 +297,71 @@ class _NumberInputWithIncrementDecrementState
         !widget.enableMinMaxClamping &&
         (parsed < widget.min || parsed > widget.max)) {
       return 'Value should be between ${widget.min} and ${widget.max}';
+    } else if (parsed != null && _stepMismatch(parsed)) {
+      // based on html input implementation
+      // https://github.com/chromium/chromium/blob/f84a9127dd42298eaca617d6838d5715bada744e/third_party/blink/renderer/core/html/forms/input_type.cc#L455
+      num candidate1 = _clamByStep(parsed);
+      num candidate2 = candidate1 < parsed
+          ? candidate1 + widget.incDecFactor
+          : candidate1 - widget.incDecFactor;
+      if (candidate2.isInfinite ||
+          candidate2 < widget.min ||
+          candidate2 > widget.max) {
+        return 'Invalid Value.\n The nearest valid value is $candidate1';
+      }
+      if (candidate1 < candidate2) {
+        return 'Invalid Value.\n Two nearest valid values: $candidate1 and $candidate2';
+      }
+      return 'Invalid Value.\n Two nearest valid values: $candidate2 and $candidate1';
     }
     return null;
+  }
+
+  /// This is a relaxed reImplementation of stepMismatch used in Chromium for
+  /// input type=number element.
+  ///
+  /// Check here: in step_range.cc
+  /// https://github.com/chromium/chromium/blob/60b6acc12a2369e970f4e2fa2e3845a8e2f85de7/third_party/blink/renderer/core/html/forms/step_range.cc#L146
+  bool _stepMismatch(num newValue) {
+    // In the actual of chrome implementation it uses the default value as the
+    // fall back hence it is followed here for correctness.
+    num stepBase = widget.min ?? widget.initialValue ?? 0;
+    num value = (newValue - stepBase).abs();
+    if (value.isInfinite) return false;
+    // For time being ignoring the system limit of double.
+    num remainder = (value -
+            widget.incDecFactor * (value / widget.incDecFactor).roundToDouble())
+        .abs();
+
+    num acceptableError = widget.isInt ? 0 : widget.incDecFactor / 153;
+    return remainder > acceptableError &&
+        remainder < (widget.incDecFactor - acceptableError);
+  }
+
+  num _roundByStep(num value) {
+    return widget.min +
+        ((value - widget.min) / widget.incDecFactor).round() *
+            widget.incDecFactor;
+  }
+
+  /// ReImplementation from
+  ///
+  /// https://github.com/chromium/chromium/blob/60b6acc12a2369e970f4e2fa2e3845a8e2f85de7/third_party/blink/renderer/core/html/forms/step_range.cc#L81
+  num _clamByStep(num value) {
+    num inRangeValue = value.clamp(widget.min, widget.max);
+
+    // Rounds inRangeValue to stepBase + N * step.
+    num roundedByStep = _roundByStep(inRangeValue);
+    num clampedValue = roundedByStep > widget.max
+        ? roundedByStep - widget.incDecFactor
+        : (roundedByStep < widget.min)
+            ? roundedByStep + widget.incDecFactor
+            : roundedByStep;
+
+    // clampedValue can be outside of [min, max] if incDecFactor is huge.
+    if (clampedValue < widget.min || clampedValue > widget.max)
+      return inRangeValue;
+    return clampedValue;
   }
 
   @override
