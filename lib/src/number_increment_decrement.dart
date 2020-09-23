@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -307,12 +306,12 @@ class _NumberInputWithIncrementDecrementState
       if (candidate2.isInfinite ||
           candidate2 < widget.min ||
           candidate2 > widget.max) {
-        return 'Invalid Value.\n The nearest valid value is $candidate1';
+        return 'Invalid Value.\n The nearest valid value is ${numToString(candidate1)}';
       }
       if (candidate1 < candidate2) {
-        return 'Invalid Value.\n Two nearest valid values: $candidate1 and $candidate2';
+        return 'Invalid Value.\n Two nearest valid values: ${numToString(candidate1)} and ${numToString(candidate2)}';
       }
-      return 'Invalid Value.\n Two nearest valid values: $candidate2 and $candidate1';
+      return 'Invalid Value.\n Two nearest valid values: ${numToString(candidate2)} and ${numToString(candidate1)}';
     }
     return null;
   }
@@ -534,20 +533,25 @@ class _NumberInputWithIncrementDecrementState
 
   num _clampAndUpdate(var currentValue, bool clamp) {
     // Perform clamping only if explicitly enabled.
-    currentValue =
-        clamp ? currentValue?.clamp(widget.min, widget.max) : currentValue;
+    currentValue = clamp ? _clamByStep(currentValue) : currentValue;
     // Covert the number to string and apply fraction restriction if necessary.
     // Also handles null cases when the parsing fails.
-    var currentValAsStr = (widget.isInt
+    var currentValAsStr = numToString(currentValue);
+    // Sets the text to the controller and corrects the cursor position.
+    _controller.value = TextEditingValue(
+      text: currentValAsStr,
+      selection: TextSelection.fromPosition(
+        TextPosition(offset: currentValAsStr?.length ?? 0),
+      ),
+    );
+    return currentValue;
+  }
+
+  String numToString(currentValue) {
+    return (widget.isInt
             ? currentValue?.toString()
             : currentValue?.toStringAsFixed(widget.fractionDigits)) ??
         _controller.text ??
         '';
-    // Sets the text to the controller and corrects the cursor position.
-    _controller.value = TextEditingValue(
-      text: currentValAsStr,
-      selection: TextSelection.collapsed(offset: currentValAsStr?.length ?? 0),
-    );
-    return currentValue;
   }
 }
