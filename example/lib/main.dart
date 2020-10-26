@@ -28,6 +28,19 @@ class MyApp extends StatelessWidget {
                 padding: EdgeInsets.all(12),
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  NumberInputWithIncrementDecrement(
+                    key: Key("testInput"),
+                    controller: TextEditingController(),
+                    isInt: true,
+                    incDecFactor: 2,
+                    min: 4,
+                    max: 8,
+                    enableMinMaxClamping: true,
+                    initialValue: 5,
+                    onSubmitted: (newValue) {
+                      print(newValue);
+                    },
+                  ),
                   Text('Default appearance'),
                   Example1(),
                   Text('Setting minimum value -2 and maximum value 3'),

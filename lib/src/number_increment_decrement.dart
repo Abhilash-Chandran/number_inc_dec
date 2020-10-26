@@ -249,12 +249,12 @@ class _NumberInputWithIncrementDecrementState
   void _onChanged(String newValue) {
     _debounceTimer?.cancel();
     _debounceTimer = Timer(Duration(milliseconds: 750), () {
-      var parsedAndClamped =
-          _clampAndUpdate(_tryParse(newValue), widget.enableMinMaxClamping);
-      if (widget.onChanged != null &&
-          parsedAndClamped != null &&
-          _formFieldKey.currentState.isValid) {
-        widget.onChanged(parsedAndClamped);
+      if (newValue != null && _defaultValidator(newValue) == null) {
+        var parsedAndClamped =
+            _clampAndUpdate(_tryParse(newValue), widget.enableMinMaxClamping);
+        if (widget.onChanged != null && parsedAndClamped != null) {
+          widget.onChanged(parsedAndClamped);
+        }
       }
     });
   }
@@ -306,12 +306,12 @@ class _NumberInputWithIncrementDecrementState
       if (candidate2.isInfinite ||
           candidate2 < widget.min ||
           candidate2 > widget.max) {
-        return 'Invalid Value.\n The nearest valid value is ${numToString(candidate1)}';
+        return 'Invalid Value.\n Nearest valid value: ${numToString(candidate1)}';
       }
       if (candidate1 < candidate2) {
-        return 'Invalid Value.\n Two nearest valid values: ${numToString(candidate1)} and ${numToString(candidate2)}';
+        return 'Invalid Value.\n Nearest valid values: ${numToString(candidate1)} and ${numToString(candidate2)}';
       }
-      return 'Invalid Value.\n Two nearest valid values: ${numToString(candidate2)} and ${numToString(candidate1)}';
+      return 'Invalid Value.\n Nearest valid values: ${numToString(candidate2)} and ${numToString(candidate1)}';
     }
     return null;
   }
@@ -533,7 +533,9 @@ class _NumberInputWithIncrementDecrementState
 
   num _clampAndUpdate(var currentValue, bool clamp) {
     // Perform clamping only if explicitly enabled.
-    currentValue = clamp ? _clamByStep(currentValue) : currentValue;
+    currentValue = clamp && currentValue != null
+        ? _clamByStep(currentValue)
+        : currentValue;
     // Covert the number to string and apply fraction restriction if necessary.
     // Also handles null cases when the parsing fails.
     var currentValAsStr = numToString(currentValue);

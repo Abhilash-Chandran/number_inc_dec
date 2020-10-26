@@ -431,7 +431,7 @@ void main() {
             key: Key("testInput"),
             controller: TextEditingController(),
             isInt: false,
-            incDecFactor: 0.4,
+            incDecFactor: 0.5,
             min: 4.5,
             max: 44.5,
             enableMinMaxClamping: true,
@@ -509,10 +509,10 @@ void main() {
     expect(valueSubmitted, 6);
 
     // entering a value and hitting done should trigger callback
-    await tester.enterText(find.byKey(Key("testInput")), "7");
+    await tester.enterText(find.byKey(Key("testInput")), "8");
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pump();
-    expect(valueSubmitted, 7);
+    expect(valueSubmitted, 8);
 
     // entering a value out of range should not be allowed and corrects to
     // largest allowed
@@ -528,12 +528,19 @@ void main() {
     await tester.pump();
     expect(valueSubmitted, 4);
 
+    // entering a value out of inc/dec step range should not be allowed and corrects
+    // to largest allowed
+    await tester.enterText(find.byKey(Key("testInput")), "7");
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    expect(valueSubmitted, 8);
+
     // following needs to be un commented once the relevant issue is solved.
     // tap increment button once and ensure onSubmitted is NOT called
     await tester.tap(find.byIcon(Icons.arrow_drop_up));
     await tester.pump();
-    expect(valueSubmitted, 4);
-    final updatedNumber = find.widgetWithText(TextFormField, '6');
+    expect(valueSubmitted, 8);
+    final updatedNumber = find.widgetWithText(TextFormField, '8');
     expect(updatedNumber, findsOneWidget);
   });
 
@@ -547,7 +554,7 @@ void main() {
             key: Key("testInput"),
             controller: TextEditingController(),
             isInt: false,
-            incDecFactor: 0.4,
+            incDecFactor: 0.5,
             min: 4.5,
             max: 44.5,
             initialValue: 10.0,
