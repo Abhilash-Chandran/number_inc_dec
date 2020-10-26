@@ -187,7 +187,7 @@ class MyApp extends StatelessWidget {
                     isInt: false,
                     incDecFactor: 2.5,
                     min: -2.5,
-                    autovalidate: false,
+                    autovalidateMode: AutovalidateMode.disabled,
                     initialValue: 0,
                     onSubmitted: (newValue) {
                       print('OnSubmitted value: $newValue');

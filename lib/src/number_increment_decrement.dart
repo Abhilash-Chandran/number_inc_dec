@@ -72,9 +72,9 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// Defaults to true.
   final bool isInt;
 
-  /// Passed to [TextFormField.autovalidate]
-  /// defaults to [false]
-  final bool autovalidate;
+  /// Passed to [TextFormField.autovalidateMode]
+  /// defaults to [AutovalidateMode.always]
+  final AutovalidateMode autovalidateMode;
 
   /// Setting this to [true] clamps the entered value to the [min] and [max]
   /// if all the validations are successful.
@@ -194,8 +194,8 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
     this.initialValue = 0,
     this.incDecFactor = 1,
     this.isInt = true,
-    this.autovalidate = true,
-    this.enableMinMaxClamping = false,
+    this.autovalidateMode = AutovalidateMode.always,
+    this.enableMinMaxClamping = true,
     this.numberFieldDecoration,
     this.widgetContainerDecoration,
     this.validator,
@@ -395,7 +395,7 @@ class _NumberInputWithIncrementDecrementState
                 style: widget.style,
                 enabled: widget.enabled,
                 textAlign: TextAlign.center,
-                autovalidate: widget.autovalidate,
+                autovalidateMode: widget.autovalidateMode,
                 decoration: widget.numberFieldDecoration ??
                     InputDecoration(
                       border: OutlineInputBorder(

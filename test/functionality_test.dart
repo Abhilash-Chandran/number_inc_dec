@@ -255,13 +255,16 @@ void main() {
     expect(decCompleter.isCompleted, isTrue);
     expect(await decCompleter.future, equals(7));
   });
-  testWidgets('Test autoValidate = false', (WidgetTester tester) async {
+  testWidgets(
+      'Test autovalidateMode: AutovalidateMode.disabled and enableMinMaxClamping: false,',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
           body: NumberInputWithIncrementDecrement(
             controller: TextEditingController(),
-            autovalidate: false,
+            autovalidateMode: AutovalidateMode.disabled,
+            enableMinMaxClamping: false,
             initialValue: 1,
             min: 1,
             max: 10,
@@ -596,7 +599,9 @@ void main() {
     // Wait for internal debounce duration.
     await tester.pump(Duration(milliseconds: 750));
     // Ensure onChanged is not called when validation error exists.
-    expect(valueChanged, 44.5);
+    // expect 4.5 because enableMinMaxClamping is by default true
+    // expect(valueChanged, 44.5);
+    expect(valueChanged, 4.5);
   });
   testWidgets('Test onChanged callback for int', (WidgetTester tester) async {
     int valueChanged = 15;
@@ -649,7 +654,9 @@ void main() {
     // Wait for internal debounce duration.
     await tester.pump(Duration(milliseconds: 750));
     // ensure that onChanged is not called when validation error still exists.
-    expect(valueChanged, 40);
+    // expect 4 because enableMinMaxClamping is by default true
+    // expect(valueChanged, 40);
+    expect(valueChanged, 4);
   });
 
   testWidgets('Test enableMinMaxClamping with default min-max',
