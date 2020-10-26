@@ -15,7 +15,7 @@ Please check the [example](https://pub.dev/packages/number_inc_dec/example) sect
 
 Some major changes are introduced. I am bumping the version is 1.x.x because following changes  may break existing users. Please do report for any issues in the repository, which I will try to address.
 
-1. `autovalidate` has been replaced with `autovalidateMode`.  More details in TextFormField [docs]([TextFormField class - material library - Dart API](https://api.flutter.dev/flutter/material/TextFormField-class.html))
+1. `autovalidate` has been replaced with `autovalidateMode`.  More details in TextFormField [docs](https://api.flutter.dev/flutter/material/TextFormField-class.html)
    
    * In your code replace `autovalidate: true` to `autovalidateMode: AutovalidateMode.always` 
    
