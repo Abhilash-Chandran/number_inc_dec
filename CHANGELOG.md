@@ -1,3 +1,17 @@
+## [1.0.0] - 27October2020
+
+* `autovalidate` has been replaced with `autovalidateMode`.  More details in TextFormField [docs]([TextFormField class - material library - Dart API](https://api.flutter.dev/flutter/material/TextFormField-class.html))
+   
+   * In your code replace `autovalidate: true` to `autovalidateMode: AutovalidateMode.always` 
+   
+   * In your code replace `autovalidate: false` to `autovalidateMode: AutovalidateMode.disabled`
+
+* `autovalidateMode` is by default set to `always`. The morale behind this is to perform validations similar to html's `<input type='number'>` tag kind validation performed in chrome. Its not upto the specification but ateleast mimics to its best.
+
+* New attribute `enableMinMaxClamping` is created to and handles the behaviour of clamping the values to `min` and `max` when provided.  For example if `min` is -2 and user enter -5 this is autocorrected to -2. By default this is attribute is set to `true`.
+
+* New attribute `onChanged` is introduced which when provided will be called whenever the user edits the value. Note this callback will not be called if any validation error exists.
+
 
 ## [0.6.6] - 25August2020
 * Improve code coverage
