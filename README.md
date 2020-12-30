@@ -3,6 +3,9 @@
 [![pub package](https://img.shields.io/pub/v/number_inc_dec.svg?label=number_inc_dec)](https://pub.dev/packages/number_inc_dec)
 [![codecov](https://codecov.io/gh/Abhilash-Chandran/number_inc_dec/branch/master/graph/badge.svg)](https://codecov.io/gh/Abhilash-Chandran/number_inc_dec)
 <a href="https://www.buymeacoffee.com/abhilashC" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee" height="25px" ></a>
+
+> <b><i>📢 Dear Friend, I am currenytly busy with my master thesis until April-2021 👨‍🎓. So please do expect a delay for the new release. I will try to work on this package when I find some free time. There is one major issue [#23](https://github.com/Abhilash-Chandran/number_inc_dec/issues/23) which I have partially fixed and still isn't functional all round.  I am trying to make it work as a number field in chrome browser. If you are interested in taking up this issue forward, I am glad to help along side. Thank you for understanding.</i></b>
+
 # number_inc_dec
 
 A flutter widget that accepts numbers along with buttons to increment and decrement. This is a simple TextFormField with buttons and logic to handle factored increments/decrements and with some additional properties like minimum and maximum allowed value. The factor of incrementing/decrementing is also configurable.
