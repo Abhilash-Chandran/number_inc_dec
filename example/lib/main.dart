@@ -25,15 +25,28 @@ class MyApp extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView(
-                // padding: EdgeInsets.all(12),
+                padding: EdgeInsets.all(12),
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  NumberInputWithIncrementDecrement(
+                    key: Key("testInput"),
+                    controller: TextEditingController(),
+                    isInt: true,
+                    incDecFactor: 2,
+                    min: 4,
+                    max: 8,
+                    enableMinMaxClamping: true,
+                    initialValue: 5,
+                    onSubmitted: (newValue) {
+                      print(newValue);
+                    },
+                  ),
                   Text('Default appearance'),
                   Example1(),
                   Text('Setting minimum value -2 and maximum value 3'),
                   Example2(),
                   Divider(),
-                  Text('Using double values with incDecFator=0.35'),
+                  Text('Using double values with incDecFactor=0.35'),
                   Example3(),
                   Text('Prefabbed widget: Squared Buttons'),
                   NumberInputPrefabbed.squaredButtons(
@@ -84,7 +97,7 @@ class MyApp extends StatelessWidget {
                   Example4(),
                   Text('Different border decoration'),
                   Example5(),
-                  Text('Different icons & formfield decoration'),
+                  Text('Different icons & FormField decoration'),
                   Example6(),
                   Text('Height scaled to 0.75'),
                   Example7(),
@@ -92,11 +105,12 @@ class MyApp extends StatelessWidget {
                   Example8(),
                   Text('Customized Icon shape and size.'),
                   Example9(),
-                  Text('Passing callbacks onIncrment and onDecrement'),
+                  Text('Passing callbacks onIncrement and onDecrement'),
                   NumberInputWithIncrementDecrement(
                     controller: TextEditingController(),
                     onIncrement: (num newlyIncrementedValue) {
-                      print('Newly incrmented value is $newlyIncrementedValue');
+                      print(
+                          'Newly incremented value is $newlyIncrementedValue');
                     },
                     onDecrement: (num newlyDecrementedValue) {
                       print(
@@ -125,6 +139,56 @@ class MyApp extends StatelessWidget {
                     min: 4,
                     max: 8,
                     initialValue: 5,
+                    onSubmitted: (newValue) {
+                      print('OnSubmitted value: $newValue');
+                    },
+                  ),
+                  Text('onChanged callback'),
+                  NumberInputWithIncrementDecrement(
+                    key: Key("testInput"),
+                    controller: TextEditingController(),
+                    isInt: true,
+                    incDecFactor: 2,
+                    min: 4,
+                    max: 8,
+                    initialValue: 5,
+                    onChanged: (newValue) {
+                      print('OnChanged value: $newValue');
+                    },
+                  ),
+                  Text('Decimal field with minMax clamping enabled'),
+                  NumberInputWithIncrementDecrement(
+                    key: Key("testInput"),
+                    controller: TextEditingController(),
+                    isInt: false,
+                    incDecFactor: 2.5,
+                    min: -2.5,
+                    enableMinMaxClamping: true,
+                    initialValue: 0,
+                    onSubmitted: (newValue) {
+                      print('OnSubmitted value: $newValue');
+                    },
+                  ),
+                  Text('Decimal field with minMax clamping disabled'),
+                  NumberInputWithIncrementDecrement(
+                    controller: TextEditingController(),
+                    isInt: false,
+                    incDecFactor: 2.5,
+                    min: -2.5,
+                    enableMinMaxClamping: false,
+                    initialValue: 0,
+                    onSubmitted: (newValue) {
+                      print('OnSubmitted value: $newValue');
+                    },
+                  ),
+                  Text('Decimal field with auto validate disabled'),
+                  NumberInputWithIncrementDecrement(
+                    controller: TextEditingController(),
+                    isInt: false,
+                    incDecFactor: 2.5,
+                    min: -2.5,
+                    autovalidateMode: AutovalidateMode.disabled,
+                    initialValue: 0,
                     onSubmitted: (newValue) {
                       print('OnSubmitted value: $newValue');
                     },
