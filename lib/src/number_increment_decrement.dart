@@ -290,7 +290,6 @@ class _NumberInputWithIncrementDecrementState
     num parsed = num.tryParse(value);
     if (parsed == null && value != null && (value.isNotEmpty && value != '-')) {
       print('validator value is : $value with ${value.length}');
-
       return '$value is an invalid ${widget.isInt ? 'integer' : 'decimal'} value.';
     } else if (parsed != null &&
         !widget.enableMinMaxClamping &&
@@ -306,12 +305,12 @@ class _NumberInputWithIncrementDecrementState
       if (candidate2.isInfinite ||
           candidate2 < widget.min ||
           candidate2 > widget.max) {
-        return 'Invalid Value.\n Nearest valid value: ${numToString(candidate1)}';
+        return 'Invalid ! Nearest valid value: ${numToString(candidate1)}';
       }
       if (candidate1 < candidate2) {
-        return 'Invalid Value.\n Nearest valid values: ${numToString(candidate1)} and ${numToString(candidate2)}';
+        return 'Invalid ! Nearest valid values: ${numToString(candidate1)} and ${numToString(candidate2)}';
       }
-      return 'Invalid Value.\n Nearest valid values: ${numToString(candidate2)} and ${numToString(candidate1)}';
+      return 'Invalid ! Nearest valid values: ${numToString(candidate2)} and ${numToString(candidate1)}';
     }
     return null;
   }
