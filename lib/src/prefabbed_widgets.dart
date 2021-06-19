@@ -370,24 +370,24 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
           onChanged: onChanged,
           separateIcons: separateIcons,
           incDecBgColor: incDecBgColor,
-          numberFieldDecoration:
-              buttonArrangement == ButtonArrangement.rightEnd ||
+          numberFieldDecoration: numberFieldDecoration ??
+                  buttonArrangement == ButtonArrangement.rightEnd ||
                       buttonArrangement == ButtonArrangement.leftEnd
-                  ? InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius:
-                            buttonArrangement == ButtonArrangement.rightEnd
-                                ? BorderRadius.only(
-                                    topLeft: Radius.circular(5),
-                                    bottomLeft: Radius.circular(5),
-                                  )
-                                : BorderRadius.only(
-                                    topRight: Radius.circular(5),
-                                    bottomRight: Radius.circular(5),
-                                  ),
-                      ),
-                    )
-                  : null,
+              ? InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius:
+                        buttonArrangement == ButtonArrangement.rightEnd
+                            ? BorderRadius.only(
+                                topLeft: Radius.circular(5),
+                                bottomLeft: Radius.circular(5),
+                              )
+                            : BorderRadius.only(
+                                topRight: Radius.circular(5),
+                                bottomRight: Radius.circular(5),
+                              ),
+                  ),
+                )
+              : null,
           incIconDecoration: BoxDecoration(
             color: incDecBgColor,
             borderRadius: buttonArrangement == ButtonArrangement.rightEnd
