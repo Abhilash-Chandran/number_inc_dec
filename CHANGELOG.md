@@ -1,4 +1,4 @@
-## [1.0.0] - 27October2020
+## [0.7.0] - 19June2021
 
 * `autovalidate` has been replaced with `autovalidateMode`.  More details in TextFormField [docs]([TextFormField class - material library - Dart API](https://api.flutter.dev/flutter/material/TextFormField-class.html))
    
@@ -12,6 +12,17 @@
 
 * New attribute `onChanged` is introduced which when provided will be called whenever the user edits the value. Note this callback will not be called if any validation error exists.
 
+* By default the numbers will be validated for stepped increments like in browser and suggest valid nearest possible values. The intention is to mimic the behaviour of number field in Chrome.
+
+* Fixes the following bugs.
+   - ["autovalidate" is deprecated. Use "autovalidateMode" parameter instead.](https://github.com/Abhilash-Chandran/number_inc_dec/issues/31)
+   - [Validation errors causes inc/dec button decoration to displace](https://github.com/Abhilash-Chandran/number_inc_dec/issues/29)
+   - [Entering negative numbers when text editing is not possible](https://github.com/Abhilash-Chandran/number_inc_dec/issues/27)
+   - [ClampAndUpdate inconsistent while editing.](https://github.com/Abhilash-Chandran/number_inc_dec/issues/26)
+   - [NumberInputPrefabbed class unnecessarily re-declares attributes](https://github.com/Abhilash-Chandran/number_inc_dec/issues/25)
+   - [onSubmitted callback doesn't update the controller](https://github.com/Abhilash-Chandran/number_inc_dec/issues/24)
+   - [While editing the numbers manually the incDecFactor is not considered.](https://github.com/Abhilash-Chandran/number_inc_dec/issues/23)
+   - [NumberInputPrefabbed.roundedEdgeButtons doesnt allow overriding the numberFieldDecoration property.](https://github.com/Abhilash-Chandran/number_inc_dec/issues/34)
 
 ## [0.6.6] - 25August2020
 * Improve code coverage

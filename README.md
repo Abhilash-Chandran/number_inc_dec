@@ -11,9 +11,9 @@ Please check the [example](https://pub.dev/packages/number_inc_dec/example) sect
 
 > If you like this package give it a thumbs-up 👍.
 
-## Breaking Changes in v1.x.x
+## Breaking Changes in v0.7.x
 
-Some major changes are introduced. I am bumping the version is 1.x.x because following changes  may break existing users. Please do report for any issues in the repository, which I will try to address.
+Some major changes are introduced. I am bumping the version to 0.7.x because following changes  may break existing users. Please do report for any issues in the repository, which I will try to address.
 
 1. `autovalidate` has been replaced with `autovalidateMode`.  More details in TextFormField [docs](https://api.flutter.dev/flutter/material/TextFormField-class.html)
    
@@ -21,11 +21,13 @@ Some major changes are introduced. I am bumping the version is 1.x.x because fol
    
    * In your code replace `autovalidate: false` to `autovalidateMode: AutovalidateMode.disabled`
 
-2. `autovalidateMode` is by default set to `always`. The morale behind this is to perform validations similar to html's `<input type='number'>` tag kind validation performed in chrome. Its not upto the specification but ateleast mimics to its best.
+2. `autovalidateMode` is by default set to `always`. The morale behind this is to perform validations similar to html's `<input type='number'>` tag kind validation performed in chrome. Its not upto the specification but at least mimics to its best.
 
-3. New attribute `enableMinMaxClamping` is created to and handles the behaviour of clamping the values to `min` and `max` when provided.  For example if `min` is -2 and user enter -5 this is autocorrected to -2. By default this is attribute is set to `true`.
+3. New attribute `enableMinMaxClamping` is created to and handles the behaviour of clamping the values to `min` and `max` when provided.  For example if `min` is -2 and user enter -5 this is auto-corrected to -2. By default this is attribute is set to `true`.
 
 4. New attribute `onChanged` is introduced which when provided will be called whenever the user edits the value. Note this callback will not be called if any validation error exists.
+
+5. By default the numbers will be validated for stepped increments like in browser and suggest valid nearest possible values. The intention is to mimic the behaviour of number field in Chrome.
 
 ## Getting Started
 
