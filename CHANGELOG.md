@@ -1,3 +1,6 @@
+## [0.8.0_null_safety] - 22June2021
+* Migrated to null safety
+
 ## [0.7.0] - 19June2021
 
 * `autovalidate` has been replaced with `autovalidateMode`.  More details in TextFormField [docs]([TextFormField class - material library - Dart API](https://api.flutter.dev/flutter/material/TextFormField-class.html))

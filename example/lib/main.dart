@@ -205,7 +205,7 @@ class MyApp extends StatelessWidget {
 
 class Example9 extends StatelessWidget {
   const Example9({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -244,7 +244,7 @@ class Example9 extends StatelessWidget {
 
 class Example7 extends StatelessWidget {
   const Example7({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -260,7 +260,7 @@ class Example7 extends StatelessWidget {
 
 class Example8 extends StatelessWidget {
   const Example8({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -276,7 +276,7 @@ class Example8 extends StatelessWidget {
 
 class Example6 extends StatelessWidget {
   const Example6({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -300,7 +300,7 @@ class Example6 extends StatelessWidget {
 
 class Example5 extends StatelessWidget {
   const Example5({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -318,7 +318,7 @@ class Example5 extends StatelessWidget {
 
 class Example4 extends StatelessWidget {
   const Example4({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -332,7 +332,7 @@ class Example4 extends StatelessWidget {
 
 class Example3 extends StatelessWidget {
   const Example3({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -347,7 +347,7 @@ class Example3 extends StatelessWidget {
 
 class Example2 extends StatelessWidget {
   const Example2({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -362,7 +362,7 @@ class Example2 extends StatelessWidget {
 
 class Example1 extends StatelessWidget {
   const Example1({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
