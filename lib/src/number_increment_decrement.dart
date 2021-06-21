@@ -185,7 +185,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
 
   /// Alignment of the number in the text field.
   /// Defaults to [TextAlign.center]
-  final TextAlign textAlign = TextAlign.center;
+  final TextAlign textAlign;
 
   /// {@macro core_widget_doc}
   NumberInputWithIncrementDecrement({
@@ -221,7 +221,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
     this.decIconDecoration,
     this.incIconDecoration,
     this.incDecBgColor,
-    this.textAlign,
+    this.textAlign = TextAlign.center,
   });
 
   @override
