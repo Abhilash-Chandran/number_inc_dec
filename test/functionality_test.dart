@@ -426,7 +426,7 @@ void main() {
 
   testWidgets('Test onSubmitted callback for double',
       (WidgetTester tester) async {
-    double valueSubmitted = 15;
+    num valueSubmitted = 15;
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
@@ -479,7 +479,7 @@ void main() {
     expect(valueSubmitted, 4.5);
   });
   testWidgets('Test onSubmitted callback for int', (WidgetTester tester) async {
-    int valueSubmitted = 6;
+    num valueSubmitted = 6;
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
@@ -549,7 +549,7 @@ void main() {
 
   testWidgets('Test onChanged callback for double',
       (WidgetTester tester) async {
-    double valueChanged = 15;
+    num valueChanged = 15;
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
@@ -604,7 +604,7 @@ void main() {
     expect(valueChanged, 4.5);
   });
   testWidgets('Test onChanged callback for int', (WidgetTester tester) async {
-    int valueChanged = 15;
+    num valueChanged = 15;
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(

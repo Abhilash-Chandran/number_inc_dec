@@ -38,8 +38,8 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// ![NumberInputPrefabbed.squaredButtons](https://raw.githubusercontent.com/Abhilash-Chandran/number_inc_dec/doc-assets/gifs/pre_squared.gif)
   ///
   NumberInputPrefabbed.squaredButtons({
-    @required TextEditingController controller,
-    Key key,
+    required TextEditingController controller,
+    Key? key,
     bool enabled = true,
     ButtonArrangement buttonArrangement = ButtonArrangement.rightEnd,
     num min = 0,
@@ -49,10 +49,10 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     bool isInt = true,
     AutovalidateMode autovalidateMode = AutovalidateMode.always,
     bool enableMinMaxClamping = false,
-    InputDecoration numberFieldDecoration,
+    InputDecoration? numberFieldDecoration,
     Decoration widgetContainerDecoration = const BoxDecoration(),
-    FormFieldValidator<String> validator,
-    TextStyle style,
+    FormFieldValidator<String>? validator,
+    TextStyle? style,
     IconData incIcon = Icons.arrow_drop_up,
     IconData decIcon = Icons.arrow_drop_down,
     int fractionDigits = 2,
@@ -60,14 +60,15 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     double scaleHeight = 1.0,
     double incIconSize = 28,
     double decIconSize = 28,
-    Color decIconColor,
-    Color incIconColor,
-    DiffIncDecCallBack onDecrement,
-    DiffIncDecCallBack onIncrement,
-    ValueCallBack onSubmitted,
-    ValueCallBack onChanged,
+    Color? decIconColor,
+    Color? incIconColor,
+    DiffIncDecCallBack? onDecrement,
+    DiffIncDecCallBack? onIncrement,
+    ValueCallBack? onSubmitted,
+    ValueCallBack? onChanged,
     bool separateIcons = false,
     Color incDecBgColor = Colors.lightGreen,
+    TextAlign textAlign = TextAlign.center,
   }) : super(
           controller: controller,
           key: key,
@@ -113,6 +114,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
               width: 0.5,
             ),
           ),
+          textAlign: textAlign,
         );
 
   /// {@macro prefab_doc} leaf like buttons.
@@ -120,8 +122,8 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// ![NumberInputPrefabbed.leafyButtons](https://raw.githubusercontent.com/Abhilash-Chandran/number_inc_dec/doc-assets/gifs/pre_leaf.gif)
   ///
   NumberInputPrefabbed.leafyButtons({
-    @required TextEditingController controller,
-    Key key,
+    required TextEditingController controller,
+    Key? key,
     bool enabled = true,
     ButtonArrangement buttonArrangement = ButtonArrangement.rightEnd,
     num min = 0,
@@ -131,10 +133,10 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     bool isInt = true,
     AutovalidateMode autovalidateMode = AutovalidateMode.always,
     bool enableMinMaxClamping = false,
-    InputDecoration numberFieldDecoration,
+    InputDecoration? numberFieldDecoration,
     Decoration widgetContainerDecoration = const BoxDecoration(),
-    FormFieldValidator<String> validator,
-    TextStyle style,
+    FormFieldValidator<String>? validator,
+    TextStyle? style,
     IconData incIcon = Icons.arrow_drop_up,
     IconData decIcon = Icons.arrow_drop_down,
     int fractionDigits = 2,
@@ -142,14 +144,15 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     double scaleHeight = 1.0,
     double incIconSize = 28,
     double decIconSize = 28,
-    Color decIconColor,
-    Color incIconColor,
-    DiffIncDecCallBack onDecrement,
-    DiffIncDecCallBack onIncrement,
-    ValueCallBack onSubmitted,
-    ValueCallBack onChanged,
+    Color? decIconColor,
+    Color? incIconColor,
+    DiffIncDecCallBack? onDecrement,
+    DiffIncDecCallBack? onIncrement,
+    ValueCallBack? onSubmitted,
+    ValueCallBack? onChanged,
     bool separateIcons = true,
     Color incDecBgColor = Colors.lightGreen,
+    TextAlign textAlign = TextAlign.center,
   }) : super(
           controller: controller,
           key: key,
@@ -213,6 +216,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
               width: 0.25,
             ),
           ),
+          textAlign: textAlign,
         );
 
   /// {@macro prefab_doc} directional buttons.
@@ -220,8 +224,8 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// ![NumberInputPrefabbed.directionalButtons](https://raw.githubusercontent.com/Abhilash-Chandran/number_inc_dec/doc-assets/gifs/pre_directional.gif)
   ///
   NumberInputPrefabbed.directionalButtons({
-    @required TextEditingController controller,
-    Key key,
+    required TextEditingController controller,
+    Key? key,
     bool enabled = true,
     ButtonArrangement buttonArrangement = ButtonArrangement.rightEnd,
     num min = 0,
@@ -231,10 +235,10 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     bool isInt = true,
     AutovalidateMode autovalidateMode = AutovalidateMode.always,
     bool enableMinMaxClamping = false,
-    InputDecoration numberFieldDecoration,
+    InputDecoration? numberFieldDecoration,
     Decoration widgetContainerDecoration = const BoxDecoration(),
-    FormFieldValidator<String> validator,
-    TextStyle style,
+    FormFieldValidator<String>? validator,
+    TextStyle? style,
     IconData incIcon = Icons.arrow_drop_up,
     IconData decIcon = Icons.arrow_drop_down,
     int fractionDigits = 2,
@@ -242,14 +246,15 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     double scaleHeight = 1.0,
     double incIconSize = 28,
     double decIconSize = 28,
-    Color decIconColor,
-    Color incIconColor,
-    DiffIncDecCallBack onDecrement,
-    DiffIncDecCallBack onIncrement,
-    ValueCallBack onSubmitted,
-    ValueCallBack onChanged,
+    Color? decIconColor,
+    Color? incIconColor,
+    DiffIncDecCallBack? onDecrement,
+    DiffIncDecCallBack? onIncrement,
+    ValueCallBack? onSubmitted,
+    ValueCallBack? onChanged,
     bool separateIcons = true,
     Color incDecBgColor = Colors.lightGreen,
+    TextAlign textAlign = TextAlign.center,
   }) : super(
           controller: controller,
           key: key,
@@ -303,6 +308,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
               width: 0.25,
             ),
           ),
+          textAlign: textAlign,
         );
 
   /// {@macro prefab_doc} rounded edge buttons.
@@ -310,8 +316,8 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// ![NumberInputPrefabbed.roundedEdgeButtons](https://raw.githubusercontent.com/Abhilash-Chandran/number_inc_dec/doc-assets/gifs/pre_roundEdge.gif)
   ///
   NumberInputPrefabbed.roundedEdgeButtons({
-    @required TextEditingController controller,
-    Key key,
+    required TextEditingController controller,
+    Key? key,
     bool enabled = true,
     ButtonArrangement buttonArrangement = ButtonArrangement.rightEnd,
     num min = 0,
@@ -321,10 +327,10 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     bool isInt = true,
     AutovalidateMode autovalidateMode = AutovalidateMode.always,
     bool enableMinMaxClamping = true,
-    InputDecoration numberFieldDecoration,
+    InputDecoration? numberFieldDecoration,
     Decoration widgetContainerDecoration = const BoxDecoration(),
-    FormFieldValidator<String> validator,
-    TextStyle style,
+    FormFieldValidator<String>? validator,
+    TextStyle? style,
     IconData incIcon = Icons.arrow_drop_up,
     IconData decIcon = Icons.arrow_drop_down,
     int fractionDigits = 2,
@@ -332,14 +338,15 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     double scaleHeight = 1.0,
     double incIconSize = 27,
     double decIconSize = 27,
-    Color decIconColor,
-    Color incIconColor,
-    DiffIncDecCallBack onDecrement,
-    DiffIncDecCallBack onIncrement,
-    ValueCallBack onSubmitted,
-    ValueCallBack onChanged,
+    Color? decIconColor,
+    Color? incIconColor,
+    DiffIncDecCallBack? onDecrement,
+    DiffIncDecCallBack? onIncrement,
+    ValueCallBack? onSubmitted,
+    ValueCallBack? onChanged,
     bool separateIcons = true,
     Color incDecBgColor = Colors.lightGreen,
+    TextAlign textAlign = TextAlign.center,
   }) : super(
           controller: controller,
           key: key,
@@ -370,24 +377,24 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
           onChanged: onChanged,
           separateIcons: separateIcons,
           incDecBgColor: incDecBgColor,
-          numberFieldDecoration: numberFieldDecoration ??
-                  buttonArrangement == ButtonArrangement.rightEnd ||
+          numberFieldDecoration:
+              buttonArrangement == ButtonArrangement.rightEnd ||
                       buttonArrangement == ButtonArrangement.leftEnd
-              ? InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius:
-                        buttonArrangement == ButtonArrangement.rightEnd
-                            ? BorderRadius.only(
-                                topLeft: Radius.circular(5),
-                                bottomLeft: Radius.circular(5),
-                              )
-                            : BorderRadius.only(
-                                topRight: Radius.circular(5),
-                                bottomRight: Radius.circular(5),
-                              ),
-                  ),
-                )
-              : null,
+                  ? InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius:
+                            buttonArrangement == ButtonArrangement.rightEnd
+                                ? BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5),
+                                  )
+                                : BorderRadius.only(
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5),
+                                  ),
+                      ),
+                    )
+                  : null,
           incIconDecoration: BoxDecoration(
             color: incDecBgColor,
             borderRadius: buttonArrangement == ButtonArrangement.rightEnd
@@ -436,6 +443,7 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
               width: 0.25,
             ),
           ),
+          textAlign: textAlign,
         );
 
   /// {@macro prefab_doc} rounded/circular buttons.
@@ -443,8 +451,8 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
   /// ![NumberInputPrefabbed.roundedButtons](https://raw.githubusercontent.com/Abhilash-Chandran/number_inc_dec/doc-assets/gifs/pre_rounded.gif)
   ///
   NumberInputPrefabbed.roundedButtons({
-    @required TextEditingController controller,
-    Key key,
+    required TextEditingController controller,
+    Key? key,
     bool enabled = true,
     ButtonArrangement buttonArrangement = ButtonArrangement.rightEnd,
     num min = 0,
@@ -454,10 +462,10 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     bool isInt = true,
     AutovalidateMode autovalidateMode = AutovalidateMode.always,
     bool enableMinMaxClamping = true,
-    InputDecoration numberFieldDecoration,
+    InputDecoration? numberFieldDecoration,
     Decoration widgetContainerDecoration = const BoxDecoration(),
-    FormFieldValidator<String> validator,
-    TextStyle style,
+    FormFieldValidator<String>? validator,
+    TextStyle? style,
     IconData incIcon = Icons.arrow_drop_up,
     IconData decIcon = Icons.arrow_drop_down,
     int fractionDigits = 2,
@@ -465,14 +473,15 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
     double scaleHeight = 1.0,
     double incIconSize = 27,
     double decIconSize = 27,
-    Color decIconColor,
-    Color incIconColor,
-    DiffIncDecCallBack onDecrement,
-    DiffIncDecCallBack onIncrement,
-    ValueCallBack onSubmitted,
-    ValueCallBack onChanged,
+    Color? decIconColor,
+    Color? incIconColor,
+    DiffIncDecCallBack? onDecrement,
+    DiffIncDecCallBack? onIncrement,
+    ValueCallBack? onSubmitted,
+    ValueCallBack? onChanged,
     bool separateIcons = true,
     Color incDecBgColor = Colors.lightGreen,
+    TextAlign textAlign = TextAlign.center,
   }) : super(
           controller: controller,
           key: key,
@@ -520,5 +529,6 @@ class NumberInputPrefabbed extends NumberInputWithIncrementDecrement {
               width: 0.25,
             ),
           ),
+          textAlign: textAlign,
         );
 }
