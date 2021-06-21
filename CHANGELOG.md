@@ -1,4 +1,4 @@
-## [0.8.0_null_safety] - 22June2021
+## [0.8.0-null-safety] - 22June2021
 * Migrated to null safety
 
 ## [0.7.0] - 19June2021
