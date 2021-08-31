@@ -57,8 +57,9 @@ jobs:
           flutter: true
           skipTests: true
           relativePath: ${{ matrix.package }}
-          accessToken: ${{ secrets.GAUTH_ACCESS_TOKEN }}
-          refreshToken: ${{ secrets.GAUTH_REFRESH_TOKEN }}
+          credentialJson: ${{ secrets.CREDENTIAL_JSON }}
+          # accessToken: ${{ secrets.GAUTH_ACCESS_TOKEN }}
+          # refreshToken: ${{ secrets.GAUTH_REFRESH_TOKEN }}
           suppressBuildRunner: true
 
       - name: Tag commit

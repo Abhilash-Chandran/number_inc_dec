@@ -1,6 +1,6 @@
 name: number_inc_dec
 description: A flutter widget which accepts numeric values with buttons to increment and decrement.
-version: 0.8.0-null-safety
+version: 0.8.0
 homepage: https://github.com/Abhilash-Chandran/number_inc_dec
 
 environment:
