@@ -42,7 +42,7 @@ enum ButtonArrangement {
 
 class NumberInputWithIncrementDecrement extends StatefulWidget {
   /// Key to be used for this widget.
-  final Key key;
+  final Key? key;
 
   /// Whether the user is able to interact or not
   final bool enabled;
@@ -82,11 +82,11 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
 
   /// Decoration for the TextFormField.
   /// Defaults to a simple outline border.
-  final InputDecoration numberFieldDecoration;
+  final InputDecoration? numberFieldDecoration;
 
   /// Decoration for the whole widget.
   /// defaults to a simple container with rounded border.
-  final Decoration widgetContainerDecoration;
+  final Decoration? widgetContainerDecoration;
 
   /// validators for this field.
   /// Defaults to [_NumberInputWithIncrementDecrementState._defaultValidator] validator
@@ -100,7 +100,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   ///        : null;
   ///  }
   /// ```
-  final FormFieldValidator<String> validator;
+  final FormFieldValidator<String>? validator;
 
   /// The [TextStyle] that will passed down to [TextFormField.style].
   /// This is the style of the text being edited.
@@ -115,53 +115,53 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   ///   ),
   /// );
   /// ```
-  final TextStyle style;
+  final TextStyle? style;
 
   /// Decoration for the Increment Icon
   /// Defaults to a black border in the bottom.
-  final Decoration incIconDecoration;
+  final Decoration? incIconDecoration;
 
   /// Decoration for the Decrement Icon
   /// Defaults to null;
-  final Decoration decIconDecoration;
+  final Decoration? decIconDecoration;
 
   /// Icon to be used for Increment button.
   final IconData incIcon;
 
   /// Icon size to be used for Increment button.
   /// Defaults to size defined in IconTheme
-  final double incIconSize;
+  final double? incIconSize;
 
   /// Icon color to be used for Increment button.
   /// Defaults to color defined in IconTheme
-  final Color incIconColor;
+  final Color? incIconColor;
 
   /// A call back function to be called on successful increment.
   /// This will not be called if the internal validators fail.
-  final DiffIncDecCallBack onIncrement;
+  final DiffIncDecCallBack? onIncrement;
 
   /// A call back function to be called on successful submit.
   /// This will not be called if the internal validators fail.
-  final ValueCallBack onSubmitted;
+  final ValueCallBack? onSubmitted;
 
   /// A call back function to be called every time the number is changed
   /// manually. This will not be called if the internal validators fail.
-  final ValueCallBack onChanged;
+  final ValueCallBack? onChanged;
 
   /// Icon to be used for Decrement button.
-  final IconData decIcon;
+  final IconData? decIcon;
 
   /// Icon size to be used for Decrement button.
   /// Defaults to size defined in IconTheme
-  final double decIconSize;
+  final double? decIconSize;
 
   /// Icon color to be used for Decrement button.
   /// Defaults to color defined in IconTheme
-  final Color decIconColor;
+  final Color? decIconColor;
 
   /// A call back function to be called on successful decrement.
   /// This will not be called if the internal validators fail.
-  final DiffIncDecCallBack onDecrement;
+  final DiffIncDecCallBack? onDecrement;
 
   /// No of digits after decimal point.
   /// Defaults to value of 2 for non int fields.
@@ -181,11 +181,15 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
   final bool separateIcons;
 
   /// Background color of increment decrement buttons.
-  final Color incDecBgColor;
+  final Color? incDecBgColor;
+
+  /// Alignment of the number in the text field.
+  /// Defaults to [TextAlign.center]
+  final TextAlign textAlign;
 
   /// {@macro core_widget_doc}
   NumberInputWithIncrementDecrement({
-    @required this.controller,
+    required this.controller,
     this.key,
     this.enabled = true,
     this.buttonArrangement = ButtonArrangement.rightEnd,
@@ -217,6 +221,7 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
     this.decIconDecoration,
     this.incIconDecoration,
     this.incDecBgColor,
+    this.textAlign = TextAlign.center,
   });
 
   @override
@@ -226,9 +231,9 @@ class NumberInputWithIncrementDecrement extends StatefulWidget {
 
 class _NumberInputWithIncrementDecrementState
     extends State<NumberInputWithIncrementDecrement> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
   final _formFieldKey = GlobalKey<FormFieldState>();
-  Timer _debounceTimer;
+  Timer? _debounceTimer;
 
   @override
   void initState() {
@@ -249,11 +254,11 @@ class _NumberInputWithIncrementDecrementState
   void _onChanged(String newValue) {
     _debounceTimer?.cancel();
     _debounceTimer = Timer(Duration(milliseconds: 750), () {
-      if (newValue != null && _defaultValidator(newValue) == null) {
+      if (_defaultValidator(newValue) == null) {
         var parsedAndClamped =
             _clampAndUpdate(_tryParse(newValue), widget.enableMinMaxClamping);
-        if (widget.onChanged != null && parsedAndClamped != null) {
-          widget.onChanged(parsedAndClamped);
+        if (widget.onChanged != null) {
+          widget.onChanged!(parsedAndClamped);
         }
       }
     });
@@ -263,9 +268,9 @@ class _NumberInputWithIncrementDecrementState
     var parsedAndClamped =
         _clampAndUpdate(_tryParse(newValue), widget.enableMinMaxClamping);
     if (this.widget.onSubmitted != null &&
-        parsedAndClamped != null &&
-        _formFieldKey.currentState.isValid) {
-      this.widget.onSubmitted(parsedAndClamped);
+        _formFieldKey.currentState != null &&
+        _formFieldKey.currentState!.isValid) {
+      this.widget.onSubmitted!(parsedAndClamped);
     }
   }
 
@@ -286,10 +291,9 @@ class _NumberInputWithIncrementDecrementState
     ];
   }
 
-  String _defaultValidator(String value) {
-    num parsed = num.tryParse(value);
+  String? _defaultValidator(String? value) {
+    final parsed = value != null ? num.tryParse(value) : null;
     if (parsed == null && value != null && (value.isNotEmpty && value != '-')) {
-      print('validator value is : $value with ${value.length}');
       return '$value is an invalid ${widget.isInt ? 'integer' : 'decimal'} value.';
     } else if (parsed != null &&
         !widget.enableMinMaxClamping &&
@@ -316,14 +320,15 @@ class _NumberInputWithIncrementDecrementState
   }
 
   /// This is a relaxed reImplementation of stepMismatch used in Chromium for
-  /// input type=number element.
+  /// input type=number element. In our implementation the step value is set in
+  /// the parameter [widget.incDecFactor]
   ///
   /// Check here: in step_range.cc
   /// https://github.com/chromium/chromium/blob/60b6acc12a2369e970f4e2fa2e3845a8e2f85de7/third_party/blink/renderer/core/html/forms/step_range.cc#L146
   bool _stepMismatch(num newValue) {
     // In the actual of chrome implementation it uses the default value as the
     // fall back hence it is followed here for correctness.
-    num stepBase = widget.min ?? widget.initialValue ?? 0;
+    num stepBase = widget.min;
     num value = (newValue - stepBase).abs();
     if (value.isInfinite) return false;
     // For time being ignoring the system limit of double.
@@ -393,7 +398,7 @@ class _NumberInputWithIncrementDecrementState
                 validator: widget.validator ?? _defaultValidator,
                 style: widget.style,
                 enabled: widget.enabled,
-                textAlign: TextAlign.center,
+                textAlign: widget.textAlign,
                 autovalidateMode: widget.autovalidateMode,
                 decoration: widget.numberFieldDecoration ??
                     InputDecoration(
@@ -473,7 +478,7 @@ class _NumberInputWithIncrementDecrementState
                   currentValue = _clampAndUpdate(currentValue, true);
                   // decrement callback
                   if (widget.onDecrement != null) {
-                    widget.onDecrement(currentValue);
+                    widget.onDecrement!(currentValue);
                   }
                 },
         ),
@@ -516,7 +521,7 @@ class _NumberInputWithIncrementDecrementState
                   currentValue = _clampAndUpdate(currentValue, true);
                   // decrement callback
                   if (widget.onIncrement != null) {
-                    widget.onIncrement(currentValue);
+                    widget.onIncrement!(currentValue);
                   }
                 },
         ),
@@ -525,8 +530,8 @@ class _NumberInputWithIncrementDecrementState
   }
 
   /// try to parse the given string into a number.
-  num _tryParse(String value) {
-    var newValue = num.tryParse(value);
+  num? _tryParse(String value) {
+    final newValue = num.tryParse(value);
     return newValue;
   }
 
@@ -542,7 +547,7 @@ class _NumberInputWithIncrementDecrementState
     _controller.value = TextEditingValue(
       text: currentValAsStr,
       selection: TextSelection.fromPosition(
-        TextPosition(offset: currentValAsStr?.length ?? 0),
+        TextPosition(offset: currentValAsStr.length),
       ),
     );
     return currentValue;
