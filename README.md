@@ -12,7 +12,7 @@ Please check the [example](https://pub.dev/packages/number_inc_dec/example) sect
 
 > If you like this package give it a thumbs-up 👍.
 
-## Breaking Changes in v0.7.x
+## Breaking Changes from v0.7.x
 
 Some major changes are introduced. I am bumping the version to 0.7.x because following changes  may break existing users. Please do report for any issues in the repository, which I will try to address.
 
