@@ -383,7 +383,7 @@ class _NumberInputWithIncrementDecrementState
             ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             if (widget.buttonArrangement == ButtonArrangement.incLeftDecRight)
               _buildIncrementButton(),
