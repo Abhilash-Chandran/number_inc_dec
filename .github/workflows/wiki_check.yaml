@@ -1,0 +1,25 @@
+name: Update version wiki
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-version-wiki:
+    runs-on: ubuntu-latest
+
+    steps:
+      
+      - name: Checkout the code
+        uses: actions/checkout@v3
+      - name: Checkout the wiki repo
+        uses: actions/checkout@v3
+        with:
+          repository: ${{github.repository}}.wiki
+          path: wiki
+          ref: 'master'
+          token:  ${{secrets.GITHUB_TOKEN}}
+      - name: check wiki repo content
+        run: |
+          ls -al
