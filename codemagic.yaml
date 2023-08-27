@@ -1,0 +1,22 @@
+workflows:
+  my-workflow:
+    triggering:
+      events:
+        - tag
+      tag_patterns:          
+        - pattern: v*
+      cancel_previous_builds: true
+    environment:
+      flutter: stable
+    cache:
+      cache_paths:
+        - $FLUTTER_ROOT/.pub-cache
+    scripts:
+      - name: say hello
+        script: echo "Hello Codemagician!"
+      - name: analyze flutter
+        script: flutter analyze
+      - name: run flutter tests
+        scripts: flutter test
+      
+    
