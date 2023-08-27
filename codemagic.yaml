@@ -3,7 +3,7 @@ workflows:
     triggering:
       events:
         - tag
-      tag_patterns:          
+      tag_patterns:
         - pattern: v*
       cancel_previous_builds: true
     environment:
@@ -17,6 +17,4 @@ workflows:
       - name: analyze flutter
         script: flutter analyze
       - name: run flutter tests
-        scripts: flutter test
-      
-    
+        script: flutter test
