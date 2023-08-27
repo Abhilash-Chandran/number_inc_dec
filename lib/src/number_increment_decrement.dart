@@ -539,7 +539,7 @@ class _NumberInputWithIncrementDecrementState
     // Perform clamping only if explicitly enabled.
     currentValue = clamp && currentValue != null
         ? _clamByStep(currentValue)
-        : currentValue;
+        : currentValue ?? 0;
     // Covert the number to string and apply fraction restriction if necessary.
     // Also handles null cases when the parsing fails.
     var currentValAsStr = numToString(currentValue);
