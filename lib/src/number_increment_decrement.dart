@@ -420,7 +420,7 @@ class _NumberInputWithIncrementDecrementState
               _buildDecrementButton(),
             if (widget.buttonArrangement == ButtonArrangement.incRightDecLeft)
               _buildIncrementButton(),
-            if (widget.buttonArrangement == ButtonArrangement.rightEnd)
+            if (widget.buttonArrangement == ButtonArrangement.rightEnd && widget.enabled)
               _buildColumnOfButtons(),
           ],
         ),
